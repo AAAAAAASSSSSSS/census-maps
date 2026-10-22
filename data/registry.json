@@ -1,0 +1,54 @@
+{
+ "countries": [
+  {
+   "id": "ro",
+   "name": {
+    "en": "Romania",
+    "ro": "România"
+   },
+   "view": {
+    "longitude": 25,
+    "latitude": 45.9,
+    "zoom": 5.9
+   },
+   "censuses": [
+    {
+     "id": "2021",
+     "label": {
+      "en": "2021 census",
+      "ro": "Recensământ 2021"
+     },
+     "datasets": [
+      {
+       "id": "ro-communes",
+       "role": "unit",
+       "file": "communes.json",
+       "label": {
+        "en": "Communes",
+        "ro": "Comune"
+       }
+      },
+      {
+       "id": "ro-counties",
+       "role": "region",
+       "file": "counties.json",
+       "label": {
+        "en": "Counties",
+        "ro": "Județe"
+       }
+      },
+      {
+       "id": "ro-country",
+       "role": "country",
+       "file": "country.json",
+       "label": {
+        "en": "Country",
+        "ro": "Țară"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
