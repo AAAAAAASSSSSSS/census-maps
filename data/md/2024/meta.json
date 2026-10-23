@@ -15,15 +15,15 @@
   },
   "rel": {
    "en": [
-    "Orthodox Church of Moldova and Metropolis of Bessarabia",
+    "Orthodox Church of Moldova (Metropolis of Moldova) / Metropolis of Bessarabia",
     "Union of Evangelical Christian Baptist Churches of Moldova",
     "Religious Denomination “Jehovah’s Witnesses”",
-    "Pentecostal",
-    "Adventist",
+    "Union of Pentecostal Churches of the Republic of Moldova",
+    "Seventh-day Adventist Church – Moldova Union Conference",
     "Evangelical Christian",
     "Old Rite Orthodox Church",
     "Islamic League of the Republic of Moldova",
-    "Roman Catholic Church",
+    "Roman Catholic Diocese of Chișinău",
     "Other religion",
     "Free thinker",
     "Agnostic",
@@ -35,12 +35,12 @@
  },
  "colors": {
   "eth": {
-   "0": "8d5fd3",
-   "1": "1a8cff",
+   "0": "5e15cf",
+   "1": "a78bfa",
    "2": "aade87",
-   "3": "d6342b",
-   "4": "f9cf00",
-   "5": "2ca02c",
+   "3": "b40000",
+   "4": "b39a14",
+   "5": "db5b0b",
    "6": "808000"
   },
   "rel": {
@@ -69,9 +69,22 @@
  },
  "withheld": false,
  "info": {
-  "en": "These maps were created using data from the 2024 Moldovan census, available at <a href=\"https://statistica.gov.md/ro/statistic_indicator_details/60\" target=\"_blank\" rel=\"noopener noreferrer\">https://statistica.gov.md/ro/statistic_indicator_details/60</a>.<br>The names of the religious denominations were taken from <a href=\"https://www.asp.gov.md/sites/default/files/date-deschise/lista-beneficiarilor-desemnarii-procentuale/Lista-religioase-2025.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">https://www.asp.gov.md/sites/default/files/date-deschise/lista-beneficiarilor-desemnarii-procentuale/Lista-religioase-2025.pdf</a> and <a href=\"https://infobiz.md/en/1017620002171/cultul-religios-uniunea-bisericilor-crestine-evanghelice-baptiste-din-moldova\" target=\"_blank\" rel=\"noopener noreferrer\">https://infobiz.md/en/1017620002171/cultul-religios-uniunea-bisericilor-crestine-evanghelice-baptiste-din-moldova</a>.<br>Transnistria was not covered by the census. Its data (unofficial) comes from the 2015 census of the self-proclaimed Pridnestrovian Moldavian Republic, available at <a href=\"https://web.archive.org/web/20180814231257/http://privetpmr.ru/perepis-naseleniya-pmr\" target=\"_blank\" rel=\"noopener noreferrer\">https://web.archive.org/web/20180814231257/http://privetpmr.ru/perepis-naseleniya-pmr</a>."
+  "en": "These maps were created using data from the 2024 Moldovan census, available at <a href=\"https://statistica.gov.md/ro/statistic_indicator_details/60\" target=\"_blank\" rel=\"noopener noreferrer\">https://statistica.gov.md/ro/statistic_indicator_details/60</a>.<br>The names of the religious denominations were taken from the lists of religious denominations of the Public Services Agency: <a href=\"https://www.asp.gov.md/sites/default/files/date-deschise/lista-beneficiarilor-desemnarii-procentuale/lista-CR-si-PC-beneficiare-ale-DP-2022%20actualizata%202023.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">2022 (updated 2023)</a>, <a href=\"https://www.asp.gov.md/sites/default/files/date-deschise/lista-beneficiarilor-desemnarii-procentuale/Lista-cultelor-religioase-anul-2024.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">2024</a> and <a href=\"https://www.asp.gov.md/sites/default/files/date-deschise/lista-beneficiarilor-desemnarii-procentuale/Lista-religioase-2025.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">2025</a>, using the central body of each denomination (union, diocese or metropolis). The names of the Baptist and Pentecostal unions are as in the state register of legal entities, shown at <a href=\"https://infobiz.md/en/1017620002171/cultul-religios-uniunea-bisericilor-crestine-evanghelice-baptiste-din-moldova\" target=\"_blank\" rel=\"noopener noreferrer\">Baptist</a> and <a href=\"https://infobiz.md/en/1015620005134/cultul-religios-uniunea-bisericilor-penticostale-din-republica-moldova\" target=\"_blank\" rel=\"noopener noreferrer\">Pentecostal</a>. The Adventist, Catholic, Evangelical Christian and Old Rite entries use the denominations’ own names, as no state register entry could be confirmed.<br>Transnistria was not covered by the census. Its data are unofficial and come from the 2015 census of the self-proclaimed Pridnestrovian Moldavian Republic (PMR), as reported at <a href=\"https://web.archive.org/web/20180814231257/http://privetpmr.ru/perepis-naseleniya-pmr\" target=\"_blank\" rel=\"noopener noreferrer\">https://web.archive.org/web/20180814231257/http://privetpmr.ru/perepis-naseleniya-pmr</a> and on <a href=\"https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%B8%D0%B4%D0%BD%D0%B5%D1%81%D1%82%D1%80%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F_%D0%9C%D0%BE%D0%BB%D0%B4%D0%B0%D0%B2%D1%81%D0%BA%D0%B0%D1%8F_%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0\" target=\"_blank\" rel=\"noopener noreferrer\">Wikipedia (ru)</a>. The PMR counted its population on a different date (14 October 2015) and published no religion data."
  },
  "unofficial": {
-  "en": "Unofficial data. Transnistria was not covered by the Moldovan census; these figures come from the 2015 census of the self-proclaimed Pridnestrovian Moldavian Republic (PMR), as reported in the press, and are not official statistics. The ethnic shares add up to more than 100% (86.2% declared plus about 14% not stated). Rîbnița, Grigoriopol and Dubăsari are only given in rounded thousands, Romanians and Roma were not recorded separately, and there is no religion data."
+  "tr": {
+   "en": "Unofficial data. Transnistria (the area controlled by the self-proclaimed Pridnestrovian Moldavian Republic, PMR: the districts of Camenca, Dubăsari, Grigoriopol, Rîbnița and Slobozia, and the cities of Tiraspol and Bender/Tighina) was not covered by the Moldovan census. These figures come from the PMR’s own census of 14 October 2015, nine years before the 2024 census, as reported by the PMR press and Wikipedia; they are not official Moldovan statistics. The ethnic shares add up to more than 100% (86.2% declared plus about 14% not stated). Rîbnița, Grigoriopol and Dubăsari districts are only given in rounded thousands (~). Romanians and Roma were not recorded separately; Belarusians, “Transnistrians” and other nationalities are counted as Other ethnicity. Town figures come from Wikipedia and may not match the regional ones. Dnestrovsk is listed separately, as in the source, although it is administratively part of Tiraspol."
+  },
+  "co": {
+   "en": "Includes unofficial data. The total adds the 475,373 residents of Transnistria (PMR census of 14 October 2015, a different date from the 2024 Moldovan census) to the 2,409,207 counted by the Moldovan census. The PMR ethnic shares add up to more than 100%. Romanians and Roma are from the Moldovan census only, as the PMR did not record them separately. See Transnistria on the raion map for the full notes."
+  }
+ },
+ "relNote": {
+  "tr": {
+   "en": "Religion: no religion data was published for Transnistria’s 2015 census, so it is shown as “No data”."
+  },
+  "co": {
+   "en": "Religion: no religion data was published for Transnistria’s 475,373 residents, so they are counted under “Not declared”."
+  }
  }
 }

@@ -33,16 +33,17 @@ hr{border:0;border-top:1px solid var(--bd);margin:8px 0}
 #copy{right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));padding:4px 9px;font-size:11px;color:var(--mut)}
 .dd{position:relative;display:block}.ddb{display:flex;justify-content:space-between;align-items:center;width:100%;font-weight:600}.ddb .car{color:var(--mut);transition:transform .15s}.dd.open .car{transform:rotate(180deg)}
 .g.h .ddb{padding:11px 11px;min-height:42px}.ddb .ph{font-weight:400}.ddb span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ddm{display:none;position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:6;background:var(--bg);border:1px solid var(--bd);border-radius:9px;padding:4px;box-shadow:0 8px 24px #0004}.dd.open .ddm{display:block}
+.ddm{display:none;position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:6;background:var(--bg);border:1px solid var(--bd);border-radius:9px;padding:4px;box-shadow:0 8px 24px #0004}.dd.open .ddm{display:block;position:static;margin-top:4px;box-shadow:none}
 .ddm button{display:flex;justify-content:space-between;width:100%;border:0;text-align:left;padding:7px 9px}.ddm button:hover{background:#8882}.ddm button.on{background:var(--fg);color:var(--bg)}
 #sel{right:12px;top:calc(60px + env(safe-area-inset-top,0px));width:min(320px,calc(100% - 24px));max-height:calc(100% - 140px);overflow:auto;padding:10px 12px;box-sizing:border-box;display:none}
 #sel .sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}#sel .sh button{border:0;padding:2px 6px;color:var(--mut)}
-#sel td:first-child{white-space:normal}#sel tr.cur td{font-weight:700;background:#00c8ff33}#sel tr.ch td:first-child{padding-left:20px}#sel .sub{margin:12px 0 4px}.unn{margin-top:8px;font-size:11px;line-height:1.35}#sel td.l{white-space:normal}#sel tr.gap td{padding:2px;border-bottom:1px solid var(--bd)}#sel tr.tot td{font-weight:700;border-top:1px solid var(--bd)}
+#sel td:first-child{white-space:normal}#sel tr.cur td{font-weight:700;background:#00c8ff33}#sel tr.ch td:first-child{padding-left:20px}#sel .sub{margin:12px 0 4px}.unn{margin-top:8px;font-size:11px;line-height:1.35}.rn{margin:8px 0;padding:7px 9px;border-left:3px solid #d4a017;background:#d4a01722;border-radius:4px;font-size:12px;line-height:1.4}
+#warn{display:none;left:50%;top:50%;transform:translate(-50%,-50%);width:min(560px,calc(100% - 40px));padding:28px 30px;box-sizing:border-box;text-align:center;z-index:5;border:2px solid #d4a017}#warn::before{content:'⚠';display:block;font-size:46px;line-height:1;margin-bottom:10px;color:#d4a017}#warn h2{margin:0 0 12px;font-size:24px;line-height:1.25}#warn p{margin:0 0 14px;font-size:15px;line-height:1.5}#warn .en{font-size:13px;color:var(--mut)}#sel td.l{white-space:normal}#sel tr.gap td{padding:2px;border-bottom:1px solid var(--bd)}#sel tr.tot td{font-weight:700;border-top:1px solid var(--bd)}
 #tw.pick tbody tr{cursor:pointer}#tw tbody tr.cur td{background:#00c8ff44}
 @media (max-width:820px){#sel{top:auto;left:12px;right:12px;width:auto;bottom:calc(58px + env(safe-area-inset-bottom,0px));max-height:40%}}
 </style></head><body>
 <div id="map"></div><div id="tip"></div>
-<div id="panel" class="box"></div>
+<div id="panel" class="box"></div><div id="warn" class="box"></div>
 <div id="lang" class="box"></div>
 <div id="info" class="box"></div>
 <div id="sel" class="box"></div>
@@ -65,7 +66,7 @@ const T={en:{title:'Census maps',rights:'© 2026 AAAAAAASSSSSSS, all rights rese
   pop:'Population',abs:'absolute',sim:'simple',absm:'Absolute',simm:'Simple',mixm:'Mixed',mix_n:'Mixed = the two largest groups are exactly equal.',maj:'majority',na:'Not available',
   list_show:'Show list',list_hide:'Hide list',search:'Search…',col_name:'Name',col_county:'County',col_pop:'Population',col_nat:'% of {c}',col_group:'Largest group',col_relg:'Largest religion',col_share:'Share',col_people:'People',col_maj:'Majority',
   sel_tool:'Select area',sel_tt:'Click an area on the map to see its full breakdown.',sel_title:'Area details',sel_hint:'Click an area on the map to see its full breakdown.',sel_close:'Close',sel_total:'Total',col_eg:'Ethnic group',col_rg:'Religion',
-  sel_note:'Small values are withheld by the statistics office (*), so the rows may not add up to the total.',zero_l:'No people',nodata_l:'No data',nodata_sel:'No data for this area.',unof_s:'Unofficial data †',sel_subs:'Towns and villages',sel_parts:'Parts of this area',k_town:'town',k_sector:'sector',
+  sel_note:'Small values are withheld by the statistics office (*), so the rows may not add up to the total.',zero_l:'No people',nodata_l:'No data',nodata_sel:'No data for this area.',unof_s:'Unofficial data †',notr_t:'This census is not available in this language yet.',notr_m:'The selected census has not been translated into the current language. Change the language (top right) to view it.',notr_b:'Choose another country',sel_subs:'Towns and villages',sel_parts:'Parts of this area',k_town:'town',k_sector:'sector',
   nav_m:'Left mouse: pan. Right mouse: rotate and tilt. Scroll: zoom.',nav_t:'One finger: pan. Two fingers: pinch to zoom, twist to rotate, drag up or down to tilt.',
   eth_n:'Absolute = more than 50% of residents. Simple = the largest ethnicity, with 50% or less. Hover a color box to make those areas pulse. Shares use total resident population, including people whose ethnicity was not given.',
   rel_n:'Absolute = more than 50% of residents. Simple = the largest religion, with 50% or less. Hover a color box to make those areas pulse. Shares use total resident population, including people whose religion was not given.',
@@ -80,7 +81,7 @@ ro:{title:'Hărți recensăminte',rights:'© 2026 AAAAAAASSSSSSS, toate drepturi
   pop:'Populație',abs:'absolut',sim:'simplu',absm:'Absolut',simm:'Simplu',mixm:'Mixt',mix_n:'Mixt = cele mai mari două grupuri sunt exact egale.',maj:'majoritate',na:'Indisponibil',
   list_show:'Arată lista',list_hide:'Ascunde lista',search:'Caută…',col_name:'Nume',col_county:'Județ',col_pop:'Populație',col_nat:'% de {c}',col_group:'Etnia cea mai deasă',col_relg:'Religia cea mai deasă',col_share:'Procent',col_people:'Oameni',col_maj:'Majoritate',
   sel_tool:'Selectează zona',sel_tt:'Fă click pe o zonă de pe hartă pentru a o vedea detaliat.',sel_title:'Detalii zonă',sel_hint:'Fă click pe o zonă de pe hartă pentru a o vedea detaliat.',sel_close:'Închide',sel_total:'Total',col_eg:'Grup etnic',col_rg:'Religie',
-  sel_note:'Valorile mici sunt reținute de către biroul de statistică (*), s-ar putea ca valorile de pe rânduri să nu se adune până la total.',zero_l:'Nicio persoană',nodata_l:'Fără date',nodata_sel:'Nu există date pentru această zonă.',unof_s:'Date neoficiale †',sel_subs:'Orașe și sate',sel_parts:'Părțile acestei zone',k_town:'oraș',k_sector:'sector',
+  sel_note:'Valorile mici sunt reținute de către biroul de statistică (*), s-ar putea ca valorile de pe rânduri să nu se adune până la total.',zero_l:'Nicio persoană',nodata_l:'Fără date',nodata_sel:'Nu există date pentru această zonă.',unof_s:'Date neoficiale †',notr_t:'Acest recensământ nu este încă disponibil în limba română.',notr_m:'Recensământul selectat nu a fost încă tradus în limba română. Schimbă limba (dreapta sus) pentru a-l vedea.',notr_b:'Alege altă țară',sel_subs:'Orașe și sate',sel_parts:'Părțile acestei zone',k_town:'oraș',k_sector:'sector',
   nav_m:'Mouse stânga: mișcare hartă. Mouse dreapta: rotire și înclinare. Scroll: zoom.',nav_t:'Un deget: mișcare hartă. Două degete: pișcă pentru zoom, încrucișează pentru rotire, trage în jos sau în sus pentru înclinare.',
   eth_n:'Absolut = mai mult de 50% din rezidenți. Simplu = cea mai numeroasă etnie, cu 50% sau mai puțin. Duceți cursorul peste o casetă de culoare pentru a face acele zone să pulseze. Procentajul folosește numărul total de rezidenți, incluzând oamenii a căror etnie nu a fost declarată.',
   rel_n:'Absolut = mai mult de 50% din rezidenți. Simplu = cea mai numeroasă religie, cu 50% sau mai puțin. Duceți cursorul peste o casetă de culoare pentru a face acele zone să pulseze. Procentajul folosește numărul total de rezidenți, incluzând oamenii a căror religie nu a fost declarată.',
@@ -98,7 +99,7 @@ const flag=k=>{
    data/<country>/<census>/meta.json holds category names, colours and info text, and each dataset is one TopoJSON file.
    Files are fetched only when the person opens them. See README.md. ---- */
 const COUNTRIES=[],CENSUSES=[],VIEW={},HT={},META={},DS=[]; /* HT = tallest bar in metres (registry "height", default 150000); META = loaded meta.json per census */ /* filled from data/registry.json; the last census of a country is opened first */
-const cache={},getJSON=u=>cache[u]||(cache[u]=fetch(u).then(r=>{if(!r.ok)throw new Error(u+' '+r.status);return r.json()}).catch(e=>{delete cache[u];throw e}));
+const cache={},getJSON=u=>cache[u]||(cache[u]=fetch(u,{cache:'no-cache'}).then(r=>{if(!r.ok)throw new Error(u+' '+r.status);return r.json()}).catch(e=>{delete cache[u];throw e}));
 const dpath=(c,n,f)=>`data/${c}/${n}/${f}`;
 async function loadRegistry(){const R=await getJSON('data/registry.json');
   for(const c of R.countries){COUNTRIES.push(c.id);VIEW[c.id]=c.view;HT[c.id]=c.height||150000;for(const l in c.name)if(T[l])T[l]['c_'+c.id]=c.name[l];
@@ -120,9 +121,9 @@ function derive(p,M){for(const D of Object.values(DOM)){const e=p[D.e];if(!e)con
   p[D.w]=m>0?ids[v.indexOf(m)]:0;p[D.k]=2*m>p.p?'abs':'rel';p[D.s]=+(100*m/p.p).toFixed(1);
   const s=v.slice().sort((a,b)=>b-a);if(s[0]>0&&s[0]===s[1])p[D.k]='mix'}}
 /* Optional breakdown b = [{n,p,e,r,y,c}]: towns/communes of a raion (y: 't' town, 's' sector), c = nested rows (Chisinau sectors). Shown in the "Select area" card. */
-function prep(d,M){const F=d.data.features;d.tot=0;d.hasS=false;d.hasU=false;const walk=a=>a.forEach(u=>{derive(u,M);if(u.c)walk(u.c)});
+function prep(d,M){const F=d.data.features;d.tot=0;d.hasS=false;d.hasU=false;d.uids=new Set();const walk=a=>a.forEach(u=>{derive(u,M);if(u.c)walk(u.c)});
   for(const [i,f] of F.entries()){const p=f.properties;p._i=i;d.tot+=p.p;if(d.role==='country')p._c=1;
-    derive(p,M);if(p.u)d.hasU=true;if(p.b){d.hasS=true;walk(p.b)}
+    derive(p,M);if(p.u){d.hasU=true;d.uids.add(p.u)}if(p.b){d.hasS=true;walk(p.b)}
     p._q=nq(p.n+' '+(p.j||'')+(p._c?' '+LANGS.map(l=>T[l.id]['c_'+d.country]||'').join(' '):''))}}
 function applyMeta(M){for(const D of Object.values(DOM)){D.base=rgb(M.colors[D.id]);D.oth=M.other[D.id];D.na=M.unavailable[D.id]}}
 async function load(){const d=ds();if(!d)return;const M=await loadMeta(S.cty,S.cen);applyMeta(M);
@@ -135,15 +136,17 @@ const H={sqrt:(v,m)=>Math.sqrt(v/m),lin:(v,m)=>v/m};
 const RAMP=[[253,233,168],[246,160,90],[212,70,47],[122,16,80],[42,10,74]];
 const ramp=t=>{t=Math.min(1,Math.max(0,t))*4;const i=Math.min(3,Math.floor(t)),u=t-i;return RAMP[i].map((v,k)=>Math.round(v+(RAMP[i+1][k]-v)*u))};
 const S={lang:'en',cty:null,cen:null,ds:null,view:'pop',g:{eth:0,rel:0},sc:'lin',cm:'pct',min:false,list:false,q:'',sort:{k:'p',d:-1},selOn:false,sel:null};
-const t=k=>{const v=T[S.lang][k];return v!==undefined?v:/^(info|cen)_/.test(k)?T[S.lang].na:T.en[k]},lbl=(k,f)=>T[S.lang][k]!==undefined?T[S.lang][k]:f+' ('+t('na')+')',ds=()=>DS.find(d=>d.id===S.ds&&d.country===S.cty&&d.census===S.cen),$=id=>document.getElementById(id),touch=matchMedia('(pointer:coarse)').matches;
-const hasSubs=()=>{const d=ds();return !!(d&&d.hasS)},hasSel=()=>!!S.cty&&!miss()&&(S.view!=='pop'||hasSubs()),NM=D=>{const v=T[S.lang][D.names+'_'+S.cty+'_'+S.cen];return Array.isArray(v)?v:null},miss=()=>!!S.cty&&S.view!=='pop'&&!NM(dm()),isG=()=>S.view==='grp'||S.view==='rgr',isM=()=>S.view==='eth'||S.view==='rel',dm=()=>DOM[VD[S.view]||'eth'],gi=()=>S.g[dm().id];
+const t=k=>{const v=T[S.lang][k];return v!==undefined?v:/^(info|cen)_/.test(k)?T[S.lang].na:T.en[k]},lbl=(k,f)=>T[S.lang][k]!==undefined?T[S.lang][k]:T.en[k]!==undefined?T.en[k]:f,ds=()=>DS.find(d=>d.id===S.ds&&d.country===S.cty&&d.census===S.cen),$=id=>document.getElementById(id),touch=matchMedia('(pointer:coarse)').matches;
+const noTr=()=>!!S.cty&&!!META[S.cty+'_'+S.cen]&&['eth_','rel_','info_'].some(k=>T[S.lang][k+S.cty+'_'+S.cen]===undefined), /* census opened in a language it has no translation for */
+ hasSubs=()=>{const d=ds();return !!(d&&d.hasS)},hasSel=()=>!!S.cty&&!miss()&&(S.view!=='pop'||hasSubs()),NM=D=>{const v=T[S.lang][D.names+'_'+S.cty+'_'+S.cen];return Array.isArray(v)?v:null},miss=()=>!!S.cty&&S.view!=='pop'&&!NM(dm()),isG=()=>S.view==='grp'||S.view==='rgr',isM=()=>S.view==='eth'||S.view==='rel',dm=()=>DOM[VD[S.view]||'eth'],gi=()=>S.g[dm().id];
 const MIXC=[70,70,70]; /* colour of "mixed" areas (top two groups exactly equal); only appears if such an area exists */
 const tied=(p,D)=>{const e=p[D.e],ids=e.map((_,i)=>i).filter(i=>i!==D.oth&&i!==D.na),m=Math.max(0,...ids.map(i=>e[i]));return ids.filter(i=>e[i]===m)},
   gname=(p,D)=>p[D.k]==='mix'?tied(p,D).map(i=>NM(D)[i]).join(' / '):NM(D)[p[D.w]];
 const bc=w=>dm().base[w]||[90,90,90],col=f=>{const p=f.properties,D=dm();if(p[D.k]==='mix')return MIXC;return p[D.k]==='abs'?bc(p[D.w]):mix(bc(p[D.w]),.6)};
 const gv=p=>{const e=p[dm().e];return e?Math.max(0,e[gi()]||0):0}; /* "*" (withheld) values are stored as -1 and count as 0 */
 const NODATA=[92,88,102],nod=p=>S.view!=='pop'&&(!p[dm().e]||(isG()&&p[dm().e][gi()]==null)); /* no data: the area has no ethnicity/religion figures, or this group was not recorded (null) */
-const unNote=()=>{const x=(META[S.cty+'_'+S.cen]||{}).unofficial;return x?(x[S.lang]||x.en):''}; /* note for areas with u=1 (unofficial data); falls back to English */
+const nt=(k,id)=>{const x=((META[S.cty+'_'+S.cen]||{})[k]||{})[id];return x?(x[S.lang]||x.en):''}; /* meta.json notes keyed by an area's u id: "unofficial" (always) and "relNote" (religion views) */
+const notesFor=(p,rel)=>[nt('unofficial',p.u),rel?nt('relNote',p.u):''].filter(Boolean),isRel=()=>S.view!=='pop'&&dm().id==='rel';
 const ZERO=[165,168,172],zero=p=>isG()&&(p[dm().e]||[])[gi()]===0; /* group modes: areas with exactly 0 people are grey; a withheld value (-1) is not known to be 0, so it keeps the normal colours */
 let base=null,bord=null,hl=null,raf=0,hlData=[];
 const tip=$('tip');
@@ -179,7 +182,11 @@ function draw(tm){const L=base?[base]:[],D=dm();
 function loop(tm){if(!hl)return;draw(tm);raf=requestAnimationFrame(loop)}
 function pulse(w,k){const D=dm();hl={w,k};hlData=ds().data.features.filter(f=>f.properties[D.k]===k&&(k==='mix'||f.properties[D.w]===w));raf=requestAnimationFrame(loop)}
 function unpulse(){hl=null;cancelAnimationFrame(raf);draw()}
-function render(reset){unpulse();if(S.selOn&&!hasSel()){S.selOn=false;S.sel=null}
+function render(reset){unpulse();
+  if(noTr()){S.selOn=false;S.sel=null;base=bord=null;draw();$('panel').style.display='none';$('sel').style.display='none';const w=$('warn');w.style.display='block'; /* big warning in the middle instead of the panel */
+    w.innerHTML=`<h2>${t('notr_t')}</h2><p>${t('notr_m')}</p>${S.lang!=='en'?`<p class="en">${T.en.notr_t} ${T.en.notr_m}</p>`:''}<button data-a="notr_back">${t('notr_b')}</button>`;return fin()}
+  $('warn').style.display='none';$('panel').style.display='';
+  if(S.selOn&&!hasSel()){S.selOn=false;S.sel=null}
   const v=S.view,m=S.cty&&!miss()&&ds()&&ds().data?build(reset):(base=bord=null,draw(),null),P=$('panel'),d=ds(),D=dm(),g=isG(),nm=S.cty?(NM(D)||[]):[];
   const btn=(a,k,l,on,tt)=>`<button data-a="${a}" data-k="${k}" class="${on?'on':''}" ${tt?`title="${tt}"`:''}>${l}</button>`;
   let h=`<h1 data-a="min" class="${S.min?'m':''}"><span>${t('title')}</span><span>${S.min?'▸':'▾'}</span></h1>`;
@@ -187,7 +194,7 @@ function render(reset){unpulse();if(S.selOn&&!hasSel()){S.selOn=false;S.sel=null
   const dd=(a,items,cur,ph,fl)=>`<div class="dd"${fl?' style="flex:1;min-width:0"':''} title="${ph}"><button class="ddb" data-a="dd" aria-haspopup="listbox"><span class="${cur==null?'mut ph':''}">${cur==null?ph:items.find(x=>x.k===cur).l}</span><span class="car">▾</span></button>
    <div class="ddm" role="listbox">${items.map(x=>`<button data-a="${a}" data-k="${x.k}" role="option" class="${x.k===cur?'on':''}"><span>${x.l}</span><span>${x.k===cur?'✓':''}</span></button>`).join('')}</div></div>`;
   const cs=CENSUSES.filter(x=>x.country===S.cty);
-  h+=`<div class="g h">${dd('cty',COUNTRIES.map(c=>({k:c,l:lbl('c_'+c,c.toUpperCase())})),S.cty,t('pick_cty'),1)}${S.cty?dd('cen',cs.map(x=>({k:x.id,l:lbl('cen_'+S.cty+'_'+x.id,x.id)})),S.cen,'',1):''}</div>`;
+  h+=`<div class="g h">${dd('cty',COUNTRIES.map(c=>({k:c,l:lbl('c_'+c,c.toUpperCase())})).sort((a,b)=>a.l.localeCompare(b.l,S.lang)),S.cty,t('pick_cty'),1)}${S.cty?dd('cen',cs.map(x=>({k:x.id,l:lbl('cen_'+S.cty+'_'+x.id,x.id)})),S.cen,'',1):''}</div>`;
   if(!S.cty){P.innerHTML=h+`<div class="mut">${t('pick_hint')}</div>`;P.classList.remove('w');return fin()}
   h+=`<div class="g h">${DS.filter(x=>x.country===S.cty&&x.census===S.cen).map(x=>btn('ds',x.id,lbl('ds_'+x.id,x.id),x.id===S.ds)).join('')}</div>
   <div style="margin-bottom:4px">${dd('v',MODES.map(k=>({k,l:t('v_'+k)})),v,t('lbl_mode'))}</div><hr>`;
@@ -205,8 +212,9 @@ function render(reset){unpulse();if(S.selOn&&!hasSel()){S.selOn=false;S.sel=null
    h+=`<div class="row" style="margin:0 0 4px"><span class="hd">${t('absm')}</span><span class="hd">${t('simm')}</span><span></span></div>`+
    seen.map(w=>{const n=k=>d.data.features.filter(f=>f.properties[D.w]===w&&f.properties[D.k]===k).length,b=bc(w);
     return `<div class="row"><span class="sw" data-hl="${w}:abs" style="background:rgb(${b})"></span><span class="sw" data-hl="${w}:rel" style="background:rgb(${mix(b,.6)})"></span><span>${nm[w]} <span class="mut">(${n('abs')} / ${n('rel')})</span></span></div>`}).join('')+(nmix?`<div class="row"><span class="sw" data-hl="0:mix" style="background:rgb(${MIXC})"></span><span></span><span>${t('mixm')} <span class="mut">(${nmix})</span></span></div>`:'')+ndl()+`<div class="mut">${t(D.mn)}${nmix?' '+t('mix_n'):''}</div>`}
+  if(d.hasU&&isRel())h+=[...d.uids].map(id=>nt('relNote',id)).filter(Boolean).map(x=>`<div class="rn">† ${x}</div>`).join('');
   h+=`<div class="mut">${touch?t('nav_t'):t('nav_m')}</div><div class="g" style="margin-top:8px"><button data-a="list">${t(S.list?'list_hide':'list_show')}</button>${hasSel()?`<button data-a="seltool" class="${S.selOn?'on':''}" title="${t('sel_tt')}">${t('sel_tool')}</button>`:''}${S.list?'<span class="mut" id="cnt" style="margin:0"></span>':''}</div>`+
-  (S.list?`<input id="q" placeholder="${t('search')}" value="${S.q.replace(/"/g,'&quot;')}"><div id="tw" class="${S.selOn&&hasSel()?'pick':''}"><table><thead><tr>${cols().map(c=>`<th class="${c.r?'r':''}" data-a="sort" data-k="${c.k}">${t(c.l).replace('{c}',t('c_'+S.cty))}${c.k===sk()?(S.sort.d>0?' ▲':' ▼'):''}</th>`).join('')}</tr></thead><tbody id="tb"></tbody></table></div>${d.hasU&&unNote()?`<div class="mut unn">† ${unNote()}</div>`:''}`:'');
+  (S.list?`<input id="q" placeholder="${t('search')}" value="${S.q.replace(/"/g,'&quot;')}"><div id="tw" class="${S.selOn&&hasSel()?'pick':''}"><table><thead><tr>${cols().map(c=>`<th class="${c.r?'r':''}" data-a="sort" data-k="${c.k}">${t(c.l).replace('{c}',t('c_'+S.cty))}${c.k===sk()?(S.sort.d>0?' ▲':' ▼'):''}</th>`).join('')}</tr></thead><tbody id="tb"></tbody></table></div>${d.hasU?[...d.uids].flatMap(id=>notesFor({u:id},isRel())).map(x=>`<div class="mut unn">† ${x}</div>`).join(''):''}`:'');
   P.innerHTML=h;P.classList.toggle('w',S.list);fillTable();
   P.querySelectorAll('[data-hl]').forEach(e=>{const[w,k]=e.dataset.hl.split(':');e.onmouseenter=()=>pulse(+w,k);e.onmouseleave=unpulse});fin()}
 function cols(){const d=ds(),v=S.view,D=dm(),c=[{k:'n',l:'col_name',t:1,g:p=>pn(p),s:p=>p.n}];
@@ -223,8 +231,8 @@ function fillTable(){const el=$('tb');if(!el)return;const d=ds(),C=cols(),q=nq(S
   $('cnt').textContent=fmt(F.length)+' / '+fmt(d.data.features.length)}
 /* Area details card: full breakdown of one area (all modes except population). The highlighted row is the mapped group / the majority */
 function subTable(p,D,pop){if(!p.b)return '';
-  const g=isG(),n1=u=>u[D.e]?Math.max(0,u[D.e][gi()]||0):0,key=u=>g?n1(u):u.p,srt=a=>a.slice().sort((x,y)=>key(y)-key(x)||y.p-x.p||x.n.localeCompare(y.n)),
-   nmz=u=>u.n+(u.y?' ('+t(u.y==='t'?'k_town':'k_sector')+')':''),
+  const g=isG(),n1=u=>u[D.e]?Math.max(0,u[D.e][gi()]||0):0,key=u=>g?n1(u):u.p,srt=a=>a.slice().sort((x,y)=>key(y)-key(x)||y.p-x.p||x.n.localeCompare(y.n,'ro')), /* by the mapped group's count (or population), name breaks ties */
+   nmz=u=>u.n+(u.y?' ('+t(u.y==='t'?'k_town':'k_sector')+')':'')+(u.u?' †':''),
    hd=[['col_name'],[pop?'col_pop':g?'col_people':D.cg,pop||g],['col_share',1]],
    cell=u=>pop?[[(u.a?'~':'')+fmt(u.p),1],[(u.a?'~':'')+(100*u.p/p.p).toFixed(2)+'%',1]]:!u[D.e]||(g&&u[D.e][gi()]==null)?[['–',g?1:0],['–',1]]:g?[[u[D.e][gi()]<0?'*':fmt(u[D.e][gi()]),1],[(100*n1(u)/u.p).toFixed(2)+'%',1]]:[[gname(u,D),0],[u[D.s]+'%',1]],
    row=(u,ch)=>`<tr${ch?' class="ch"':''}><td>${nmz(u)}</td>${cell(u).map(([c,r])=>`<td class="${r?'r':'l'}">${c}</td>`).join('')}</tr>`+(u.c?srt(u.c).map(c=>row(c,1)).join(''):'');
@@ -242,7 +250,7 @@ function drawSel(){const el=$('sel'),on=hasSel()&&S.selOn;el.style.display=on?'b
     const note=(META[S.cty+'_'+S.cen]||{}).withheld!==false&&(e.some(v=>v<0)||e.reduce((a,v)=>a+Math.max(0,v),0)!==p.p)&&!p.u; /* census files with no withheld values set "withheld":false in meta.json */
     h+=`<table><thead><tr><th>${t(D.ch)}</th><th class="r">${t('col_people')}</th><th class="r">${t('col_share')}</th></tr></thead><tbody>${ids.map(row).join('')}<tr class="gap"><td colspan="3"></td></tr>${row(D.oth)}${row(D.na)}
    <tr class="tot"><td>${t('sel_total')}</td><td class="r">${fmt(p.p)}</td><td class="r">100%</td></tr></tbody></table>`+(note?`<div class="mut">${t('sel_note')}</div>`:'')}
-  el.innerHTML=h+subTable(p,D,pop)+(p.u&&unNote()?`<div class="mut unn">† ${unNote()}</div>`:'')}
+  el.innerHTML=h+subTable(p,D,pop)+(p.u?notesFor(p,!pop&&isRel()).map(x=>`<div class="mut unn">† ${x}</div>`).join(''):'')}
 function fin(){$('info').innerHTML=S.cty?t('info_'+S.cty+'_'+S.cen)||'':'';$('ib').title=t('info');$('copy').textContent=t('rights');document.documentElement.lang=S.lang;drawSel();
   const cur=LANGS.find(l=>l.id===S.lang);
   $('lang').innerHTML=`<button data-a="lm">${flag(cur.flag)}${cur.code}</button><div class="menu">${LANGS.filter(l=>l.id!==S.lang).map(l=>`<button data-a="lang" data-k="${l.id}">${flag(l.flag)}${l.code}</button>`).join('')}</div>`}
@@ -263,6 +271,7 @@ $('panel').onclick=async e=>{
   render(a!=='sc'&&a!=='cm')};
 $('panel').oninput=e=>{if(e.target.id==='q'){S.q=e.target.value;fillTable()}};
 $('panel').onchange=e=>{if(e.target.dataset.a==='grp'){S.g[dm().id]=+e.target.value;render(false)}};
+$('warn').onclick=e=>{if(e.target.closest('[data-a="notr_back"]')){S.cty=S.cen=S.ds=null;S.sel=null;S.selOn=false;render(true)}};
 $('sel').onclick=e=>{if(e.target.closest('[data-a="selx"]')){S.selOn=false;S.sel=null;render(false)}};
 document.addEventListener('click',e=>document.querySelectorAll('.dd.open').forEach(d=>{if(!d.contains(e.target))d.classList.remove('open')}));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.dd.open').forEach(d=>d.classList.remove('open'))});

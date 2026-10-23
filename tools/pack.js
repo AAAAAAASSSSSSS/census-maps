@@ -8,7 +8,7 @@
 //   e  array of ethnicity counts, same order as names.eth in meta.json   (-1 = value withheld by the statistics office,
 //      null = category not recorded; the whole array may be null = no ethnicity data for this area)
 //   r  array of religion counts,  same order as names.rel in meta.json   (same rules; may be null)
-//   u  (optional) 1 = unofficial data, the map marks the area with a dagger and shows the note from meta.json (names: "unofficial")
+//   u  (optional) id of a note in meta.json ("unofficial" / "relNote", keyed by this id): the area is marked with a dagger and the note is shown
 //   b  (optional) breakdown shown by the "Select area" card: array of {n, p, e, r, y?, c?}
 //      = name, population, ethnicity counts, religion counts (null = none), y = kind ('t' town, 's' sector),
 //      a = 1 when the population is only approximate, nested children (same shape)
@@ -35,7 +35,7 @@ fc.features.forEach((f, i) => {
     };
     p.b.forEach(u => chk(u, p.n));
   }
-  f.properties = { n: p.n, ...(p.j ? { j: p.j } : {}), p: p.p, e: p.e, r: p.r, ...(p.u ? { u: 1 } : {}), ...(p.b ? { b: p.b } : {}) }; // drop everything else
+  f.properties = { n: p.n, ...(p.j ? { j: p.j } : {}), p: p.p, e: p.e, r: p.r, ...(p.u ? { u: p.u } : {}), ...(p.b ? { b: p.b } : {}) }; // drop everything else
 });
 const topo = topology({ u: fc }, +q || 1e5); // the object must be called "u"
 fs.writeFileSync(out, JSON.stringify(topo));

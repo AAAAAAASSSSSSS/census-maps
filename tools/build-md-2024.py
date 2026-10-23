@@ -15,12 +15,12 @@ Usage (from the repo root; needs `pip install openpyxl`):
   node pack.js ../build/md_raions_s.geojson  ../data/md/2024/raions.json
   node pack.js ../build/md_country_s.geojson ../data/md/2024/country.json
 
-Transnistria (unofficial): the Moldovan census did not enumerate it. Its figures are the 2015 census of the self-proclaimed
+Transnistria (unofficial, u = 'tr'): the Moldovan census did not enumerate it. Its figures are the 2015 census of the self-proclaimed
 Pridnestrovian Moldavian Republic (PMR) as reported by newspmr.com (copy on privetpmr.ru, web.archive.org snapshot 20180814231257):
 475,373 residents and ethnic shares of the whole republic, plus the population of each region. The press text gives shares only
 for the republic as a whole, so Transnistria is ONE area (Bender is part of the PMR figures, so MD-SN and MD-BD are merged).
 Shares add up to 100.2% (86.2% declared + "about 14%" not stated); that is kept as published and flagged on the map (u = 1).
-Religion was not published, so r = null. Romanians and Roma are not separate categories there, so their counts are null.
+Religion was not published, so r = null. The country-level shape (ADM0, which includes the left bank) adds Transnistria's population (u = 'co'); with no religion data it is counted as "Not declared" there. Romanians and Roma are not separate categories there, so their counts are null.
 
 Only counts are stored (p, e, r). Percentages, majorities and shares are calculated in the browser.
 In these tables "-" means zero (there are no withheld "*" values), so every "-" is stored as 0.
@@ -113,19 +113,38 @@ SHARE = dict(moldovan=28.6, ukrainian=22.9, russian=29.1, gagauz=1.1, bulgarian=
 n = lambda k: round(TR_P * SHARE[k] / 100)
 tr_e = [n('moldovan'), None, n('ukrainian'), n('russian'), n('gagauz'), n('bulgarian'), None, n('other'), n('undeclared')]  # order of meta.json (None = not recorded)
 print('PMR shares add up to', round(sum(SHARE.values()), 1), '%')
-PARTS = [('Tiraspol', 129367, 0), ('Bender', 91197, 0), ('Slobozia and district', 83798, 0), ('Rîbnița and district', 69000, 1),
-         ('Grigoriopol and district', 40000, 1), ('Dubăsari and district', 31000, 1), ('Camenca and district', 20542, 0), ('Dnestrovsk', 9744, 0)]
-tr_b = [dict(n=a, p=b, e=None, r=None, **({'a': 1} if c else {})) for a, b, c in PARTS]
+def part(name, p, y=None, a=0, c=None):
+    d = dict(n=name, p=p, e=None, r=None)
+    if y: d['y'] = y
+    if a: d['a'] = 1                              # rounded figure ("~")
+    if c: d['c'] = c
+    return d
+# Regions as listed in the PMR census report (republic = 5 districts + 2 cities of republican subordination: Tiraspol, Bender).
+# District figures include the district centre; the town figures nested under them come from the Russian Wikipedia article on the PMR.
+tr_b = [part('Tiraspol', 129367, 't'), part('Bender (Tighina)', 91197, 't'),
+        part('Slobozia district', 83798, c=[part('Slobozia', 14618, 't')]),
+        part('Rîbnița district', 69000, a=1, c=[part('Rîbnița', 47949, 't')]),
+        part('Grigoriopol district', 40000, a=1, c=[part('Grigoriopol', 9381, 't')]),
+        part('Dubăsari district', 31000, a=1, c=[part('Dubăsari', 25060, 't')]),
+        part('Camenca district', 20542, c=[part('Camenca', 8871, 't')]),
+        part('Dnestrovsk', 9744, 't')]           # listed separately in the source (administratively it belongs to Tiraspol)
 polys = []
 for f in g['features']:
     if f['properties']['shapeISO'] in ('MD-SN', 'MD-BD'):
         polys += f['geometry']['coordinates'] if f['geometry']['type'] == 'MultiPolygon' else [f['geometry']['coordinates']]
 assert len(polys) >= 2
 feats.append(dict(type='Feature', geometry=dict(type='MultiPolygon', coordinates=polys),
-                  properties=dict(n='Transnistria', p=TR_P, e=tr_e, r=None, u=1, b=tr_b)))
+                  properties=dict(n='Transnistria', p=TR_P, e=tr_e, r=None, u='tr', b=tr_b)))
 json.dump(dict(type='FeatureCollection', features=feats), open(os.path.join(out, 'md_raions.geojson'), 'w'), ensure_ascii=False)
 
+# ---- country: the whole ADM0 shape (it includes the left bank) = Moldovan census area + Transnistria
 c = json.load(open(os.path.join(raw, 'geoBoundaries-MDA-ADM0.geojson')))['features'][0]
+cen_e, cen_r = total['c'], rel[0]['c']
+co_e = [a + (b or 0) for a, b in zip(cen_e, tr_e)]            # Romanians / Roma: Moldovan census only (not recorded separately in the PMR census)
+co_r = list(cen_r); co_r[14] += TR_P                           # no religion data for Transnistria -> counted as "Not declared"
+co_b = [dict(n='Area enumerated by the 2024 census', p=total['p'], e=cen_e, r=cen_r),
+        dict(n='Transnistria', p=TR_P, e=tr_e, r=None, u='tr')]
+assert sum(co_r) == total['p'] + TR_P
 json.dump(dict(type='FeatureCollection', features=[dict(type='Feature', geometry=c['geometry'],
-    properties=dict(n='Moldova', p=total['p'], e=total['c'], r=rel[0]['c']))]), open(os.path.join(out, 'md_country.geojson'), 'w'), ensure_ascii=False)
+    properties=dict(n='Republic of Moldova', p=total['p'] + TR_P, e=co_e, r=co_r, u='co', b=co_b))]), open(os.path.join(out, 'md_country.geojson'), 'w'), ensure_ascii=False)
 print('wrote', out)
