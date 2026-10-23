@@ -262,8 +262,8 @@ $('panel').onclick=async e=>{
   if(a==='list'){S.list=!S.list;return render(false)}
   if(a==='seltool'){S.selOn=!S.selOn;if(!S.selOn)S.sel=null;return render(false)}
   if(a==='sort'){const c=cols().find(x=>x.k===k);S.sort={k,d:k===sk()?-S.sort.d:(c.t?1:-1)};return render(false)}
-  if(a==='cty'){S.cty=k;const cs=CENSUSES.filter(x=>x.country===k);S.cen=cs[cs.length-1].id;S.ds=DS.find(x=>x.country===k&&x.census===S.cen).id;S.sc='lin';S.sel=null}
-  else if(a==='cen'){S.cen=k;S.ds=DS.find(x=>x.country===S.cty&&x.census===k).id;S.sc='lin';S.sel=null}
+  if(a==='cty'){S.cty=k;const cs=CENSUSES.filter(x=>x.country===k);S.cen=cs[cs.length-1].id;S.ds=DS.find(x=>x.country===k&&x.census===S.cen).id;S.sc='lin';S.view='pop';S.g={eth:0,rel:0};S.sel=null}
+  else if(a==='cen'){S.cen=k;S.ds=DS.find(x=>x.country===S.cty&&x.census===k).id;S.sc='lin';S.view='pop';S.g={eth:0,rel:0};S.sel=null}
   else if(a==='ds'){S.ds=k;S.sc='lin';S.sel=null}else if(a==='v')S.view=k;else if(a==='sc')S.sc=k;else if(a==='cm')S.cm=k;
   if(a==='cty'||a==='cen'||a==='ds'){const sig=S.cty+S.cen+S.ds;$('ld').textContent=t('loading');$('ld').style.display='block';
     try{await load()}catch(err){console.error(err);$('ld').textContent=t('load_err');setTimeout(()=>$('ld').style.display='none',6000);return}
