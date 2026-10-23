@@ -49,6 +49,44 @@
      ]
     }
    ]
+  },
+  {
+   "id": "md",
+   "name": {
+    "en": "Moldova"
+   },
+   "view": {
+    "longitude": 28.4,
+    "latitude": 47.0,
+    "zoom": 6.7
+   },
+   "height": 70000,
+   "censuses": [
+    {
+     "id": "2024",
+     "label": {
+      "en": "2024 census"
+     },
+     "datasets": [
+      {
+       "id": "md-raions",
+       "role": "region",
+       "file": "raions.json",
+       "label": {
+        "en": "Raions"
+       }
+      },
+      {
+       "id": "md-country",
+       "role": "country",
+       "file": "country.json",
+       "label": {
+        "en": "Country"
+       }
+      }
+     ]
+    }
+   ]
   }
  ]
 }

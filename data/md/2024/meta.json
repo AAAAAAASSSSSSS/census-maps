@@ -1,0 +1,77 @@
+{
+ "names": {
+  "eth": {
+   "en": [
+    "Moldovan",
+    "Romanian",
+    "Ukrainian",
+    "Russian",
+    "Gagauz",
+    "Bulgarian",
+    "Roma",
+    "Other ethnicity",
+    "Not declared"
+   ]
+  },
+  "rel": {
+   "en": [
+    "Orthodox Church of Moldova and Metropolis of Bessarabia",
+    "Union of Evangelical Christian Baptist Churches of Moldova",
+    "Religious Denomination “Jehovah’s Witnesses”",
+    "Pentecostal",
+    "Adventist",
+    "Evangelical Christian",
+    "Old Rite Orthodox Church",
+    "Islamic League of the Republic of Moldova",
+    "Roman Catholic Church",
+    "Other religion",
+    "Free thinker",
+    "Agnostic",
+    "Atheist",
+    "No religion",
+    "Not declared"
+   ]
+  }
+ },
+ "colors": {
+  "eth": {
+   "0": "8d5fd3",
+   "1": "1a8cff",
+   "2": "aade87",
+   "3": "d6342b",
+   "4": "f9cf00",
+   "5": "2ca02c",
+   "6": "808000"
+  },
+  "rel": {
+   "0": "4a7fd8",
+   "1": "18b8c9",
+   "2": "808000",
+   "3": "e056a4",
+   "4": "ff8c1a",
+   "5": "8d5fd3",
+   "6": "c87137",
+   "7": "1e9e4a",
+   "8": "f2c200",
+   "10": "b0b0ff",
+   "11": "7f8c8d",
+   "12": "34495e",
+   "13": "bdc3c7"
+  }
+ },
+ "other": {
+  "eth": 7,
+  "rel": 9
+ },
+ "unavailable": {
+  "eth": 8,
+  "rel": 14
+ },
+ "withheld": false,
+ "info": {
+  "en": "These maps were created using data from the 2024 Moldovan census, available at <a href=\"https://statistica.gov.md/ro/statistic_indicator_details/60\" target=\"_blank\" rel=\"noopener noreferrer\">https://statistica.gov.md/ro/statistic_indicator_details/60</a>.<br>The names of the religious denominations were taken from <a href=\"https://www.asp.gov.md/sites/default/files/date-deschise/lista-beneficiarilor-desemnarii-procentuale/Lista-religioase-2025.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">https://www.asp.gov.md/sites/default/files/date-deschise/lista-beneficiarilor-desemnarii-procentuale/Lista-religioase-2025.pdf</a> and <a href=\"https://infobiz.md/en/1017620002171/cultul-religios-uniunea-bisericilor-crestine-evanghelice-baptiste-din-moldova\" target=\"_blank\" rel=\"noopener noreferrer\">https://infobiz.md/en/1017620002171/cultul-religios-uniunea-bisericilor-crestine-evanghelice-baptiste-din-moldova</a>.<br>Transnistria was not covered by the census. Its data (unofficial) comes from the 2015 census of the self-proclaimed Pridnestrovian Moldavian Republic, available at <a href=\"https://web.archive.org/web/20180814231257/http://privetpmr.ru/perepis-naseleniya-pmr\" target=\"_blank\" rel=\"noopener noreferrer\">https://web.archive.org/web/20180814231257/http://privetpmr.ru/perepis-naseleniya-pmr</a>."
+ },
+ "unofficial": {
+  "en": "Unofficial data. Transnistria was not covered by the Moldovan census; these figures come from the 2015 census of the self-proclaimed Pridnestrovian Moldavian Republic (PMR), as reported in the press, and are not official statistics. The ethnic shares add up to more than 100% (86.2% declared plus about 14% not stated). Rîbnița, Grigoriopol and Dubăsari are only given in rounded thousands, Romanians and Roma were not recorded separately, and there is no religion data."
+ }
+}
