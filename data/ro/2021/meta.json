@@ -50,6 +50,31 @@
     "Macedoneni",
     "Altă etnie",
     "Informație indisponibilă"
+   ],
+   "bg": [
+    "Румънци",
+    "Унгарци",
+    "Роми",
+    "Украинци",
+    "Германци",
+    "Турци",
+    "Руси-липовани",
+    "Татари",
+    "Сърби",
+    "Словаци",
+    "Българи",
+    "Хървати",
+    "Гърци",
+    "Италианци",
+    "Евреи",
+    "Чехи",
+    "Поляци",
+    "Русини",
+    "Арменци",
+    "Албанци",
+    "Македонци",
+    "Друга етническа принадлежност",
+    "Липсва информация"
    ]
   },
   "rel": {
@@ -102,6 +127,31 @@
     "Ateu",
     "Agnostic",
     "Informație nedisponibilă"
+   ],
+   "bg": [
+    "Румънска православна църква",
+    "Римокатолическа църква",
+    "Реформатска църква в Румъния",
+    "Християнско петдесятно вероизповедание – Апостолска църква на Бога в Румъния",
+    "Румънска църква, обединена с Рим – гръкокатолическа",
+    "Съюз на баптистките църкви в Румъния",
+    "Християнска адвентистка църква от седмия ден в Румъния",
+    "Мюсюлманско вероизповедание",
+    "Унгарска унитарианска църква",
+    "Религиозна организация „Свидетели на Йехова“",
+    "Съюз на евангелските християнски църкви в Румъния",
+    "Руска християнска старообредна църква в Румъния",
+    "Евангелско-лутеранска църква в Румъния",
+    "Сръбска православна епархия в Темешвар",
+    "Румънска евангелска църква",
+    "Евангелска църква с аугсбургско изповедание в Румъния",
+    "Федерация на еврейските общности в Румъния – Мойсеево вероизповедание",
+    "Архиепископия на Арменската църква",
+    "Друго вероизповедание",
+    "Без вероизповедание",
+    "Атеист",
+    "Агностик",
+    "Липсва информация"
    ]
   }
  },
@@ -153,6 +203,7 @@
  },
  "info": {
   "en": "These maps were created using data from the 2021 Romanian census, available on <a href=\"https://www.recensamantromania.ro/rezultate-rpl-2021/rezultate-definitive/\" target=\"_blank\" rel=\"noopener noreferrer\">the final results page of the census website (recensamantromania.ro)</a>.",
-  "ro": "Aceste hărți au fost create folosind datele recensământului din România din 2021, disponibile pe <a href=\"https://www.recensamantromania.ro/rezultate-rpl-2021/rezultate-definitive/\" target=\"_blank\" rel=\"noopener noreferrer\">pagina rezultatelor definitive de pe site-ul recensământului (recensamantromania.ro)</a>."
+  "ro": "Aceste hărți au fost create folosind datele recensământului din România din 2021, disponibile pe <a href=\"https://www.recensamantromania.ro/rezultate-rpl-2021/rezultate-definitive/\" target=\"_blank\" rel=\"noopener noreferrer\">pagina rezultatelor definitive de pe site-ul recensământului (recensamantromania.ro)</a>.",
+  "bg": "Тези карти са създадени с данни от преброяването на населението в Румъния през 2021 г., достъпни на <a href=\"https://www.recensamantromania.ro/rezultate-rpl-2021/rezultate-definitive/\" target=\"_blank\" rel=\"noopener noreferrer\">страницата с окончателните резултати на сайта на преброяването (recensamantromania.ro)</a>."
  }
 }

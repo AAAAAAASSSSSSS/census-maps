@@ -5,6 +5,21 @@
     "Bulgarian",
     "Turkish",
     "Roma",
+    "Pomak",
+    "Russian",
+    "Bulgarian-Mohammedan",
+    "Armenian",
+    "Ukrainian",
+    "English",
+    "Karakachan",
+    "Vlach",
+    "Greek",
+    "Jewish",
+    "Macedonian",
+    "Tatar",
+    "Italian",
+    "Polish",
+    "Romanian",
     "Other",
     "Cannot determine",
     "Don’t want to answer",
@@ -14,6 +29,21 @@
     "Българска",
     "Турска",
     "Ромска",
+    "Помашка",
+    "Руска",
+    "Българомохамеданска",
+    "Арменска",
+    "Украинска",
+    "Английска",
+    "Каракачанска",
+    "Влашка",
+    "Гръцка",
+    "Еврейска",
+    "Македонска",
+    "Татарска",
+    "Италианска",
+    "Полска",
+    "Румънска",
     "Друга",
     "Не мога да определя",
     "Не желая да отговоря",
@@ -45,7 +75,7 @@
  },
  "colors": {
   "eth": {
-   "0": "2e8b57",
+   "0": "db5b0b",
    "1": "ff00ff",
    "2": "808000"
   },
@@ -57,14 +87,14 @@
   }
  },
  "other": {
-  "eth": 3,
+  "eth": 18,
   "rel": 3
  },
  "unavailable": {
   "eth": [
-   4,
-   5,
-   6
+   19,
+   20,
+   21
   ],
   "rel": [
    5,
@@ -74,7 +104,11 @@
  },
  "withheld": false,
  "info": {
-  "en": "These maps were created using data from the 2021 Bulgarian census, available in <a href=\"https://www.nsi.bg/infostat\" target=\"_blank\" rel=\"noopener noreferrer\">InfoStat, the information system of the National Statistical Institute (nsi.bg/infostat)</a>.",
-  "bg": "Тези карти са създадени с данни от преброяването на населението в България през 2021 г., достъпни в <a href=\"https://www.nsi.bg/infostat\" target=\"_blank\" rel=\"noopener noreferrer\">ИнфоСтат, информационната система на Националния статистически институт (nsi.bg/infostat)</a>."
+  "en": "These maps were created using data from the 2021 Bulgarian census, available in <a href=\"https://www.nsi.bg/infostat\" target=\"_blank\" rel=\"noopener noreferrer\">InfoStat, the information system of the National Statistical Institute (nsi.bg/infostat)</a>.<br>Only the Bulgarian, Turkish and Roma ethnic groups are recorded for oblasts and municipalities. The other ethnic groups were published for the whole country only, so in oblasts and municipalities they are included in “Other”.",
+  "bg": "Тези карти са създадени с данни от преброяването на населението в България през 2021 г., достъпни в <a href=\"https://www.nsi.bg/infostat\" target=\"_blank\" rel=\"noopener noreferrer\">ИнфоСтат, информационната система на Националния статистически институт (nsi.bg/infostat)</a>.<br>За областите и общините са отчетени само българската, турската и ромската етническа група. Останалите етнически групи са публикувани само за страната като цяло, затова в областите и общините те са включени в „Друга“."
+ },
+ "ethNote": {
+  "en": "Only the Bulgarian, Turkish and Roma ethnic groups are recorded for oblasts and municipalities. The other ethnic groups were published for the whole country only, so in oblasts and municipalities they are included in “Other”.",
+  "bg": "За областите и общините са отчетени само българската, турската и ромската етническа група. Останалите етнически групи са публикувани само за страната като цяло, затова в областите и общините те са включени в „Друга“."
  }
 }

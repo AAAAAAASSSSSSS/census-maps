@@ -10,6 +10,7 @@ Inputs (keep them in raw/, which is not committed):
   bulgaria_population_detailed_in_bulgarian.xlsx  same table in Bulgarian
   bulgaria_ethnicity_detailed(.xlsx|_in_bulgarian.xlsx)   ethnic group by oblast / municipality
   bulgaria_religion_detailed(.xlsx|_in_bulgarian.xlsx)    religion by oblast / municipality
+  minor_minorities.xlsx                           NSI: all ethnic groups, country level only
   (all six tables come from https://www.nsi.bg/infostat, census of 7 September 2021)
 
 Usage (from the repo root; needs `pip install openpyxl numpy`):
@@ -28,7 +29,9 @@ of the shape files: they are only used to find the right shape for each municipa
 Only counts are stored (p, e, r). Percentages, majorities and shares are calculated in the browser.
 In the NSI tables "-" means zero, so every "-" is stored as 0 (no withheld values -> "withheld": false in meta.json).
 Categories (order = data/bg/2021/meta.json):
-  ethnicity: Bulgarian, Turkish, Roma, Other, Cannot determine, Don't want to answer, Unknown
+  ethnicity: Bulgarian, Turkish, Roma, the 15 smaller groups of minor_minorities.xlsx (largest first), Other, Cannot determine, Don't want to answer, Unknown
+             The smaller groups were published for the whole country only: oblasts and municipalities have null for them (= not recorded) and
+             their "Other" still contains those groups; only the country has them separately (its "Other" is the true remainder).
   religion:  Christian, Muslim, Jewish, Other, No religion, Cannot determine, Don't want to answer, Unknown
 Settlements (EKATTE) only have a population figure (e = r = null); they are the breakdown `b` of each municipality.
 """
@@ -112,8 +115,19 @@ print(f'{len(oblasts)} oblasts, {len(munis)} municipalities, {sum(len(m["settle"
 print('romanisation: names where our spelling differs from the NSI English table (apart from capitals):')
 for x in problems: print('   ', x)
 
+# smaller ethnic groups, country level only (minor_minorities.xlsx); English names as in the file, "Ucrainian" corrected
+mm = [r for r in openpyxl.load_workbook(os.path.join(raw, 'minor_minorities.xlsx'), read_only=True).active.iter_rows(values_only=True) if r[1] and isinstance(r[2], int)]
+mm = {r[1].replace('Ucrainian', 'Ukrainian'): r[2] for r in mm}
+assert mm.pop('Total') == eth['BG'][0] and [mm.pop(k) for k in ('Bulgarian', 'Turkish', 'Roma')] == eth['BG'][1][:3]
+assert [mm.pop(k) for k in ('Cannot determine', "Don't want to answer", 'Unknown2')] == eth['BG'][1][4:]
+MINOR_OTHER = mm.pop('Other')
+MINORS = sorted(mm, key=lambda k: -mm[k])                 # 15 groups, largest first = their order in meta.json
+assert len(MINORS) == 15 and sum(mm.values()) + MINOR_OTHER == eth['BG'][1][3], 'the smaller groups plus Other must equal the NSI Other of the country'
+def eth7(code, e):    # 7 categories of the oblast / municipality tables -> the full category list
+    mins = [mm[k] for k in MINORS] if code == 'BG' else [None] * len(MINORS)
+    return e[:3] + mins + [MINOR_OTHER if code == 'BG' else e[3]] + e[4:]
 def area(code):
-    d = dict(p=eth[code][0], e=eth[code][1], r=rel[code][1])
+    d = dict(p=eth[code][0], e=eth7(code, eth[code][1]), r=rel[code][1])
     return d
 
 # ---------------------------------------------------------------- shapes

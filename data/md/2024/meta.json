@@ -13,6 +13,19 @@
     "Transnistrian",
     "Other ethnicity",
     "Not declared"
+   ],
+   "bg": [
+    "Молдовци",
+    "Румънци",
+    "Украинци",
+    "Руси",
+    "Гагаузи",
+    "Българи",
+    "Роми",
+    "Беларуси",
+    "Приднестровци",
+    "Друга етническа принадлежност",
+    "Непосочена"
    ]
   },
   "rel": {
@@ -32,6 +45,23 @@
     "Atheist",
     "No religion",
     "Not declared"
+   ],
+   "bg": [
+    "Православна църква на Молдова (Молдовска митрополия) / Бесарабска митрополия",
+    "Съюз на евангелско-християнските баптистки църкви в Молдова",
+    "Религиозно вероизповедание „Свидетели на Йехова“",
+    "Съюз на петдесятните църкви в Република Молдова",
+    "Адвентистка църква от седмия ден – Молдовска съюзна конференция",
+    "Евангелски християни",
+    "Старообредна православна църква",
+    "Ислямска лига на Република Молдова",
+    "Римокатолическа епархия в Кишинев",
+    "Друго вероизповедание",
+    "Свободомислещ",
+    "Агностик",
+    "Атеист",
+    "Без вероизповедание",
+    "Непосочено"
    ]
   }
  },
@@ -73,22 +103,27 @@
  },
  "withheld": false,
  "info": {
-  "en": "These maps were created using data from the 2024 Moldovan census, available on <a href=\"https://statistica.gov.md/ro/statistic_indicator_details/60\" target=\"_blank\" rel=\"noopener noreferrer\">the website of the National Bureau of Statistics of Moldova (statistica.gov.md)</a>.<br>Transnistria was not covered by the census. Its data are unofficial and come from the 2015 census of the self-proclaimed Pridnestrovian Moldavian Republic (PMR). The total population and the ethnic shares are those published by the PMR press, in a copy archived by the <a href=\"https://web.archive.org/web/20180814231257/http://privetpmr.ru/perepis-naseleniya-pmr\" target=\"_blank\" rel=\"noopener noreferrer\">Wayback Machine (privetpmr.ru)</a>; the town figures come from <a href=\"https://en.wikipedia.org/wiki/2015_Transnistrian_census\" target=\"_blank\" rel=\"noopener noreferrer\">2015 Transnistrian census - Wikipedia</a>. The PMR counted its population on a different date (14 October 2015) and published no religion data."
+  "en": "These maps were created using data from the 2024 Moldovan census, available on <a href=\"https://statistica.gov.md/ro/statistic_indicator_details/60\" target=\"_blank\" rel=\"noopener noreferrer\">the website of the National Bureau of Statistics of Moldova (statistica.gov.md)</a>.<br>Transnistria was not covered by the census. Its data are unofficial and come from the 2015 census of the self-proclaimed Pridnestrovian Moldavian Republic (PMR). The total population and the ethnic shares are those published by the PMR press, in a copy archived by the <a href=\"https://web.archive.org/web/20180814231257/http://privetpmr.ru/perepis-naseleniya-pmr\" target=\"_blank\" rel=\"noopener noreferrer\">Wayback Machine (privetpmr.ru)</a>; the town figures come from <a href=\"https://en.wikipedia.org/wiki/2015_Transnistrian_census\" target=\"_blank\" rel=\"noopener noreferrer\">2015 Transnistrian census - Wikipedia</a>. The PMR counted its population on a different date (14 October 2015) and published no religion data.",
+  "bg": "Тези карти са създадени с данни от преброяването на населението в Молдова през 2024 г., достъпни на <a href=\"https://statistica.gov.md/ro/statistic_indicator_details/60\" target=\"_blank\" rel=\"noopener noreferrer\">уебсайта на Националното бюро по статистика на Молдова (statistica.gov.md)</a>.<br>Приднестровието не е обхванато от преброяването. Данните за него са неофициални и идват от преброяването през 2015 г. на самопровъзгласилата се Приднестровска молдовска република (ПМР). Общият брой на населението и етническите дялове са публикуваните от печата на ПМР, в копие, архивирано от <a href=\"https://web.archive.org/web/20180814231257/http://privetpmr.ru/perepis-naseleniya-pmr\" target=\"_blank\" rel=\"noopener noreferrer\">Wayback Machine (privetpmr.ru)</a>; данните за градовете са от <a href=\"https://en.wikipedia.org/wiki/2015_Transnistrian_census\" target=\"_blank\" rel=\"noopener noreferrer\">2015 Transnistrian census - Wikipedia</a> (на английски). ПМР е преброила населението си към друга дата (14 октомври 2015 г.) и не е публикувала данни за вероизповеданията."
  },
  "unofficial": {
   "tr": {
-   "en": "Unofficial data. Transnistria (the area controlled by the self-proclaimed Pridnestrovian Moldavian Republic, PMR: the districts of Camenca, Dubăsari, Grigoriopol, Rîbnița and Slobozia, and the cities of Tiraspol and Bender/Tighina) was not covered by the Moldovan census. These figures come from the PMR’s own census of 14 October 2015, nine years before the 2024 census, as reported by the PMR press (archived copy) and Wikipedia; they are not official Moldovan statistics. The ethnic shares add up to more than 100% (86.2% declared plus about 14% not stated). Rîbnița, Grigoriopol and Dubăsari districts are only given in rounded thousands (~). Romanians and Roma were not recorded separately. Belarusians and “Transnistrians” are shown as separate groups, although the Moldovan census has no such categories (there they fall under Other ethnicity); other nationalities are counted as Other ethnicity. Town figures come from Wikipedia and may not match the regional ones. Dnestrovsk is listed separately, as in the source, although it is administratively part of Tiraspol."
+   "en": "Unofficial data. Transnistria (the area controlled by the self-proclaimed Pridnestrovian Moldavian Republic, PMR: the districts of Camenca, Dubăsari, Grigoriopol, Rîbnița and Slobozia, and the cities of Tiraspol and Bender/Tighina) was not covered by the Moldovan census. These figures come from the PMR’s own census of 14 October 2015, nine years before the 2024 census, as reported by the PMR press (archived copy) and Wikipedia; they are not official Moldovan statistics. The ethnic shares add up to more than 100% (86.2% declared plus about 14% not stated). Rîbnița, Grigoriopol and Dubăsari districts are only given in rounded thousands (~). Romanians and Roma were not recorded separately. Belarusians and “Transnistrians” are shown as separate groups, although the Moldovan census has no such categories (there they fall under Other ethnicity); other nationalities are counted as Other ethnicity. Town figures come from Wikipedia and may not match the regional ones. Dnestrovsk is listed separately, as in the source, although it is administratively part of Tiraspol.",
+   "bg": "Неофициални данни. Приднестровието (територията, контролирана от самопровъзгласилата се Приднестровска молдовска република, ПМР: районите Каменка, Дубосари, Григориопол, Рибница и Слободзея, и градовете Тираспол и Бендери/Тигина) не е обхванато от преброяването в Молдова. Тези данни са от собственото преброяване на ПМР от 14 октомври 2015 г., девет години преди преброяването през 2024 г., по публикации в печата на ПМР (архивно копие) и Уикипедия; те не са официална молдовска статистика. Етническите дялове се сумират до над 100% (86,2% са декларирали и около 14% не са посочили). Районите Рибница, Григориопол и Дубосари са дадени само в закръглени хиляди (~). Румънците и ромите не са отчетени отделно. Беларусите и „приднестровците“ са показани като отделни групи, въпреки че преброяването в Молдова няма такива категории (там те попадат в „Друга етническа принадлежност“); останалите националности са включени в „Друга етническа принадлежност“. Данните за градовете са от Уикипедия и може да не съвпадат с районните. Днестровск е показан отделно, както в източника, макар административно да е част от Тираспол."
   },
   "co": {
-   "en": "Includes unofficial data. The total adds the 475,373 residents of Transnistria (PMR census of 14 October 2015, a different date from the 2024 Moldovan census) to the 2,409,207 counted by the Moldovan census. The PMR ethnic shares add up to more than 100%. Romanians and Roma are from the Moldovan census only, as the PMR did not record them separately. Belarusians and Transnistrians are not categories of the Moldovan census, so the 2,377 Belarusians and 951 Transnistrians of the PMR census are included in Other ethnicity here. See Transnistria on the raion map for the full notes."
+   "en": "Includes unofficial data. The total adds the 475,373 residents of Transnistria (PMR census of 14 October 2015, a different date from the 2024 Moldovan census) to the 2,409,207 counted by the Moldovan census. The PMR ethnic shares add up to more than 100%. Romanians and Roma are from the Moldovan census only, as the PMR did not record them separately. Belarusians and Transnistrians are not categories of the Moldovan census, so the 2,377 Belarusians and 951 Transnistrians of the PMR census are included in Other ethnicity here. See Transnistria on the raion map for the full notes.",
+   "bg": "Включва неофициални данни. Общата сума добавя 475 373 жители на Приднестровието (преброяване на ПМР от 14 октомври 2015 г., друга дата спрямо преброяването в Молдова през 2024 г.) към 2 409 207 души, преброени при преброяването в Молдова. Етническите дялове на ПМР се сумират до над 100%. Румънците и ромите са само от преброяването в Молдова, тъй като ПМР не ги е отчитала отделно. Беларусите и приднестровците не са категории в преброяването в Молдова, затова 2 377 беларуси и 951 приднестровци от преброяването на ПМР са включени тук в „Друга етническа принадлежност“. Пълните бележки вижте при Приднестровието на картата по райони."
   }
  },
  "relNote": {
   "tr": {
-   "en": "Religion: no religion data was published for Transnistria’s 2015 census, so it is shown as “No data”."
+   "en": "Religion: no religion data was published for Transnistria’s 2015 census, so it is shown as “No data”.",
+   "bg": "Вероизповедание: за преброяването на Приднестровието през 2015 г. не са публикувани данни за вероизповеданията, затова е показано „Няма данни“."
   },
   "co": {
-   "en": "Religion: no religion data was published for Transnistria’s 475,373 residents, so they are counted under “Not declared”."
+   "en": "Religion: no religion data was published for Transnistria’s 475,373 residents, so they are counted under “Not declared”.",
+   "bg": "Вероизповедание: за 475 373 жители на Приднестровието не са публикувани данни за вероизповеданията, затова те са отчетени като „Непосочено“."
   }
  }
 }

@@ -27,7 +27,8 @@
        "file": "communes.json",
        "label": {
         "en": "Communes",
-        "ro": "Comune"
+        "ro": "Comune",
+        "bg": "Комуни"
        }
       },
       {
@@ -36,11 +37,13 @@
        "file": "counties.json",
        "label": {
         "en": "Counties",
-        "ro": "Județe"
+        "ro": "Județe",
+        "bg": "Окръзи"
        },
        "subs": {
         "en": "Communes, towns and municipalities",
-        "ro": "Comune, orașe și municipii"
+        "ro": "Comune, orașe și municipii",
+        "bg": "Комуни, градове и общини"
        }
       },
       {
@@ -49,11 +52,13 @@
        "file": "country.json",
        "label": {
         "en": "Country",
-        "ro": "Țară"
+        "ro": "Țară",
+        "bg": "Страна"
        },
        "subs": {
         "en": "Counties",
-        "ro": "Județe"
+        "ro": "Județe",
+        "bg": "Окръзи"
        }
       }
      ]
@@ -64,7 +69,7 @@
    "id": "md",
    "name": {
     "en": "Republic of Moldova",
-    "bg": "Молдова"
+    "bg": "Република Молдова"
    },
    "view": {
     "longitude": 28.4,
@@ -85,7 +90,8 @@
        "role": "region",
        "file": "raions.json",
        "label": {
-        "en": "Raions"
+        "en": "Raions",
+        "bg": "Райони"
        }
       },
       {
@@ -93,7 +99,8 @@
        "role": "country",
        "file": "country.json",
        "label": {
-        "en": "Country"
+        "en": "Country",
+        "bg": "Страна"
        }
       }
      ]
