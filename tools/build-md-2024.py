@@ -19,7 +19,12 @@ Transnistria (unofficial, u = 'tr'): the Moldovan census did not enumerate it. I
 Pridnestrovian Moldavian Republic (PMR) as reported by newspmr.com (copy on privetpmr.ru, web.archive.org snapshot 20180814231257):
 475,373 residents and ethnic shares of the whole republic, plus the population of each region. The press text gives shares only
 for the republic as a whole, so Transnistria is ONE area (Bender is part of the PMR figures, so MD-SN and MD-BD are merged).
-Shares add up to 100.2% (86.2% declared + "about 14%" not stated); that is kept as published and flagged on the map (u = 1).
+Shares as published: Russians 29.1, Moldovans 28.6, Ukrainians 22.9, Bulgarians 2.4, Gagauz 1.1, Belarusians 0.5, "Pridnestrovians" 0.2,
+other 1.4, not stated "about 14" - 100.2% in total; that is kept as published and flagged on the map (u = 'tr'). (The ru.wikipedia article on the PMR
+gives different 2015 shares, calculated among those who stated an ethnicity, so it is not used for them; the separate ru.wikipedia article on the
+2015 census agrees except for "other" = 1.2.)
+Belarusian and Transnistrian are ethnicity categories of their own in meta.json (indexes 7 and 8), but the Moldovan census has no such
+categories (those people are in "Other ethnicity" there): they are null for every census area and only have values for Transnistria.
 Religion was not published, so r = null. The country-level shape (ADM0, which includes the left bank) adds Transnistria's population (u = 'co'); with no religion data it is counted as "Not declared" there. Romanians and Roma are not separate categories there, so their counts are null.
 
 Only counts are stored (p, e, r). Percentages, majorities and shares are calculated in the browser.
@@ -57,7 +62,7 @@ def table(name, ncat):
         if r[3] is None: break                  # footnotes start here
         rows.append(dict(code=r[1], name=str(r[2]).strip().translate(FIX), p=num(r[3]), c=[num(x) for x in r[4:4 + ncat]]))
     return rows
-eth, rel = table(' 5.6', 9), table('5.31', 15)   # 5.6: 7 ethnicities + other + not declared; 5.31: 13 religions/beliefs + other + not declared (order = data/md/2024/meta.json)
+eth, rel = table(' 5.6', 9), table('5.31', 15)   # 5.6: 7 ethnicities + other + not declared (Belarusian / Transnistrian are inserted before "other" below); 5.31: 13 religions/beliefs + other + not declared (order = data/md/2024/meta.json)
 assert [(a['code'], a['name'], a['p']) for a in eth] == [(a['code'], a['name'], a['p']) for a in rel], 'tables 5.6 and 5.31 do not line up'
 for a in eth + rel: assert sum(a['c']) == a['p'], f"{a['name']}: categories do not add up to the total"
 
@@ -92,6 +97,15 @@ for R in units.values():
 assert sum(R['p'] for R in units.values()) == total['p']
 print(f'{len(units)} raions, {sum(len(R["b"]) for R in units.values())} towns/communes, population {total["p"]:,} (all match tables 8.2/8.3)')
 
+# ---- Belarusian / Transnistrian: new categories (indexes 7, 8, between Roma and "Other ethnicity"); not recorded in the Moldovan census -> None
+ins = lambda e: None if e is None else e[:7] + [None, None] + e[7:]
+def widen(b):
+    for u in b:
+        u['e'] = ins(u['e'])
+        widen(u.get('c', []))
+for R in units.values():
+    R['e'] = ins(R['e']); widen(R['b'])
+
 # ---- shapes
 def short(n):                                # 'Raionul Briceni' -> 'Briceni', 'Mun. Bălți' -> 'Bălți', 'UTA Găgăuzia' -> 'Gagauzia'
     return 'Gagauzia' if n == 'UTA Găgăuzia' else n.split(' ', 1)[1]
@@ -108,10 +122,10 @@ assert len(feats) == len(units) == 35
 # ---- Transnistria / PMR 2015 (unofficial)
 TR_P = 475373
 SHARE = dict(moldovan=28.6, ukrainian=22.9, russian=29.1, gagauz=1.1, bulgarian=2.4,
-             other=0.5 + 0.2 + 1.4,           # Belarusians + "Pridnestrovians" + other nationalities
+             belarusian=0.5, transnistrian=0.2, other=1.4,     # "other nationalities"
              undeclared=14.0)                  # "around 14%"
 n = lambda k: round(TR_P * SHARE[k] / 100)
-tr_e = [n('moldovan'), None, n('ukrainian'), n('russian'), n('gagauz'), n('bulgarian'), None, n('other'), n('undeclared')]  # order of meta.json (None = not recorded)
+tr_e = [n('moldovan'), None, n('ukrainian'), n('russian'), n('gagauz'), n('bulgarian'), None, n('belarusian'), n('transnistrian'), n('other'), n('undeclared')]  # order of meta.json (None = not recorded)
 print('PMR shares add up to', round(sum(SHARE.values()), 1), '%')
 def part(name, p, y=None, a=0, c=None):
     d = dict(n=name, p=p, e=None, r=None)
@@ -139,8 +153,9 @@ json.dump(dict(type='FeatureCollection', features=feats), open(os.path.join(out,
 
 # ---- country: the whole ADM0 shape (it includes the left bank) = Moldovan census area + Transnistria
 c = json.load(open(os.path.join(raw, 'geoBoundaries-MDA-ADM0.geojson')))['features'][0]
-cen_e, cen_r = total['c'], rel[0]['c']
-co_e = [a + (b or 0) for a, b in zip(cen_e, tr_e)]            # Romanians / Roma: Moldovan census only (not recorded separately in the PMR census)
+cen_e, cen_r = ins(total['c']), rel[0]['c']
+co_e = [a + (b or 0) if a is not None else None for a, b in zip(cen_e, tr_e)]            # Romanians / Roma: Moldovan census only (not recorded separately in the PMR census)
+co_e[9] += tr_e[7] + tr_e[8]                                   # the Moldovan census has no Belarusian / Transnistrian category: the PMR's go into "Other ethnicity" at country level
 co_r = list(cen_r); co_r[14] += TR_P                           # no religion data for Transnistria -> counted as "Not declared"
 co_b = [dict(n='Area enumerated by the 2024 census', p=total['p'], e=cen_e, r=cen_r),
         dict(n='Transnistria', p=TR_P, e=tr_e, r=None, u='tr')]

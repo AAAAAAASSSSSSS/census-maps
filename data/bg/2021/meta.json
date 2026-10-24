@@ -1,0 +1,80 @@
+{
+ "names": {
+  "eth": {
+   "en": [
+    "Bulgarian",
+    "Turkish",
+    "Roma",
+    "Other",
+    "Cannot determine",
+    "Don’t want to answer",
+    "Unknown"
+   ],
+   "bg": [
+    "Българска",
+    "Турска",
+    "Ромска",
+    "Друга",
+    "Не мога да определя",
+    "Не желая да отговоря",
+    "Непоказана"
+   ]
+  },
+  "rel": {
+   "en": [
+    "Christian",
+    "Muslim",
+    "Jewish",
+    "Other",
+    "No religion",
+    "Cannot determine",
+    "Don’t want to answer",
+    "Unknown"
+   ],
+   "bg": [
+    "Християнско",
+    "Мюсюлманско",
+    "Юдейско",
+    "Друго",
+    "Нямам",
+    "Не мога да определя",
+    "Не желая да отговоря",
+    "Непоказано"
+   ]
+  }
+ },
+ "colors": {
+  "eth": {
+   "0": "2e8b57",
+   "1": "ff00ff",
+   "2": "808000"
+  },
+  "rel": {
+   "0": "4a7fd8",
+   "1": "1e9e4a",
+   "2": "1a8cff",
+   "4": "7f8c8d"
+  }
+ },
+ "other": {
+  "eth": 3,
+  "rel": 3
+ },
+ "unavailable": {
+  "eth": [
+   4,
+   5,
+   6
+  ],
+  "rel": [
+   5,
+   6,
+   7
+  ]
+ },
+ "withheld": false,
+ "info": {
+  "en": "These maps were created using data from the 2021 Bulgarian census, available in <a href=\"https://www.nsi.bg/infostat\" target=\"_blank\" rel=\"noopener noreferrer\">InfoStat, the information system of the National Statistical Institute (nsi.bg/infostat)</a>.",
+  "bg": "Тези карти са създадени с данни от преброяването на населението в България през 2021 г., достъпни в <a href=\"https://www.nsi.bg/infostat\" target=\"_blank\" rel=\"noopener noreferrer\">ИнфоСтат, информационната система на Националния статистически институт (nsi.bg/infostat)</a>."
+ }
+}

@@ -4,6 +4,8 @@
 // Input: a GeoJSON FeatureCollection whose features have these properties
 //   n  name of the area                         (required)
 //   j  name of the parent region, e.g. county   (only for the finest level; used for region borders and the table)
+//   nb / jb  (optional) the same two names in Bulgarian; shown instead of n / j when the interface language is Bulgarian
+//            (breakdown entries may carry nb too)
 //   p  total resident population                (required)
 //   e  array of ethnicity counts, same order as names.eth in meta.json   (-1 = value withheld by the statistics office,
 //      null = category not recorded; the whole array may be null = no ethnicity data for this area)
@@ -35,7 +37,7 @@ fc.features.forEach((f, i) => {
     };
     p.b.forEach(u => chk(u, p.n));
   }
-  f.properties = { n: p.n, ...(p.j ? { j: p.j } : {}), p: p.p, e: p.e, r: p.r, ...(p.u ? { u: p.u } : {}), ...(p.b ? { b: p.b } : {}) }; // drop everything else
+  f.properties = { n: p.n, ...(p.nb ? { nb: p.nb } : {}), ...(p.j ? { j: p.j } : {}), ...(p.jb ? { jb: p.jb } : {}), p: p.p, e: p.e, r: p.r, ...(p.u ? { u: p.u } : {}), ...(p.b ? { b: p.b } : {}) }; // drop everything else
 });
 const topo = topology({ u: fc }, +q || 1e5); // the object must be called "u"
 fs.writeFileSync(out, JSON.stringify(topo));

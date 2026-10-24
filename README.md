@@ -16,8 +16,12 @@ data/
       communes.json       finest level   (TopoJSON: shapes + numbers in one file)
       counties.json       middle level
       country.json        whole country
+  md/2024/                 Moldova (raions + country; Transnistria is unofficial data)
+  bg/2021/                 Bulgaria (municipalities, oblasts, country; English + Bulgarian)
 tools/
   pack.js                  GeoJSON -> data file (see "Adding a country")
+  build-md-2024.py         Moldova: census tables + shapes -> GeoJSON for pack.js
+  build-bg-2021.py         Bulgaria: NSI tables + shapes -> GeoJSON for pack.js (also checks the romanisation of the names)
 raw/                       NOT committed: original geojsons and INS tables
 ```
 
@@ -36,14 +40,17 @@ Every dataset file is TopoJSON with one object named `u`. Each area has only the
 | key | meaning |
 |---|---|
 | `n` | name |
-| `j` | parent region (finest level only) |
+| `nb` | (optional) the name in Bulgarian, shown when the interface language is Bulgarian |
+| `j` | parent region (finest level only); `jb` is its Bulgarian name |
 | `p` | total resident population |
 | `e` | array of ethnicity counts, same order as `names.eth` in `meta.json` |
 | `r` | array of religion counts, same order as `names.rel` |
 
 `-1` means the statistics office withheld the value (`*`). Majority, share and "mixed" are **calculated in the browser**, and region borders on the commune map are derived from the communes, so none of that is stored.
 
-`meta.json` has `names` (`eth`/`rel`, one list per language), `colors` (hex per category index), `other` and `unavailable` (index of "Other" and "Not given", excluded when choosing the majority) and `info` (source text per language).
+`meta.json` has `names` (`eth`/`rel`, one list per language), `colors` (hex per category index), `other` and `unavailable` (index of "Other" and of "Not given", excluded when choosing the majority; `unavailable` may be a list when a census has several such categories, as in Bulgaria) and `info` (source text per language, shown in the information box). `unofficial` holds the footnote of every flagged area (an area with `u`), `short` the tooltip label of that flag (default "Unofficial data †"), `relNote` a religion-only note. The last row of the information box (the contact e-mail) is the same for every census and comes from `index.html` (`contact`).
+
+In `registry.json` a dataset may have `subs`, the title of its breakdown table in the "Select area" card (default "Towns and villages").
 
 ## Adding a country (or a new census year)
 1. Put the source files in `raw/`.
@@ -53,5 +60,7 @@ Every dataset file is TopoJSON with one object named `u`. Each area has only the
 5. Create `data/xx/2023/meta.json` (copy the Romanian one and edit).
 6. Add the country/census/datasets to `data/registry.json`. Dataset `role` is `unit` (finest level, shows the region column and region borders), `region` or `country`.
 7. Commit `data/` and push. Nothing in `index.html` changes, except the language list if you add a UI language.
+
+Interface languages: English, Romanian, Bulgarian. A census is only shown in a language that has its category names and info text in `meta.json` (otherwise a notice offers another country); `nb`/`jb` names fall back to `n`/`j`.
 
 Check the numbers against the official table before publishing: the country row of the table is the truth for the country level (the sum of the communes is lower because small values are withheld).
