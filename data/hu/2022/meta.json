@@ -1,0 +1,80 @@
+{
+ "names": {
+  "eth": {
+   "en": [
+    "Hungarian",
+    "Roma",
+    "German",
+    "Slovak",
+    "Croatian",
+    "Ukrainian",
+    "Romanian",
+    "Serbian",
+    "Polish",
+    "Ruthenian",
+    "Greek",
+    "Bulgarian",
+    "Armenian",
+    "Slovene",
+    "Other ethnicity",
+    "No answer"
+   ]
+  },
+  "rel": {
+   "en": [
+    "Roman Catholic",
+    "Greek Catholic",
+    "Catholic (other or unspecified)",
+    "Reformed",
+    "Evangelical (Lutheran)",
+    "Orthodox Christian",
+    "Other Christian denomination",
+    "Jewish",
+    "Other religious community or denomination",
+    "Not belonging to any religious community or denomination",
+    "No answer"
+   ]
+  }
+ },
+ "colors": {
+  "eth": {
+   "0": "2ca02c",
+   "1": "808000",
+   "2": "f9cf00",
+   "3": "ad1457",
+   "4": "1a8cff",
+   "5": "aade87",
+   "6": "a78bfa",
+   "7": "01579b",
+   "11": "db5b0b"
+  },
+  "rel": {
+   "0": "f2c200",
+   "1": "18b8c9",
+   "3": "d6342b",
+   "4": "008080",
+   "5": "4a7fd8",
+   "7": "1a8cff",
+   "9": "7f8c8d"
+  }
+ },
+ "other": {
+  "eth": 14,
+  "rel": 8
+ },
+ "unavailable": {
+  "eth": [
+   15
+  ],
+  "rel": [
+   10
+  ]
+ },
+ "withheld": false,
+ "info": {
+  "en": "These maps were created using data from the 2022 Hungarian census, available in <a href=\"https://nepszamlalas2022.ksh.hu/\" target=\"_blank\" rel=\"noopener noreferrer\">the 2022 census database of the Hungarian Central Statistical Office (nepszamlalas2022.ksh.hu)</a>.<br>People could declare more than one ethnic identity, so the ethnic groups add up to more than the population. Many residents did not answer the ethnicity and religion questions: they are shown as “No answer”, are included in the shares, and are not counted when the majority is chosen.<br>“Catholic (other or unspecified)” is all Catholics minus the Roman Catholics and Greek Catholics.<br>Figures for individual settlements are shown in the “Select area” tool (not for the districts of Budapest). A * marks a value withheld for data protection."
+ },
+ "ethNote": {
+  "en": "People could declare more than one ethnic identity, so the ethnic groups add up to more than the population. A * marks a value withheld for data protection."
+ }
+}

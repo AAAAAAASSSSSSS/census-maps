@@ -170,6 +170,61 @@
      ]
     }
    ]
+  },
+  {
+   "id": "hu",
+   "name": {
+    "en": "Hungary"
+   },
+   "view": {
+    "longitude": 19.5,
+    "latitude": 47.15,
+    "zoom": 6.7
+   },
+   "height": 90000,
+   "censuses": [
+    {
+     "id": "2022",
+     "label": {
+      "en": "2022 census"
+     },
+     "datasets": [
+      {
+       "id": "hu-districts",
+       "role": "unit",
+       "file": "districts.json",
+       "label": {
+        "en": "Districts"
+       },
+       "subs": {
+        "en": "Settlements"
+       }
+      },
+      {
+       "id": "hu-counties",
+       "role": "region",
+       "file": "counties.json",
+       "label": {
+        "en": "Counties"
+       },
+       "subs": {
+        "en": "Districts"
+       }
+      },
+      {
+       "id": "hu-country",
+       "role": "country",
+       "file": "country.json",
+       "label": {
+        "en": "Country"
+       },
+       "subs": {
+        "en": "Counties"
+       }
+      }
+     ]
+    }
+   ]
   }
  ]
 }
