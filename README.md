@@ -1,13 +1,13 @@
-# Census maps - mostly population, ethnic and religious (MAYBE language)
+# Census maps - mostly population, ethnic and religious
 
-A static site (GitHub Pages) that draws census data as 3D maps. **No data is stored inside `index.html`**: every dataset is its own small file that the browser downloads only when someone opens it.
+A static site (GitHub Pages) that draws census data as 3D maps. Every dataset is its own small file that the browser downloads only when someone opens it.
 
 ## What goes where
 
 ```
-index.html                 the app (code + interface text only, ~30 KB)
+index.html                 the app (code + interface text)
 README.md
-.gitignore                 keeps raw/ out of the repository
+.gitignore                 
 data/
   registry.json            list of countries > censuses > datasets (+ names, map start position)
   ro/                      one folder per country (ISO 2-letter code, lowercase)
@@ -16,23 +16,18 @@ data/
       communes.json       finest level   (TopoJSON: shapes + numbers in one file)
       counties.json       middle level
       country.json        whole country
+  hu/2022/                 Hungary (municipalities, districts, counties, country)
   md/2024/                 Moldova (raions + country; Transnistria is unofficial data)
   bg/2021/                 Bulgaria (municipalities, oblasts, country; English + Bulgarian)
 tools/
-  pack.js                  GeoJSON -> data file (see "Adding a country")
+  pack.js                  GeoJSON -> data file (no simplification)
+  rebuild-shapes.py        puts the full-detail geoBoundaries shapes into every data file; builds Hungary's Municipalities map
+  match-hu-settlements.py  how the 3,154 Hungarian settlements were matched to ADM3 shapes (result: hu-settlements.json)
   build-md-2024.py         Moldova: census tables + shapes -> GeoJSON for pack.js
   build-bg-2021.py         Bulgaria: NSI tables + shapes -> GeoJSON for pack.js (also checks the romanisation of the names)
-raw/                       NOT committed: original geojsons and INS tables
 ```
 
-Why one file per dataset: the geometry and its numbers always travel together (no join to get wrong), and the browser fetches only what is on screen. GitHub Pages compresses the JSON automatically, so Romania costs about **0.75 MB** on first open of the commune map and a few KB for counties/country.
-
-## Keep `raw/` out of GitHub
-GitHub rejects files over 100 MB and `geoBoundaries-ROU-ADM2_communes.geojson` is 195 MB. Keep the originals on your computer (or in a release/cloud drive); the `.gitignore` already skips a `raw/` folder.
-
-## Testing locally
-Opening `index.html` by double-click will not work (browsers block `fetch` on `file://`). Run in the repo folder:
-`python3 -m http.server 8000` and open http://localhost:8000
+Why one file per dataset: the geometry and its numbers always travel together (no join to get wrong), and the browser fetches only what is on screen. GitHub Pages compresses the JSON automatically.
 
 ## Data format
 Every dataset file is TopoJSON with one object named `u`. Each area has only these properties:
@@ -46,21 +41,15 @@ Every dataset file is TopoJSON with one object named `u`. Each area has only the
 | `e` | array of ethnicity counts, same order as `names.eth` in `meta.json` |
 | `r` | array of religion counts, same order as `names.rel` |
 
-`-1` means the statistics office withheld the value (`*`). Majority, share and "mixed" are **calculated in the browser**, and region borders on the commune map are derived from the communes, so none of that is stored.
+`-1` means the statistics office withheld the value (`*`). Majority, share and "mixed" are calculated in the browser.
 
 `meta.json` has `names` (`eth`/`rel`, one list per language), `colors` (hex per category index), `other` and `unavailable` (index of "Other" and of "Not given", excluded when choosing the majority; `unavailable` may be a list when a census has several such categories, as in Bulgaria) and `info` (source text per language, shown in the information box). `unofficial` holds the footnote of every flagged area (an area with `u`), `short` the tooltip label of that flag (default "Unofficial data †"), `relNote` a religion-only note. The last row of the information box (the contact e-mail) is the same for every census and comes from `index.html` (`contact`).
 
 In `registry.json` a dataset may have `subs`, the title of its breakdown table in the "Select area" card (default "Towns and villages").
 
-## Adding a country (or a new census year)
-1. Put the source files in `raw/`.
-2. Simplify the shapes (about 1-5 % keeps borders recognisable): `npx mapshaper raw/xx_adm2.geojson -simplify 5% keep-shapes -o precision=0.0001 build/xx_communes.geojson`
-3. Join the census table to the shapes so every feature has `n`, `j`, `p`, `e`, `r` (a small script per country; the INS tables are keyed by name).
-4. `cd tools && npm install && node pack.js ../build/xx_communes.geojson ../data/xx/2023/communes.json` (repeat per level).
-5. Create `data/xx/2023/meta.json` (copy the Romanian one and edit).
-6. Add the country/census/datasets to `data/registry.json`. Dataset `role` is `unit` (finest level, shows the region column and region borders), `region` or `country`.
-7. Commit `data/` and push. Nothing in `index.html` changes, except the language list if you add a UI language.
+A census is only shown in a language that has its category names and info text in `meta.json` (otherwise a notice offers another country); `nb`/`jb` names fall back to `n`/`j`.
 
-Interface languages: English, Romanian, Bulgarian. A census is only shown in a language that has its category names and info text in `meta.json` (otherwise a notice offers another country); `nb`/`jb` names fall back to `n`/`j`.
-
-Check the numbers against the official table before publishing: the country row of the table is the truth for the country level (the sum of the communes is lower because small values are withheld).
+## Shapes
+All shapes are the geoBoundaries files at full detail, **not simplified** (an earlier version simplified them to about 12%). `tools/rebuild-shapes.py` keeps the names and numbers of every data file and replaces only the geometry; pack.js quantizes the coordinates to a 100,000 x 100,000 grid over the country (about 5-10 m), finer than the map can show.
+Hungary's *Municipalities* map has one shape per settlement (3,154) plus Budapest as a single municipality whose 23 districts are its breakdown. The geoBoundaries ADM3 names are corrupted, so the shape of each settlement is listed in `tools/hu-settlements.json` (by shapeID).
+Bulgaria: geoBoundaries has no separate Sarnitsa (it is inside Velingrad); it is cut out along the outline that was already in the data. Romania's communes are large (about 16 MB); that is the cost of full detail.

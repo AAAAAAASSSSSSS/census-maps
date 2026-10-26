@@ -15,7 +15,7 @@
 //      = name, population, ethnicity counts, religion counts (null = none), y = kind ('t' town, 's' sector),
 //      a = 1 when the population is only approximate, nested children (same shape)
 //      Moldova uses it for its towns/communes and the Chisinau sectors.
-// Geometry should already be simplified (see README.md); coordinates are quantized to ~1 m by this script.
+// Geometry is NOT simplified any more (see README.md); coordinates are only quantized to a 100,000 x 100,000 grid over the country (about 5-10 m) by this script.
 const fs = require('fs');
 const { topology } = require('topojson-server');
 const [, , inp, out, q] = process.argv;

@@ -5,7 +5,7 @@ Inputs (keep them in raw/, which is not committed):
   bgr_admin2.geojson   265 municipality shapes (one per municipality, including Sarnitsa)
   bgr_admin1.geojson   28 oblast shapes
   bgr_admin0.geojson   country shape
-  (the three boundary files share their border vertices exactly, so they can be simplified without gaps)
+  (the three boundary files share their border vertices exactly, so they can be packed without gaps)
   bulgaria_population_detailed.xlsx               NSI InfoStat: population by oblast / municipality / settlement (English)
   bulgaria_population_detailed_in_bulgarian.xlsx  same table in Bulgarian
   bulgaria_ethnicity_detailed(.xlsx|_in_bulgarian.xlsx)   ethnic group by oblast / municipality
@@ -18,7 +18,7 @@ Usage (from the repo root; needs `pip install openpyxl numpy`):
   python3 tools/geo2topo.py build/bg_municipalities.geojson data/bg/2021/municipalities.json
   python3 tools/geo2topo.py build/bg_oblasts.geojson        data/bg/2021/oblasts.json
   python3 tools/geo2topo.py build/bg_country.geojson        data/bg/2021/country.json
-(geo2topo.py does what `mapshaper -simplify 12% keep-shapes` + `node pack.js` do; those two still work on the build/*.geojson files too.)
+(geo2topo.py no longer simplifies. Afterwards run tools/rebuild-shapes.py to put the geoBoundaries shapes into the data files.)
 
 Names. Every area carries two spellings: `n` (English = the official Bulgarian "Streamlined System" romanisation of the Bulgarian name,
 Law on the Transliteration 2009, applied letter by letter, keeping the capital / small letters of the Cyrillic name: "Ново село" = "Novo selo")

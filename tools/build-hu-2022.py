@@ -9,7 +9,7 @@ Inputs (keep them in raw/, which is not committed):
   religion_ethnicity_west_south_transdanubia.xlsx              the same table down to settlements: Győr-Moson-Sopron, Vas, Zala, Baranya, Somogy, Tolna
   religion_ethnicity_northernhungary_north_south_greatplain.xlsx   the same table down to settlements: Borsod-Abaúj-Zemplén, Heves, Nógrád, Hajdú-Bihar, Jász-Nagykun-Szolnok,
                                                                Szabolcs-Szatmár-Bereg, Bács-Kiskun, Békés, Csongrád-Csanád
-  (all tables come from https://nepszamlalas2022.ksh.hu/ ; the geoBoundaries ADM0/ADM1/ADM3 files are not used, see "Shapes")
+  (all tables come from https://nepszamlalas2022.ksh.hu/ ; the settlement shapes (data/hu/2022/settlements.json) are made afterwards by tools/rebuild-shapes.py from the ADM3 file)
 
 Usage (from the repo root; needs `pip install openpyxl numpy`):
   python3 tools/build-hu-2022.py raw build

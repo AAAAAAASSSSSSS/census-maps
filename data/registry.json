@@ -190,6 +190,17 @@
      },
      "datasets": [
       {
+       "id": "hu-settlements",
+       "role": "unit",
+       "file": "settlements.json",
+       "label": {
+        "en": "Municipalities"
+       },
+       "subs": {
+        "en": "Districts"
+       }
+      },
+      {
        "id": "hu-districts",
        "role": "unit",
        "file": "districts.json",

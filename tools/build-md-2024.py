@@ -9,11 +9,9 @@ Inputs (keep them in raw/, which is not committed):
 
 Usage (from the repo root; needs `pip install openpyxl`):
   python3 tools/build-md-2024.py raw build
-  npx mapshaper build/md_raions.geojson  -simplify 20% keep-shapes -o precision=0.0001 force build/md_raions_s.geojson
-  npx mapshaper build/md_country.geojson -simplify 25% keep-shapes -o precision=0.0001 force build/md_country_s.geojson
   cd tools && npm install
-  node pack.js ../build/md_raions_s.geojson  ../data/md/2024/raions.json
-  node pack.js ../build/md_country_s.geojson ../data/md/2024/country.json
+  node pack.js ../build/md_raions.geojson    ../data/md/2024/raions.json
+  node pack.js ../build/md_country.geojson ../data/md/2024/country.json
 
 Transnistria (unofficial, u = 'tr'): the Moldovan census did not enumerate it. Its figures are the 2015 census of the self-proclaimed
 Pridnestrovian Moldavian Republic (PMR) as reported by newspmr.com (copy on privetpmr.ru, web.archive.org snapshot 20180814231257):

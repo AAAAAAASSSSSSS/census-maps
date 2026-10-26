@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Simplify a GeoJSON FeatureCollection and pack it into the TopoJSON file the site loads.
-Does the same job as  `mapshaper -simplify 12% keep-shapes`  +  `node pack.js`  (numpy is the only dependency), for when those are not available.
+"""Pack (and, only if keep < 1, simplify) a GeoJSON FeatureCollection and pack it into the TopoJSON file the site loads.
+By default (keep=1.0) nothing is simplified, the shapes keep every point. keep=0.12 does what `mapshaper -simplify 12% keep-shapes` + `node pack.js` do  (numpy is the only dependency), for when those are not available.
 
-  python3 tools/geo2topo.py input.geojson output.json [keep=0.12] [quantization=100000]
+  python3 tools/geo2topo.py input.geojson output.json [keep=1.0] [quantization=100000]
 
 Input: a FeatureCollection with the properties described in tools/pack.js (n, nb, j, jb, p, e, r, u, b). Neighbouring polygons must share
 their border vertices exactly (true for the boundary files used here); shared borders become shared arcs, so simplifying cannot open gaps
@@ -39,7 +39,7 @@ def vw(pts):
 
 def main():
     inp, out = sys.argv[1], sys.argv[2]
-    keep = float(sys.argv[3]) if len(sys.argv) > 3 else 0.12
+    keep = float(sys.argv[3]) if len(sys.argv) > 3 else 1.0
     q = int(sys.argv[4]) if len(sys.argv) > 4 else 100000
     fc = json.load(open(inp, encoding='utf-8'))
     xs = [pt[0] for f in fc['features'] for poly in (f['geometry']['coordinates'] if f['geometry']['type'] == 'MultiPolygon' else [f['geometry']['coordinates']]) for r in poly for pt in r]
@@ -89,7 +89,7 @@ def main():
     # ---- simplify (global threshold on effective area)
     effs = [vw(a) for a in arcs]
     allv = np.array([v for e in effs for v in e[1:-1]])
-    thr = float(np.partition(allv, int(len(allv) * (1 - keep)))[int(len(allv) * (1 - keep))]) if len(allv) else 0
+    thr = 0 if keep >= 1 else float(np.partition(allv, int(len(allv) * (1 - keep)))[int(len(allv) * (1 - keep))]) if len(allv) else 0
     kept = [[i == 0 or i == len(e) - 1 or v >= thr for i, v in enumerate(e)] for e in effs]
     def npts(k):      # distinct points a ring still has
         return len({p for ai in ring_arcs[k] for p, kp in zip(arcs[ai if ai >= 0 else ~ai], kept[ai if ai >= 0 else ~ai]) if kp})
