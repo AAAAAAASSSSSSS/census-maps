@@ -39,6 +39,8 @@ hr{border:0;border-top:1px solid var(--bd);margin:8px 0}
 #sel .sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}#sel .sh button{border:0;padding:2px 6px;color:var(--mut)}
 #sel td:first-child{white-space:normal}#sel tr.cur td{font-weight:700;background:#00c8ff33}#sel tr.ch td:first-child{padding-left:20px}#sel .sub{margin:12px 0 4px}.unn{margin-top:8px;font-size:11px;line-height:1.35}.rn{margin:8px 0;padding:7px 9px;border-left:3px solid #d4a017;background:#d4a01722;border-radius:4px;font-size:12px;line-height:1.4}
 #warn{display:none;left:50%;top:50%;transform:translate(-50%,-50%);width:min(560px,calc(100% - 40px));padding:28px 30px;box-sizing:border-box;text-align:center;z-index:5;border:2px solid #d4a017}#warn::before{content:'⚠';display:block;font-size:46px;line-height:1;margin-bottom:10px;color:#d4a017}#warn h2{margin:0 0 12px;font-size:24px;line-height:1.25}#warn p{margin:0 0 14px;font-size:15px;line-height:1.5}#warn .en{font-size:13px;color:var(--mut)}#sel td.l{white-space:normal}#sel tr.gap td{padding:2px;border-bottom:1px solid var(--bd)}#sel tr.tot td{font-weight:700;border-top:1px solid var(--bd)}
+#mbox{left:50%;top:50%;transform:translate(-50%,-50%);padding:14px 16px;width:min(340px,calc(100% - 40px));z-index:7;display:none;box-sizing:border-box}#mbox .sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}#mbox .sh button{border:0;padding:2px 6px;color:var(--mut)}
+.ck{display:flex;align-items:center;gap:9px;padding:6px 4px;cursor:pointer;font-size:14px}.ck input{width:auto;margin:0;cursor:pointer;accent-color:var(--fg)}.mc{margin-bottom:6px}.mc b{margin-right:4px}.mc .g.h{margin-bottom:4px}
 #tw.pick tbody tr{cursor:pointer}#tw tbody tr.cur td{background:#00c8ff44}
 @media (max-width:820px){#sel{top:auto;left:12px;right:12px;width:auto;bottom:calc(58px + env(safe-area-inset-bottom,0px));max-height:40%}}
 </style></head><body>
@@ -46,7 +48,7 @@ hr{border:0;border-top:1px solid var(--bd);margin:8px 0}
 <div id="panel" class="box"></div><div id="warn" class="box"></div>
 <div id="lang" class="box"></div>
 <div id="info" class="box"></div>
-<div id="sel" class="box"></div>
+<div id="sel" class="box"></div><div id="mbox" class="box"></div>
 <div id="ib" class="box" role="button" tabindex="0"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(-.5 .5)"><path d="M14.2 8.6L10.6 17.6Q10 19.3 11.4 19Q13.2 18.6 14.8 16.4" stroke-width="2.3"/><circle cx="14.9" cy="4.7" r="1.5" fill="currentColor" stroke="none"/></g></svg></div>
 <div id="ld" class="box"></div>
 <div id="copy" class="box"></div>
@@ -105,6 +107,12 @@ bg:{title:'Карти на преброявания',rights:'© 2026 AAAAAAASSSS
   rel_n:'Абсолютно = повече от 50% от жителите. Относително = най-голямото вероизповедание, с 50% или по-малко. Задръжте курсора върху цветно квадратче, за да запулсират съответните територии. Делът е спрямо цялото население, включително хората, които не са посочили вероизповедание.',
 }};
 
+Object.assign(T.en,{multi_btn:'Multiple countries',multi_tt:'Show several countries on one map.',multi_t:'Select countries',multi_hint:'Tick two or more countries to show them together. The map modes, colours and groups are then shared by all of them.',multi_ok:'Show',col_country:'Country',c__m:'the selected countries',
+  multi_n:'Several countries: ethnic and religious groups with the same name are added together and ordered by their total number of people in the selected countries. Every country keeps its own census definitions, dates and notes (see the information button and the notes below).',multi_notes:'Notes of the selected countries'});
+Object.assign(T.ro,{multi_btn:'Mai multe țări',multi_tt:'Arată mai multe țări pe aceeași hartă.',multi_t:'Alege țările',multi_hint:'Bifează două sau mai multe țări pentru a le arăta împreună. Modurile hărții, culorile și grupurile sunt atunci comune.',multi_ok:'Arată',col_country:'Țara',c__m:'țările selectate',
+  multi_n:'Mai multe țări: grupurile etnice și religioase cu același nume se adună și sunt ordonate după numărul total de persoane din țările selectate. Fiecare țară păstrează definițiile, data și notele propriului recensământ (vezi butonul de informații și notele de mai jos).',multi_notes:'Notele țărilor selectate'});
+Object.assign(T.bg,{multi_btn:'Няколко държави',multi_tt:'Показване на няколко държави на една карта.',multi_t:'Избор на държави',multi_hint:'Отбележете две или повече държави, за да ги видите заедно. Режимите на картата, цветовете и групите са тогава общи.',multi_ok:'Покажи',col_country:'Държава',c__m:'избраните държави',
+  multi_n:'Няколко държави: етническите и религиозните групи с едно и също име се събират и се подреждат по общия брой хора в избраните държави. Всяка държава запазва собствените си определения, дати и бележки от преброяването (вижте бутона за информация и бележките по-долу).',multi_notes:'Бележки за избраните държави'});
 const LANGS=[{id:'en',code:'EN',flag:'us'},{id:'ro',code:'RO',flag:'ro'},{id:'bg',code:'BG',flag:'bg'}];
 const flag=k=>{
   if(k==='bg')return '<svg width="22" height="15" viewBox="0 0 3 2"><rect width="3" height="2" fill="#fff"/><rect y=".667" width="3" height="1.333" fill="#00966E"/><rect y="1.333" width="3" height=".667" fill="#D62612"/></svg>';
@@ -128,7 +136,7 @@ async function loadMeta(c,n){const M=await getJSON(dpath(c,n,'meta.json'));META[
   if(!M._t){M._t=1;for(const k of ['eth','rel'])for(const l in M.names[k])if(T[l])T[l][k+'_'+c+'_'+n]=M.names[k][l];for(const l in M.info)if(T[l])T[l]['info_'+c+'_'+n]=M.info[l]}
   return M}
 const nm_=o=>(S.lang==='bg'&&o.nb)||o.n,jm_=o=>(S.lang==='bg'&&o.jb)||o.j; /* area / region name in the interface language (nb / jb = Bulgarian, only the Bulgarian census has them) */
-const pn=p=>p._c?t('c_'+S.cty):tc(nm_(p))+(p.u?' †':''); /* area name; the country-level area is named in the UI language */
+const pn=p=>p._c?t('c_'+(p._cty||S.cty)):tc(nm_(p))+(p.u?' †':''); /* area name; the country-level area is named in the UI language */
 const nq=x=>x.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 const rgb=B=>{const o={};for(const k in B)o[k]=[0,2,4].map(i=>parseInt(B[k].slice(i,i+2),16));return o};
 const mix=(c,t)=>c.map(v=>Math.round(v+(255-v)*t)),shade=(c,t)=>c.map(v=>Math.round(v*t));
@@ -145,12 +153,13 @@ function prep(d,M){const F=d.data.features;d.tot=0;d.hasS=false;d.hasU=false;d.u
   const walk=a=>a.forEach(u=>{derive(u,M);if(u.c)walk(u.c)});
   for(const [i,f] of F.entries()){const p=f.properties;p._i=i;d.tot+=p.p;if(d.role==='country')p._c=1;
     derive(p,M);for(const D of Object.values(DOM))if(p[D.e])p[D.e].forEach((v,i)=>{if(v!=null)d.rec[D.id].add(i)});if(p.u){d.hasU=true;d.uids.add(p.u)}if(p.b){d.hasS=true;walk(p.b)}
-    p._q=nq(p.n+' '+(p.nb||'')+' '+(p.j||'')+' '+(p.jb||'')+(p._c?' '+LANGS.map(l=>T[l.id]['c_'+d.country]||'').join(' '):''))}}
+    p._q=nq(p.n+' '+(p.nb||'')+' '+(p.j||'')+' '+(p.jb||'')+(p._c||p._cty?' '+LANGS.map(l=>T[l.id]['c_'+(p._cty||d.country)]||'').join(' '):''))}}
 function applyMeta(M){for(const D of Object.values(DOM)){D.base=rgb(M.colors[D.id]);D.oth=M.other[D.id];D.na=[].concat(M.unavailable[D.id])}}
-async function load(){const d=ds();if(!d)return;const M=await loadMeta(S.cty,S.cen);applyMeta(M);
+async function loadDs(d){const M=await loadMeta(d.country,d.census);
   if(!d.data){const topo=await getJSON(dpath(d.country,d.census,d.file)),o=topo.objects.u;d.data=topojson.feature(topo,o);
     if(d.role==='unit')d.borders={type:'FeatureCollection',features:[{type:'Feature',properties:{},geometry:topojson.mesh(topo,o,(a,b)=>a===b||a.properties.j!==b.properties.j)}]}; /* region borders: derived from the units, nothing stored */
-    prep(d,M)}}
+    prep(d,M)}return M}
+async function load(){const d=ds();if(!d)return;applyMeta(await loadDs(d))}
 const MODES=['pop','eth','grp','rel','rgr'],VD={eth:'eth',grp:'eth',rel:'rel',rgr:'rel'};
 const fmt=n=>n.toLocaleString('en-GB'),tc=s=>s===s.toUpperCase()&&s!==s.toLowerCase()?s.toLowerCase().replace(/(^|[\s-])\S/g,m=>m.toUpperCase()):s /* only ALL-CAPS names (Romania) are re-cased; other names keep their own capitals */;
 const H={sqrt:(v,m)=>Math.sqrt(v/m),lin:(v,m)=>v/m};
@@ -171,7 +180,7 @@ const notesFor=(p,rel)=>[nt('unofficial',p.u),rel?nt('relNote',p.u):''].filter(B
 const ZERO=[165,168,172],zero=p=>isG()&&(p[dm().e]||[])[gi()]===0; /* group modes: areas with exactly 0 people are grey; a withheld value (-1) is not known to be 0, so it keeps the normal colours */
 let base=null,bord=null,hl=null,raf=0,hlData=[];
 const tip=$('tip');
-function show(i){const o=i.object;if(!o){tip.style.display='none';return}const p=o.properties,D=dm();let x=`<b>${pn(p)}</b>${p.j?' ('+tc(jm_(p))+')':''}<br>${t('pop')}: ${fmt(p.p)}<br>`;
+function show(i){const o=i.object;if(!o){tip.style.display='none';return}const p=o.properties,D=dm();let x=`<b>${pn(p)}</b>${p.j?' ('+tc(jm_(p))+')':''}${p._cty?`<br><span class="mut">${t('c_'+p._cty)} · ${lbl('ds_'+p._sid,'')}</span>`:''}<br>${t('pop')}: ${fmt(p.p)}<br>`;
   if(S.view!=='pop'&&nod(p))x+=`<span class="mut">${isG()&&p[D.e]?NM(D)[gi()]+': –':t('nodata_l')}</span>`;
   else if(isG()){const v=p[D.e][gi()];x+=`${NM(D)[gi()]}: ${v<0?'*':fmt(v)+' ('+(100*v/p.p).toFixed(1)+'%)'}`}
   else if(isM())x+=p[D.k]==='mix'?`${gname(p,D)}: ${p[D.s]}% (${t('mixm')})`:`${NM(D)[p[D.w]]}: ${p[D.s]}% (${t(p[D.k]==='abs'?'majabs':'majsim')})`;
@@ -185,18 +194,18 @@ $('map').addEventListener('contextmenu',e=>e.preventDefault());
 ['pointerdown','mousedown'].forEach(n=>$('map').addEventListener(n,e=>{if(e.button===0&&(e.ctrlKey||e.metaKey))e.stopPropagation()},true));
 const val=f=>isG()?gv(f.properties):f.properties.p;
 function build(reset){
-  const d=ds(),F=d.data.features,flat=isM(),g=isG(),mx=Math.max(...F.map(val))||1,ms=g?Math.max(...F.map(f=>gv(f.properties)/f.properties.p)):0,pct=g&&S.cm==='pct',blk=flat&&d.role!=='unit',
+  const d=ds(),F=d.data.features,flat=isM(),g=isG(),mx=Math.max(...F.map(val))||1,ms=g?Math.max(...F.map(f=>gv(f.properties)/f.properties.p)):0,pct=g&&S.cm==='pct',
     sid=hasSel()&&S.selOn&&S.sel?S.sel.properties._i:-1;
   const tcol=f=>pct?gv(f.properties)/f.properties.p/(ms||1):H[S.sc](val(f),mx);
-  base=new deck.GeoJsonLayer({id:'c'+d.id,data:F,pickable:true,autoHighlight:true,highlightColor:[255,255,255,90],extruded:!flat,filled:true,stroked:true,
+  base=(d.parts||[{F,role:d.role,k:''}]).map(pt=>{const blk=flat&&pt.role!=='unit';return new deck.GeoJsonLayer({id:'c'+d.id+pt.k,data:pt.F,pickable:true,autoHighlight:true,highlightColor:[255,255,255,90],extruded:!flat,filled:true,stroked:true,
    lineWidthMinPixels:blk?1.2:.3,getLineColor:blk?[0,0,0,230]:[255,255,255,flat?110:60],getElevation:f=>flat?0:H[S.sc](val(f),mx)*(HT[S.cty]||150000),
    getFillColor:f=>f.properties._i===sid?[0,200,255]:nod(f.properties)?NODATA:zero(f.properties)?ZERO:flat?col(f):ramp(tcol(f)),
-   material:{ambient:.55,diffuse:.7,shininess:20},transitions:{getElevation:500},updateTriggers:{getElevation:[S.ds,S.view,S.sc,gi()],getFillColor:[S.ds,S.view,gi(),S.sc,S.cm,sid],getLineColor:[S.ds,S.view]}});
-  bord=flat&&d.borders?new deck.GeoJsonLayer({id:'cb'+d.id,data:d.borders,pickable:false,filled:false,stroked:true,lineWidthMinPixels:1.4,getLineColor:[0,0,0,230],parameters:{depthTest:false}}):null;
+   material:{ambient:.55,diffuse:.7,shininess:20},transitions:{getElevation:500},updateTriggers:{getElevation:[S.ds,S.view,S.sc,gi(),d.v],getFillColor:[S.ds,S.view,gi(),S.sc,S.cm,sid,d.v],getLineColor:[S.ds,S.view]}})});
+  bord=flat&&d.borders?new deck.GeoJsonLayer({id:'cb'+d.id+(d.v||''),data:d.borders,pickable:false,filled:false,stroked:true,lineWidthMinPixels:1.4,getLineColor:[0,0,0,230],parameters:{depthTest:false}}):null;
   draw();
   if(reset)deckgl.setProps({initialViewState:{...VIEW[S.cty],pitch:flat?0:55,bearing:flat?0:-12,minZoom:4,maxZoom:12,transitionDuration:600}});
   return {mx,ms,pct}}
-function draw(tm){const L=base?[base]:[],D=dm();
+function draw(tm){const L=base?[...base]:[],D=dm();
   if(hl)L.push(new deck.GeoJsonLayer({id:'pulse',data:hlData,pickable:false,filled:true,stroked:false,parameters:{depthTest:false},
    getFillColor:f=>{const b=f.properties[D.k]==='mix'?MIXC:bc(f.properties[D.w]),s=(1+Math.sin(tm/220))/2,a=shade(b,.5),c=mix(b,.7);return a.map((x,i)=>Math.round(x+(c[i]-x)*s))},updateTriggers:{getFillColor:tm}}));
   if(bord)L.push(bord);deckgl.setProps({layers:L})}
@@ -216,9 +225,13 @@ function render(reset){unpulse();
   const dd=(a,items,cur,ph,fl)=>`<div class="dd"${fl?' style="flex:1;min-width:0"':''} title="${ph}"><button class="ddb" data-a="dd" aria-haspopup="listbox"><span class="${cur==null?'mut ph':''}">${cur==null?ph:items.find(x=>x.k===cur).l}</span><span class="car">▾</span></button>
    <div class="ddm" role="listbox">${items.map(x=>`<button data-a="${a}" data-k="${x.k}" role="option" class="${x.k===cur?'on':''}"><span>${x.l}</span><span>${x.k===cur?'✓':''}</span></button>`).join('')}</div></div>`;
   const cs=CENSUSES.filter(x=>x.country===S.cty);
-  h+=`<div class="g h">${dd('cty',COUNTRIES.map(c=>({k:c,l:lbl('c_'+c,c.toUpperCase())})).sort((a,b)=>a.l.localeCompare(b.l,S.lang)),S.cty,t('pick_cty'),1)}${S.cty?dd('cen',cs.map(x=>({k:x.id,l:lbl('cen_'+S.cty+'_'+x.id,x.id)})),S.cen,'',1):''}</div>`;
+  const mu=S.cty==='_m'; /* several countries: one block per country (census + its levels), the rest of the panel is shared */
+  h+=mu?MS.sel.map(c=>{const cc=CENSUSES.filter(x=>x.country===c),cn=MS.cen[c];
+    return `<div class="mc"><div class="g h"><b>${lbl('c_'+c,c.toUpperCase())}</b>${cc.length>1?dd('mcen',cc.map(x=>({k:c+'|'+x.id,l:lbl('cen_'+c+'_'+x.id,x.id)})),c+'|'+cn,'',1):`<span class="mut">${lbl('cen_'+c+'_'+cn,cn)}</span>`}</div>
+    <div class="g h">${DS.filter(x=>x.country===c&&x.census===cn).map(x=>btn('mds',c+'|'+x.id,lbl('ds_'+x.id,x.id),x.id===MS.ds[c])).join('')}</div></div>`}).join(''):
+   `<div class="g h">${dd('cty',COUNTRIES.map(c=>({k:c,l:lbl('c_'+c,c.toUpperCase())})).sort((a,b)=>a.l.localeCompare(b.l,S.lang)),S.cty,t('pick_cty'),1)}${S.cty?dd('cen',cs.map(x=>({k:x.id,l:lbl('cen_'+S.cty+'_'+x.id,x.id)})),S.cen,'',1):''}</div>`;
   if(!S.cty){P.innerHTML=h+`<div class="mut">${t('pick_hint')}</div>`;P.classList.remove('w');return fin()}
-  h+=`<div class="g h">${DS.filter(x=>x.country===S.cty&&x.census===S.cen).map(x=>btn('ds',x.id,lbl('ds_'+x.id,x.id),x.id===S.ds)).join('')}</div>
+  h+=(mu?'':`<div class="g h">${DS.filter(x=>x.country===S.cty&&x.census===S.cen).map(x=>btn('ds',x.id,lbl('ds_'+x.id,x.id),x.id===S.ds)).join('')}</div>`)+`
   <div style="margin-bottom:4px">${dd('v',MODES.map(k=>({k,l:t('v_'+k)})),v,t('lbl_mode'))}</div><hr>`;
   if(miss()){P.innerHTML=h+`<div class="mut">${t('na')}</div>`;P.classList.remove('w');return fin()}
   const sc=`<div class="g"><span class="lb">${t('lbl_h')}</span>${['sqrt','lin'].map(k=>btn('sc',k,t('s_'+k),k===S.sc,t('t_'+k))).join('')}</div>`;
@@ -235,12 +248,14 @@ function render(reset){unpulse();
    seen.map(w=>{const n=k=>d.data.features.filter(f=>f.properties[D.w]===w&&f.properties[D.k]===k).length,b=bc(w);
     return `<div class="row"><span class="sw" data-hl="${w}:abs" style="background:rgb(${b})"></span><span class="sw" data-hl="${w}:rel" style="background:rgb(${mix(b,.6)})"></span><span>${nm[w]} <span class="mut">(${n('abs')} / ${n('rel')})</span></span></div>`}).join('')+(nmix?`<div class="row"><span class="sw" data-hl="0:mix" style="background:rgb(${MIXC})"></span><span></span><span>${t('mixm')} <span class="mut">(${nmix})</span></span></div>`:'')+ndl()+`<div class="mut">${t(D.mn)}${nmix?' '+t('mix_n'):''}</div>`}
   if(d.hasU&&isRel())h+=[...d.uids].map(id=>nt('relNote',id)).filter(Boolean).map(x=>`<div class="rn">† ${x}</div>`).join('');
-  h+=`<div class="mut">${touch?t('nav_t'):t('nav_m')}</div><div class="g" style="margin-top:8px"><button data-a="list">${t(S.list?'list_hide':'list_show')}</button>${hasSel()?`<button data-a="seltool" class="${S.selOn?'on':''}" title="${t('sel_tt')}">${t('sel_tool')}</button>`:''}${S.list?'<span class="mut" id="cnt" style="margin:0"></span>':''}</div>`+
+  if(mu)h+=`<div class="mut">${t('multi_n')}</div>`+multiNotes(d);
+  h+=`<div class="mut">${touch?t('nav_t'):t('nav_m')}</div><div class="g" style="margin-top:8px"><button data-a="list">${t(S.list?'list_hide':'list_show')}</button>${hasSel()?`<button data-a="seltool" class="${S.selOn?'on':''}" title="${t('sel_tt')}">${t('sel_tool')}</button>`:''}<button data-a="multi" class="${mu?'on':''}" title="${t('multi_tt')}">${t('multi_btn')}</button>${S.list?'<span class="mut" id="cnt" style="margin:0"></span>':''}</div>`+
   (S.list?`<input id="q" placeholder="${t('search')}" value="${S.q.replace(/"/g,'&quot;')}"><div id="tw" class="${S.selOn&&hasSel()?'pick':''}"><table><thead><tr>${cols().map(c=>`<th class="${c.r?'r':''}" data-a="sort" data-k="${c.k}">${t(c.l).replace('{c}',t('c_'+S.cty))}${c.k===sk()?(S.sort.d>0?' ▲':' ▼'):''}</th>`).join('')}</tr></thead><tbody id="tb"></tbody></table></div>${d.hasU?[...d.uids].flatMap(id=>notesFor({u:id},isRel())).map(x=>`<div class="mut unn">† ${x}</div>`).join(''):''}`:'');
   P.innerHTML=h;P.classList.toggle('w',S.list);fillTable();
   P.querySelectorAll('[data-hl]').forEach(e=>{const[w,k]=e.dataset.hl.split(':');e.onmouseenter=()=>pulse(+w,k);e.onmouseleave=unpulse});fin()}
 function cols(){const d=ds(),v=S.view,D=dm(),c=[{k:'n',l:'col_name',t:1,g:p=>pn(p),s:p=>nm_(p)}];
-  if(d.role==='unit')c.push({k:'j',l:T.en['col_county_'+S.cty]!==undefined?'col_county_'+S.cty:'col_county',t:1,g:p=>tc(jm_(p)),s:p=>jm_(p)}); /* a country can name its regions differently (col_county_<id>) */
+  if(S.cty==='_m')c.push({k:'ct',l:'col_country',t:1,g:p=>t('c_'+p._cty),s:p=>t('c_'+p._cty)});
+  if(d.role==='unit')c.push({k:'j',l:T.en['col_county_'+S.cty]!==undefined?'col_county_'+S.cty:'col_county',t:1,g:p=>p.j?tc(jm_(p)):'',s:p=>jm_(p)||''}); /* a country can name its regions differently (col_county_<id>) */
   c.push({k:'p',l:'col_pop',r:1,g:p=>fmt(p.p),s:p=>p.p});
   if(v==='pop')c.push({k:'x',l:'col_nat',r:1,g:p=>(100*p.p/d.tot).toFixed(3)+'%',s:p=>p.p});
   if(isM())c.push({k:'y',l:D.cg,t:1,g:p=>nod(p)?'–':gname(p,D),s:p=>nod(p)?'':gname(p,D)},{k:'z',l:'col_share',r:1,g:p=>nod(p)?'–':p[D.s]+'%',s:p=>nod(p)?-1:p[D.s]},{k:'m',l:'col_maj',t:1,g:p=>nod(p)?'–':t(p[D.k]==='abs'?'absm':p[D.k]==='mix'?'mixm':'simm'),s:p=>nod(p)?-1:p[D.k]==='abs'?2:p[D.k]==='mix'?0:1});
@@ -258,35 +273,111 @@ function subTable(p,D,pop){if(!p.b||(!pop&&!p.b.some(u=>u[D.e])))return ''; /* n
    hd=[['col_name'],[pop?'col_pop':g?'col_people':D.cg,pop||g],['col_share',1]],
    cell=u=>pop?[[(u.a?'~':'')+fmt(u.p),1],[(u.a?'~':'')+(100*u.p/p.p).toFixed(2)+'%',1]]:!u[D.e]||(g&&u[D.e][gi()]==null)?[['–',g?1:0],['–',1]]:g?[[u[D.e][gi()]<0?'*':fmt(u[D.e][gi()]),1],[(100*n1(u)/u.p).toFixed(2)+'%',1]]:[[gname(u,D),0],[u[D.s]+'%',1]],
    row=(u,ch)=>`<tr${ch?' class="ch"':''}><td>${nmz(u)}</td>${cell(u).map(([c,r])=>`<td class="${r?'r':'l'}">${c}</td>`).join('')}</tr>`+(u.c?srt(u.c.filter(c=>pop||c[D.e])).map(c=>row(c,1)).join(''):''); /* in the other modes only rows that have figures */
-  return `<div class="sub"><b>${p.u?t('sel_parts'):lbl('subs_'+ds().id,t('sel_subs'))}</b> <span class="mut">(${fmt(p.b.length)})</span></div><table><thead><tr>${hd.map(([k,r])=>`<th class="${r?'r':''}">${t(k)}</th>`).join('')}</tr></thead><tbody>${srt(p.b).map(u=>row(u)).join('')}`+
+  return `<div class="sub"><b>${p.u?t('sel_parts'):lbl('subs_'+(p._sid||ds().id),t('sel_subs'))}</b> <span class="mut">(${fmt(p.b.length)})</span></div><table><thead><tr>${hd.map(([k,r])=>`<th class="${r?'r':''}">${t(k)}</th>`).join('')}</tr></thead><tbody>${srt(p.b).map(u=>row(u)).join('')}`+
    (pop?`<tr class="tot"><td>${t('sel_total')}</td><td class="r">${fmt(p.p)}</td><td class="r">100%</td></tr>`:'')+'</tbody></table>'}
 /* Area details card: full breakdown of one area (all modes except population, which only has a card where the data has a town/village breakdown). The highlighted row is the mapped group / the majority */
 function drawSel(){const el=$('sel'),on=hasSel()&&S.selOn;el.style.display=on?'block':'none';if(!on)return;
   const pop=S.view==='pop',D=dm(),p=S.sel&&S.sel.properties;
   let h=`<div class="sh"><b>${t('sel_title')}</b><button data-a="selx" title="${t('sel_close')}">✕</button></div>`;
   if(!p){el.innerHTML=h+`<div class="mut" style="margin:0">${t('sel_hint')}</div>`;return}
-  h+=`<div><b>${pn(p)}</b></div><div class="mut" style="margin:0 0 4px">${p.j?tc(jm_(p)):t('ds_'+ds().id)}</div>`;
+  h+=`<div><b>${pn(p)}</b></div><div class="mut" style="margin:0 0 4px">${p.j?tc(jm_(p)):t('ds_'+(p._sid||ds().id))}</div>`;
   if(!pop&&!p[D.e])h+=`<div class="mut">${t('nodata_sel')}</div>`;
   else if(!pop){const nm=NM(D),e=p[D.e],ids=nm.map((_,i)=>i).filter(i=>i!==D.oth&&!D.na.includes(i)&&(!rc()||rc().has(i))).sort((a,b)=>Math.max(0,e[b])-Math.max(0,e[a])||a-b);
     const row=i=>{const v=e[i],x=v==null;return `<tr class="${(isG()?i===gi():p[D.k]==='mix'?tied(p,D).includes(i):i===p[D.w])?'cur':''}"><td>${nm[i]}</td><td class="r">${x?'–':v<0?'*':fmt(v)}</td><td class="r">${x||v<0?'–':(100*v/p.p).toFixed(2)+'%'}</td></tr>`};
-    const note=(META[S.cty+'_'+S.cen]||{}).withheld!==false&&(e.some(v=>v<0)||e.reduce((a,v)=>a+Math.max(0,v),0)!==p.p)&&!p.u; /* census files with no withheld values set "withheld":false in meta.json */
+    const note=(META[S.cty+'_'+S.cen]||{}).withheld!==false&&!p._nw&&(e.some(v=>v<0)||e.reduce((a,v)=>a+Math.max(0,v),0)!==p.p)&&!p.u; /* census files with no withheld values set "withheld":false in meta.json */
     h+=`<table><thead><tr><th>${t(D.ch)}</th><th class="r">${t('col_people')}</th><th class="r">${t('col_share')}</th></tr></thead><tbody>${ids.map(row).join('')}<tr class="gap"><td colspan="3"></td></tr>${row(D.oth)}${D.na.map(row).join('')}
    <tr class="tot"><td>${t('sel_total')}</td><td class="r">${fmt(p.p)}</td><td class="r">100%</td></tr></tbody></table>`+(note?`<div class="mut">${t('sel_note')}</div>`:'')}
   if(pop&&!p.b){const d=ds();h+=`<table><tbody><tr><td>${t('pop')}</td><td class="r">${fmt(p.p)}</td></tr><tr><td>${t('col_nat').replace('{c}',t('c_'+S.cty))}</td><td class="r">${(100*p.p/d.tot).toFixed(3)}%</td></tr></tbody></table>`} /* a unit with no breakdown below it (e.g. Romanian communes): its own population */
-  const en=(META[S.cty+'_'+S.cen]||{}).ethNote; /* census-wide note shown under the ethnicity tables (meta.json "ethNote") */
+  const en=(META[p._k||S.cty+'_'+S.cen]||{}).ethNote; /* census-wide note shown under the ethnicity tables (meta.json "ethNote") */
   el.innerHTML=h+subTable(p,D,pop)+(!pop&&D.id==='eth'&&en?`<div class="mut unn">${en[S.lang]||en.en}</div>`:'')+(p.u?notesFor(p,!pop&&isRel()).map(x=>`<div class="mut unn">† ${x}</div>`).join(''):'')}
 function fin(){$('info').innerHTML=(S.cty?(t('info_'+S.cty+'_'+S.cen)||'')+'<br>':'')+t('contact'); /* the contact row is the same for every census and is always last */$('ib').title=t('info');$('copy').textContent=t('rights');document.documentElement.lang=S.lang;drawSel();
   const cur=LANGS.find(l=>l.id===S.lang);
   $('lang').innerHTML=`<button data-a="lm">${flag(cur.flag)}${cur.code}</button><div class="menu">${LANGS.filter(l=>l.id!==S.lang).map(l=>`<button data-a="lang" data-k="${l.id}">${flag(l.flag)}${l.code}</button>`).join('')}</div>`}
+
+/* ---- Several countries on one map. The selected datasets are put together into ONE synthetic dataset ("_m") that the rest of the code
+   treats like any other census: the groups of all countries are merged by name (a few religions through ALIAS), ordered by their total
+   number of people in the selected countries, and every area keeps its own country's figures remapped to that shared order. ---- */
+const MS={sel:[],cen:{},ds:{}},firstDs=(c,n)=>DS.find(x=>x.country===c&&x.census===n).id,lastCen=c=>{const cs=CENSUSES.filter(x=>x.country===c);return cs[cs.length-1].id};
+let MV=0;
+const ALIAS=[[/old.?rite|serbian orthodox/,0],[/roman catholic/,{en:'Roman Catholic',ro:'Romano-catolică',bg:'Римокатолическа'}],[/greek catholic|united with rome/,{en:'Greek Catholic',ro:'Greco-catolică',bg:'Гръкокатолическа'}],
+ [/^reformed/,{en:'Reformed',ro:'Reformată',bg:'Реформатска'}],[/lutheran/,{en:'Evangelical Lutheran',ro:'Evanghelică luterană',bg:'Евангелско-лутеранска'}],[/pentecostal/,{en:'Pentecostal',ro:'Penticostală',bg:'Петдесятническа'}],
+ [/baptist/,{en:'Baptist',ro:'Baptistă',bg:'Баптистка'}],[/adventist/,{en:'Seventh-day Adventist',ro:'Adventistă de ziua a șaptea',bg:'Адвентистка'}],[/jehovah/,{en:'Jehovah’s Witnesses',ro:'Martorii lui Iehova',bg:'Свидетели на Йехова'}],
+ [/muslim|islamic/,{en:'Muslim',ro:'Musulmană',bg:'Мюсюлманска'}],[/jewish/,{en:'Jewish',ro:'Mozaică',bg:'Юдейска'}],[/evangelical christian/,{en:'Evangelical Christian',ro:'Creștină evanghelică',bg:'Евангелска християнска'}],
+ [/orthodox/,{en:'Orthodox',ro:'Ortodoxă',bg:'Православна'}],[/^atheist/,{en:'Atheist',ro:'Ateu',bg:'Атеист'}]]; /* religions that are the same in several censuses under different official names; ethnic groups share their English name already */
+const aliasOf=(k,en)=>{if(k!=='rel')return null;const l=en.toLowerCase();for(const [re,a] of ALIAS)if(re.test(l))return a||null;return null};
+const hex2hsl=h=>{let[r,g,b]=[0,2,4].map(i=>parseInt(h.slice(i,i+2),16)/255);const m=Math.max(r,g,b),n=Math.min(r,g,b),d=m-n;let H=0;if(d){H=m===r?((g-b)/d)%6:m===g?(b-r)/d+2:(r-g)/d+4}return[(H*60+360)%360,d?d/(1-Math.abs(m+n-1)):0,(m+n)/2]},
+ hsl2hex=([H,S_,L])=>{const c=(1-Math.abs(2*L-1))*S_,x=c*(1-Math.abs((H/60)%2-1)),m=L-c/2,[r,g,b]=H<60?[c,x,0]:H<120?[x,c,0]:H<180?[0,c,x]:H<240?[0,x,c]:H<300?[x,0,c]:[c,0,x];return[r,g,b].map(v=>Math.round((v+m)*255).toString(16).padStart(2,'0')).join('')};
+const rm=(a,ix,n)=>{if(!a)return a;const o=new Array(n).fill(null);a.forEach((v,i)=>{if(v==null)return;const j=ix[i],c=o[j];o[j]=c==null?v:(v<0&&c<0?-1:Math.max(0,c)+Math.max(0,v))});return o}; /* counts of one census -> the shared group order (a group missing in this census stays null = not recorded) */
+async function loadMulti(){
+  const items=[];
+  for(const c of MS.sel){const cn=MS.cen[c],d=DS.find(x=>x.id===MS.ds[c]&&x.country===c&&x.census===cn),cd=DS.find(x=>x.country===c&&x.census===cn&&x.role==='country')||d;
+    const M=await loadDs(d);if(cd!==d)await loadDs(cd);items.push({c,cn,d,cd,M})}
+  const Mm={names:{eth:{},rel:{}},colors:{eth:{},rel:{}},other:{},unavailable:{},info:{},unofficial:{},short:{},relNote:{},withheld:true},ids=LANGS.map(l=>l.id);
+  for(const k of ['eth','rel']){const slots=[],by={},used=new Set();
+    for(const it of items){const M=it.M,nms=M.names[k],O=M.other[k],NA=[].concat(M.unavailable[k]);it['m'+k]=[];
+      nms.en.forEach((en,i)=>{const al=aliasOf(k,en),kind=i===O?'o':NA.includes(i)?'n':'g',key=kind==='o'?'~o':kind==='n'?'~n:'+en.toLowerCase():al?'a:'+al.en:en.toLowerCase();
+        let s=by[key];if(!s){s=by[key]={key,kind,names:{},color:null,tot:0};slots.push(s)}
+        for(const l of ids)if(s.names[l]==null){const v=al?al[l]||al.en:(nms[l]||[])[i];if(v!=null)s.names[l]=v}
+        if(!s.color&&M.colors[k][i])s.color=M.colors[k][i];it['m'+k][i]=key});
+      const e=it.cd.data.features[0].properties[k==='eth'?'e':'r'];if(e)e.forEach((v,i)=>{const s=by[it['m'+k][i]];if(s&&s.kind==='g'&&v>0)s.tot+=v})} /* order = total people in the country-level figures */
+    const ord=[...slots.filter(s=>s.kind==='g').sort((a,b)=>b.tot-a.tot||a.names.en.localeCompare(b.names.en)),...slots.filter(s=>s.kind==='o'),...slots.filter(s=>s.kind==='n')],pos={};
+    ord.forEach((s,i)=>{pos[s.key]=i;for(const l of ids)(Mm.names[k][l]=Mm.names[k][l]||[])[i]=s.names[l]!=null?s.names[l]:s.names.en;
+      let c=s.color;if(c){while(used.has(c)){const h=hex2hsl(c);h[0]=(h[0]+47)%360;c=hsl2hex(h)}used.add(c);Mm.colors[k][i]=c}}); /* two different groups never share a colour */
+    Mm.other[k]=ord.findIndex(s=>s.kind==='o');Mm.unavailable[k]=ord.map((s,i)=>s.kind==='n'?i:-1).filter(i=>i>=0);
+    for(const it of items){it['x'+k]=it['m'+k].map(key=>pos[key]);it['n'+k]=ord.length}}
+  for(const it of items){const M=it.M;for(const x of ['unofficial','short','relNote'])for(const id in M[x]||{})Mm[x][it.c+':'+id]=M[x][id]}
+  for(const l of ids)Mm.info[l]=items.map(it=>`<b>${T[l]['c_'+it.c]||T.en['c_'+it.c]} – ${T[l]['cen_'+it.c+'_'+it.cn]||T.en['cen_'+it.c+'_'+it.cn]||it.cn}</b><br>${T[l]['info_'+it.c+'_'+it.cn]||T.en['info_'+it.c+'_'+it.cn]||''}`).join('<hr>');
+  Mm._t=1;META['_m_m']=Mm;for(const l of ids){T[l]['eth__m_m']=Mm.names.eth[l];T[l]['rel__m_m']=Mm.names.rel[l];T[l]['info__m_m']=Mm.info[l]}
+  const F=[],parts=[],bf=[];
+  items.forEach((it,pi)=>{const c=it.c,{xeth:ex,xrel:rx,neth:ne,nrel:nr}=it,cl=u=>{const o={...u};if(u.e)o.e=rm(u.e,ex,ne);if(u.r)o.r=rm(u.r,rx,nr);if(u.c)o.c=u.c.map(cl);if(u.u)o.u=c+':'+u.u;return o},
+    fs=it.d.data.features.map(f=>{const p=f.properties,q={n:p.n,p:p.p,_cty:c,_sid:it.d.id,_k:c+'_'+it.cn,_nw:it.M.withheld===false};for(const x of ['nb','j','jb'])if(p[x]!=null)q[x]=p[x];
+      if(p.u)q.u=c+':'+p.u;if(it.d.role==='country')q._c=1;if(p.e)q.e=rm(p.e,ex,ne);if(p.r)q.r=rm(p.r,rx,nr);if(p.b)q.b=p.b.map(cl);return {type:'Feature',properties:q,geometry:f.geometry}});
+    F.push(...fs);parts.push({role:it.d.role,F:fs,k:String(pi)});if(it.d.role==='unit'&&it.d.borders)bf.push(...it.d.borders.features)});
+  const MD={id:'m',country:'_m',census:'m',role:'unit',file:null,data:{type:'FeatureCollection',features:F},borders:{type:'FeatureCollection',features:bf},parts,v:++MV};
+  prep(MD,Mm);
+  /* view: the bounding box of the countries; bars: the tallest of the countries' heights */
+  let x0=180,x1=-180,y0=90,y1=-90;const walk=a=>typeof a[0]==='number'?(x0=Math.min(x0,a[0]),x1=Math.max(x1,a[0]),y0=Math.min(y0,a[1]),y1=Math.max(y1,a[1])):a.forEach(walk);
+  items.forEach(it=>it.cd.data.features.forEach(f=>walk(f.geometry.coordinates)));
+  const sx=Math.max(x1-x0,.5),sy=Math.max((y1-y0)/Math.cos(((y0+y1)/2)*Math.PI/180),.5);
+  VIEW._m={longitude:(x0+x1)/2-sx*.1,latitude:(y0+y1)/2,zoom:Math.max(4,Math.min(8,Math.log2(Math.min(innerWidth*360/(512*sx),innerHeight*360/(512*sy)))-.6))};HT._m=Math.max(...MS.sel.map(c=>HT[c]||150000));
+  return {MD,Mm}}
+async function enterMulti(){
+  $('ld').textContent=t('loading');$('ld').style.display='block';let R;
+  try{R=await loadMulti()}catch(err){console.error(err);$('ld').textContent=t('load_err');setTimeout(()=>$('ld').style.display='none',6000);return}
+  $('ld').style.display='none';
+  const i=DS.findIndex(x=>x.id==='m'&&x.country==='_m');if(i>=0)DS.splice(i,1);DS.push(R.MD);
+  S.cty='_m';S.cen='m';S.ds='m';S.sel=null;S.g={eth:0,rel:0};S.sc='lin';S.q='';applyMeta(R.Mm);render(true)}
+async function goSingle(c){
+  const cn=(S.cty!=='_m'&&c===S.cty&&S.cen)||lastCen(c);S.cty=c;S.cen=cn;S.ds=S.ds&&DS.find(x=>x.id===S.ds&&x.country===c&&x.census===cn)?S.ds:firstDs(c,cn);S.g={eth:0,rel:0};S.sel=null;S.sc='lin';
+  $('ld').textContent=t('loading');$('ld').style.display='block';
+  try{await load()}catch(err){console.error(err);$('ld').textContent=t('load_err');setTimeout(()=>$('ld').style.display='none',6000);return}
+  $('ld').style.display='none';render(true)}
+function openBox(){const on=S.cty==='_m'?MS.sel:S.cty?[S.cty]:[],B=$('mbox');
+  B.innerHTML=`<div class="sh"><b>${t('multi_t')}</b><button data-a="mc_x" title="${t('sel_close')}">✕</button></div><div class="mut" style="margin:0 0 6px">${t('multi_hint')}</div>
+   ${COUNTRIES.map(c=>({c,l:lbl('c_'+c,c.toUpperCase())})).sort((a,b)=>a.l.localeCompare(b.l,S.lang)).map(x=>`<label class="ck"><input type="checkbox" value="${x.c}" ${on.includes(x.c)?'checked':''}>${x.l}</label>`).join('')}
+   <div class="g" style="margin:10px 0 0"><button data-a="mc_ok" class="on">${t('multi_ok')}</button></div>`;B.style.display='block'}
+$('mbox').onclick=async e=>{const b=e.target.closest('[data-a]');if(!b)return;
+  if(b.dataset.a==='mc_x'){$('mbox').style.display='none';return}
+  if(b.dataset.a==='mc_ok'){const ch=[...$('mbox').querySelectorAll('input:checked')].map(x=>x.value);$('mbox').style.display='none';
+    if(!ch.length)return;if(ch.length===1){if(S.cty!==ch[0]||S.cty==='_m')await goSingle(ch[0]);return}
+    const prev=S.cty;MS.sel=ch;for(const c of ch){const keep=prev&&prev!=='_m'&&c===prev;MS.cen[c]=keep?S.cen:MS.cen[c]&&S.cty==='_m'?MS.cen[c]:lastCen(c);MS.ds[c]=keep&&DS.find(x=>x.id===S.ds&&x.country===c&&x.census===MS.cen[c])?S.ds:MS.ds[c]&&DS.find(x=>x.id===MS.ds[c]&&x.country===c&&x.census===MS.cen[c])?MS.ds[c]:firstDs(c,MS.cen[c])}
+    await enterMulti()}};
+/* notes of the selected countries: census-wide notes (ethnic groups), unofficial figures; the religion notes appear with the religion views */
+function multiNotes(d){const n=[];
+  for(const c of MS.sel){const M=META[c+'_'+MS.cen[c]]||{},en=M.ethNote;if(en&&!isRel())n.push(`<b>${t('c_'+c)}:</b> ${en[S.lang]||en.en}`)}
+  for(const id of d.uids||[])n.push('† '+nt('unofficial',id));if(isRel())for(const id of d.uids||[]){const r=nt('relNote',id);if(r)n.push('† '+r)}
+  return n.length?`<div class="mut unn"><b>${t('multi_notes')}</b></div>`+n.filter(Boolean).map(x=>`<div class="mut unn">${x}</div>`).join(''):''}
 $('panel').onclick=async e=>{
   const tr=e.target.closest('tr[data-i]');if(tr&&S.selOn&&hasSel()){select(ds().data.features[+tr.dataset.i]);return}
   const b=e.target.closest('[data-a]');if(!b||b.tagName==='SELECT')return;const a=b.dataset.a,k=b.dataset.k;
   if(a==='dd'){b.closest('.dd').classList.toggle('open');return}
+  if(a==='multi')return openBox();
+  if(a==='mcen'||a==='mds'){const[c,v]=k.split('|');if(a==='mcen'){MS.cen[c]=v;MS.ds[c]=firstDs(c,v)}else MS.ds[c]=v;return enterMulti()}
   if(a==='min'){S.min=!S.min;return render(false)}
   if(a==='list'){S.list=!S.list;return render(false)}
   if(a==='seltool'){S.selOn=!S.selOn;if(!S.selOn)S.sel=null;return render(false)}
   if(a==='sort'){const c=cols().find(x=>x.k===k);S.sort={k,d:k===sk()?-S.sort.d:(c.t?1:-1)};return render(false)}
-  if(a==='cty'){S.cty=k;const cs=CENSUSES.filter(x=>x.country===k);S.cen=cs[cs.length-1].id;S.ds=DS.find(x=>x.country===k&&x.census===S.cen).id;S.sc='lin';S.sel=null}
+  if(a==='cty'){S.g={eth:0,rel:0};S.cty=k;const cs=CENSUSES.filter(x=>x.country===k);S.cen=cs[cs.length-1].id;S.ds=DS.find(x=>x.country===k&&x.census===S.cen).id;S.sc='lin';S.sel=null}
   else if(a==='cen'){S.cen=k;S.ds=DS.find(x=>x.country===S.cty&&x.census===k).id;S.sc='lin';S.sel=null}
   else if(a==='ds'){S.ds=k;S.sc='lin';S.sel=null}else if(a==='v')S.view=k;else if(a==='sc')S.sc=k;else if(a==='cm')S.cm=k;
   if(a==='cty'||a==='cen'||a==='ds'){const sig=S.cty+S.cen+S.ds;$('ld').textContent=t('loading');$('ld').style.display='block';
