@@ -174,7 +174,8 @@
   {
    "id": "hu",
    "name": {
-    "en": "Hungary"
+    "en": "Hungary",
+    "bg": "Унгария"
    },
    "view": {
     "longitude": 19.5,
@@ -186,7 +187,8 @@
     {
      "id": "2022",
      "label": {
-      "en": "2022 census"
+      "en": "2022 census",
+      "bg": "Преброяване 2022"
      },
      "datasets": [
       {
@@ -194,7 +196,8 @@
        "role": "unit",
        "file": "settlements.json",
        "label": {
-        "en": "Municipalities"
+        "en": "Municipalities",
+        "bg": "Населени места"
        }
       },
       {
@@ -202,10 +205,12 @@
        "role": "unit",
        "file": "districts.json",
        "label": {
-        "en": "Districts"
+        "en": "Districts",
+        "bg": "Райони"
        },
        "subs": {
-        "en": "Settlements"
+        "en": "Settlements",
+        "bg": "Населени места"
        }
       },
       {
@@ -213,10 +218,12 @@
        "role": "region",
        "file": "counties.json",
        "label": {
-        "en": "Counties"
+        "en": "Counties",
+        "bg": "Области"
        },
        "subs": {
-        "en": "Districts"
+        "en": "Districts",
+        "bg": "Райони"
        }
       },
       {
@@ -224,10 +231,12 @@
        "role": "country",
        "file": "country.json",
        "label": {
-        "en": "Country"
+        "en": "Country",
+        "bg": "Страна"
        },
        "subs": {
-        "en": "Counties"
+        "en": "Counties",
+        "bg": "Области"
        }
       }
      ]

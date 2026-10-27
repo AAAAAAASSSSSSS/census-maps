@@ -18,6 +18,24 @@
     "Slovene",
     "Other ethnicity",
     "No answer"
+   ],
+   "bg": [
+    "Унгарци",
+    "Роми",
+    "Германци",
+    "Словаци",
+    "Хървати",
+    "Украинци",
+    "Румънци",
+    "Сърби",
+    "Поляци",
+    "Русини",
+    "Гърци",
+    "Българи",
+    "Арменци",
+    "Словенци",
+    "Друга етническа принадлежност",
+    "Без отговор"
    ]
   },
   "rel": {
@@ -33,6 +51,19 @@
     "Other religious community or denomination",
     "Not belonging to any religious community or denomination",
     "No answer"
+   ],
+   "bg": [
+    "Римокатолическа",
+    "Гръкокатолическа",
+    "Католическа (друга или неуточнена)",
+    "Реформатска",
+    "Евангелска (лутеранска)",
+    "Православна",
+    "Друго християнско вероизповедание",
+    "Юдейска",
+    "Друга религиозна общност или вероизповедание",
+    "Без принадлежност към религиозна общност или вероизповедание",
+    "Без отговор"
    ]
   }
  },
@@ -72,9 +103,11 @@
  },
  "withheld": false,
  "info": {
-  "en": "These maps were created using data from the 2022 Hungarian census, available in <a href=\"https://nepszamlalas2022.ksh.hu/\" target=\"_blank\" rel=\"noopener noreferrer\">the 2022 census database of the Hungarian Central Statistical Office (nepszamlalas2022.ksh.hu)</a>.<br>People could declare more than one ethnic identity, so the ethnic groups add up to more than the population. Many residents did not answer the ethnicity and religion questions: they are shown as “No answer”, are included in the shares, and are not counted when the majority is chosen.<br>“Catholic (other or unspecified)” is all Catholics minus the Roman Catholics and Greek Catholics.<br>Figures for individual settlements are shown in the “Select area” tool (not for the districts of Budapest). A * marks a value withheld for data protection."
+  "en": "These maps were created using data from the 2022 Hungarian census, available in <a href=\"https://nepszamlalas2022.ksh.hu/\" target=\"_blank\" rel=\"noopener noreferrer\">the 2022 census database of the Hungarian Central Statistical Office (nepszamlalas2022.ksh.hu)</a>.<br>People could declare more than one ethnic identity, so the ethnic groups add up to more than the population. Many residents did not answer the ethnicity and religion questions: they are shown as “No answer”, are included in the shares, and are not counted when the majority is chosen.<br>“Catholic (other or unspecified)” is all Catholics minus the Roman Catholics and Greek Catholics.<br>Figures for individual settlements are shown in the “Select area” tool (not for the districts of Budapest). A * marks a value withheld for data protection.",
+  "bg": "Тези карти са създадени с данни от преброяването на населението в Унгария през 2022 г., достъпни в <a href=\"https://nepszamlalas2022.ksh.hu/\" target=\"_blank\" rel=\"noopener noreferrer\">базата данни на преброяването през 2022 г. на Унгарската централна статистическа служба (nepszamlalas2022.ksh.hu)</a>.<br>Хората са могли да декларират повече от една етническа идентичност, затова сборът на етническите групи е по-голям от населението. Много жители не са отговорили на въпросите за етническата принадлежност и вероизповеданието: те са показани като „Без отговор“, включени са в дяловете и не се броят при определяне на мнозинството.<br>„Католическа (друга или неуточнена)“ са всички католици без римокатолиците и гръкокатолиците.<br>Данните за отделните населени места се показват в инструмента „Избор на територия“ (не и за районите на Будапеща). Със * е отбелязана стойност, скрита за защита на личните данни."
  },
  "ethNote": {
-  "en": "People could declare more than one ethnic identity, so the ethnic groups add up to more than the population. A * marks a value withheld for data protection."
+  "en": "People could declare more than one ethnic identity, so the ethnic groups add up to more than the population. A * marks a value withheld for data protection.",
+  "bg": "Хората са могли да декларират повече от една етническа идентичност, затова сборът на етническите групи е по-голям от населението. Със * е отбелязана стойност, скрита за защита на личните данни."
  }
 }

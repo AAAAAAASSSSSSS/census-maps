@@ -113,6 +113,9 @@ Object.assign(T.ro,{multi_btn:'Mai multe țări',multi_tt:'Arată mai multe ță
   multi_n:'Mai multe țări: grupurile etnice și religioase cu același nume se adună și sunt ordonate după numărul total de persoane din țările selectate. Fiecare țară păstrează definițiile, data și notele propriului recensământ (vezi butonul de informații și notele de mai jos).',multi_notes:'Notele țărilor selectate'});
 Object.assign(T.bg,{multi_btn:'Няколко държави',multi_tt:'Показване на няколко държави на една карта.',multi_t:'Избор на държави',multi_hint:'Отбележете две или повече държави, за да ги видите заедно. Режимите на картата, цветовете и групите са тогава общи.',multi_ok:'Покажи',col_country:'Държава',c__m:'избраните държави',
   multi_n:'Няколко държави: етническите и религиозните групи с едно и също име се събират и се подреждат по общия брой хора в избраните държави. Всяка държава запазва собствените си определения, дати и бележки от преброяването (вижте бутона за информация и бележките по-долу).',multi_notes:'Бележки за избраните държави'});
+Object.assign(T.en,{notr_mm:'Several countries can only be shown together when every selected country is available in the current language. Change the language (top right) or select other countries.',notr_ml:'Not available in this language:'});
+Object.assign(T.ro,{notr_mm:'Mai multe țări pot fi afișate împreună doar dacă fiecare țară selectată este disponibilă în limba curentă. Schimbă limba (dreapta sus) sau alege alte țări.',notr_ml:'Indisponibile în această limbă:'});
+Object.assign(T.bg,{notr_mm:'Няколко държави могат да се показват заедно само ако всички избрани държави са налични на текущия език. Сменете езика (горе вдясно) или изберете други държави.',notr_ml:'Не са налични на този език:'});
 const LANGS=[{id:'en',code:'EN',flag:'us'},{id:'ro',code:'RO',flag:'ro'},{id:'bg',code:'BG',flag:'bg'}];
 const flag=k=>{
   if(k==='bg')return '<svg width="22" height="15" viewBox="0 0 3 2"><rect width="3" height="2" fill="#fff"/><rect y=".667" width="3" height="1.333" fill="#00966E"/><rect y="1.333" width="3" height=".667" fill="#D62612"/></svg>';
@@ -167,7 +170,9 @@ const RAMP=[[253,233,168],[246,160,90],[212,70,47],[122,16,80],[42,10,74]];
 const ramp=t=>{t=Math.min(1,Math.max(0,t))*4;const i=Math.min(3,Math.floor(t)),u=t-i;return RAMP[i].map((v,k)=>Math.round(v+(RAMP[i+1][k]-v)*u))};
 const S={lang:'en',cty:null,cen:null,ds:null,view:'pop',g:{eth:0,rel:0},sc:'lin',cm:'pct',min:false,list:false,q:'',sort:{k:'p',d:-1},selOn:false,sel:null};
 const t=k=>{const v=T[S.lang][k];return v!==undefined?v:/^(info|cen)_/.test(k)?T[S.lang].na:T.en[k]},lbl=(k,f)=>T[S.lang][k]!==undefined?T[S.lang][k]:T.en[k]!==undefined?T.en[k]:f,ds=()=>DS.find(d=>d.id===S.ds&&d.country===S.cty&&d.census===S.cen),$=id=>document.getElementById(id),touch=matchMedia('(pointer:coarse)').matches;
-const noTr=()=>!!S.cty&&!!META[S.cty+'_'+S.cen]&&['eth_','rel_','info_'].some(k=>T[S.lang][k+S.cty+'_'+S.cen]===undefined), /* census opened in a language it has no translation for */
+const trLack=(c,n)=>['eth_','rel_','info_'].some(k=>T[S.lang][k+c+'_'+n]===undefined), /* census c_n has no translation in the current language */
+ mLack=()=>S.cty==='_m'?MS.sel.filter(c=>trLack(c,MS.cen[c])):[], /* several countries: the selected countries that lack the current language */
+ noTr=()=>S.cty==='_m'?mLack().length>0:!!S.cty&&!!META[S.cty+'_'+S.cen]&&trLack(S.cty,S.cen), /* census opened in a language it has no translation for (several countries: only works if ALL of them have it) */
  hasSubs=()=>{const d=ds();return !!(d&&d.hasS)},hasSel=()=>!!S.cty&&!miss(),NM=D=>{const v=T[S.lang][D.names+'_'+S.cty+'_'+S.cen];return Array.isArray(v)?v:null},miss=()=>!!S.cty&&S.view!=='pop'&&!NM(dm()),rc=()=>{const d=ds();return d&&d.rec?d.rec[dm().id]:null},isG=()=>S.view==='grp'||S.view==='rgr',isM=()=>S.view==='eth'||S.view==='rel',dm=()=>DOM[VD[S.view]||'eth'],gi=()=>S.g[dm().id];
 const MIXC=[70,70,70]; /* colour of "mixed" areas (top two groups exactly equal); only appears if such an area exists */
 const tied=(p,D)=>{const e=p[D.e],ids=e.map((_,i)=>i).filter(i=>i!==D.oth&&!D.na.includes(i)),m=Math.max(0,...ids.map(i=>e[i]));return ids.filter(i=>e[i]===m)},
@@ -214,7 +219,8 @@ function pulse(w,k){const D=dm();hl={w,k};hlData=ds().data.features.filter(f=>f.
 function unpulse(){hl=null;cancelAnimationFrame(raf);draw()}
 function render(reset){unpulse();
   if(noTr()){S.selOn=false;S.sel=null;base=bord=null;draw();$('panel').style.display='none';$('sel').style.display='none';const w=$('warn');w.style.display='block'; /* big warning in the middle instead of the panel */
-    w.innerHTML=`<h2>${t('notr_t')}</h2><p>${t('notr_m')}</p>${S.lang!=='en'?`<p class="en">${T.en.notr_t} ${T.en.notr_m}</p>`:''}<button data-a="notr_back">${t('notr_b')}</button>`;return fin()}
+    const mm=mLack(),ml=(L)=>mm.map(c=>(T[L]['c_'+c]||T.en['c_'+c]||c.toUpperCase())).join(', ');
+    w.innerHTML=mm.length?`<h2>${t('notr_t')}</h2><p>${t('notr_mm')}</p><p><b>${t('notr_ml')}</b> ${ml(S.lang)}</p>${S.lang!=='en'?`<p class="en">${T.en.notr_t} ${T.en.notr_mm} <b>${T.en.notr_ml}</b> ${ml('en')}</p>`:''}<button data-a="notr_back">${t('notr_b')}</button>`:`<h2>${t('notr_t')}</h2><p>${t('notr_m')}</p>${S.lang!=='en'?`<p class="en">${T.en.notr_t} ${T.en.notr_m}</p>`:''}<button data-a="notr_back">${t('notr_b')}</button>`;return fin()}
   $('warn').style.display='none';$('panel').style.display='';
   if(S.selOn&&!hasSel()){S.selOn=false;S.sel=null}
   if(S.cty&&!miss()&&ds()&&ds().data&&isG()){const R=rc();if(R&&R.size&&!R.has(gi()))S.g[dm().id]=Math.min(...R)} /* the chosen group is not recorded at this level -> first recorded one */
