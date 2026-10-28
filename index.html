@@ -22,7 +22,7 @@ hr{border:0;border-top:1px solid var(--bd);margin:8px 0}
 .sw{height:18px;border-radius:3px;cursor:pointer;border:1px solid #0003}.sw:hover{outline:2px solid var(--fg)}
 .bar{height:10px;border-radius:5px;margin:8px 0 2px;background:linear-gradient(90deg,#fde9a8,#f6a05a,#d4462f,#7a1050,#2a0a4a)}
 .sp{display:flex;justify-content:space-between;margin:0}
-.zl{display:flex;align-items:center;gap:6px;margin:8px 0 2px;font-size:12px}.zs{width:18px;height:12px;border-radius:3px;border:1px solid #0003;flex:none}
+.zl{display:flex;align-items:center;gap:6px;margin:8px 0 2px;font-size:12px}.zs{width:18px;height:12px;border-radius:3px;border:1px solid #0003;flex:none}.zl.c{margin:3px 0}
 #tip{position:absolute;pointer-events:none;z-index:3;background:var(--panel);border:1px solid var(--bd);border-radius:8px;padding:6px 9px;font-size:12px;display:none;max-width:240px}
 #ld{left:50%;top:50%;transform:translate(-50%,-50%);padding:10px 16px;display:none;z-index:5}
 #lang{right:12px;top:calc(12px + env(safe-area-inset-top,0px));padding:4px}#lang button{display:flex;align-items:center;gap:6px;border:0;width:100%;font-weight:600;font-size:12px}
@@ -116,6 +116,18 @@ Object.assign(T.bg,{multi_btn:'Няколко държави',multi_tt:'Пока
 Object.assign(T.en,{notr_mm:'Several countries can only be shown together when every selected country is available in the current language. Change the language (top right) or select other countries.',notr_ml:'Not available in this language:'});
 Object.assign(T.ro,{notr_mm:'Mai multe țări pot fi afișate împreună doar dacă fiecare țară selectată este disponibilă în limba curentă. Schimbă limba (dreapta sus) sau alege alte țări.',notr_ml:'Indisponibile în această limbă:'});
 Object.assign(T.bg,{notr_mm:'Няколко държави могат да се показват заедно само ако всички избрани държави са налични на текущия език. Сменете езика (горе вдясно) или изберете други държави.',notr_ml:'Не са налични на този език:'});
+Object.assign(T.en,{lbl_d:'Display:',d_3:'3D',d_2:'2D',td_3:'Areas rise with their value.',td_2:'Flat map, north up, no height. Handy for screenshots.',
+  lbl_sh:'Shading:',sh_cont:'Proportional',sh_step:'Set percentages',tsh_cont:'Colors blend smoothly. The strongest color is the highest value on the map.',tsh_step:'Colors come in a few bands with fixed percentage limits instead of a smooth gradient.',
+  shn_pct:'Bands are fixed shares of the local population.',shn_cnt:'Bands are fixed percentages of the color scale; the highest value on the map is 100%.',
+  lbl_sc:'Scale:',tf_sqrt:'Color grows with the square root of the value, so smaller places stay visible next to big cities.',tf_lin:'Color is directly proportional to the value.'});
+Object.assign(T.ro,{lbl_d:'Afișare:',d_3:'3D',d_2:'2D',td_3:'Zonele se ridică în funcție de valoare.',td_2:'Hartă plată, cu nordul în sus, fără înălțime. Utilă pentru capturi de ecran.',
+  lbl_sh:'Colorare:',sh_cont:'Proporțională',sh_step:'Procente fixe',tsh_cont:'Culorile se amestecă continuu. Cea mai intensă culoare este cea mai mare valoare de pe hartă.',tsh_step:'Culorile sunt în câteva trepte cu limite procentuale fixe, în loc de o gradație continuă.',
+  shn_pct:'Treptele sunt procente fixe din populația locală.',shn_cnt:'Treptele sunt procente fixe ale scării de culori; cea mai mare valoare de pe hartă este 100%.',
+  lbl_sc:'Scară:',tf_sqrt:'Intensitatea culorii crește cu rădăcina pătrată a valorii, astfel încât și locurile mici să rămână vizibile lângă orașele mari.',tf_lin:'Intensitatea culorii este direct proporțională cu valoarea.'});
+Object.assign(T.bg,{lbl_d:'Изглед:',d_3:'3D',d_2:'2D',td_3:'Териториите се издигат според стойността.',td_2:'Плоска карта със север нагоре, без височина. Удобна за снимки на екрана.',
+  lbl_sh:'Оцветяване:',sh_cont:'Пропорционално',sh_step:'Фиксирани проценти',tsh_cont:'Цветовете преливат плавно. Най-силният цвят е най-високата стойност на картата.',tsh_step:'Цветовете са в няколко степени с фиксирани процентни граници вместо плавен градиент.',
+  shn_pct:'Степените са фиксирани дялове от местното население.',shn_cnt:'Степените са фиксирани проценти от цветовата скала; най-високата стойност на картата е 100%.',
+  lbl_sc:'Скала:',tf_sqrt:'Цветът расте с квадратния корен от стойността, така че по-малките места да се виждат до големите градове.',tf_lin:'Цветът е право пропорционален на стойността.'});
 const LANGS=[{id:'en',code:'EN',flag:'us'},{id:'ro',code:'RO',flag:'ro'},{id:'bg',code:'BG',flag:'bg'}];
 const flag=k=>{
   if(k==='bg')return '<svg width="22" height="15" viewBox="0 0 3 2"><rect width="3" height="2" fill="#fff"/><rect y=".667" width="3" height="1.333" fill="#00966E"/><rect y="1.333" width="3" height=".667" fill="#D62612"/></svg>';
@@ -168,7 +180,7 @@ const fmt=n=>n.toLocaleString('en-GB'),tc=s=>s===s.toUpperCase()&&s!==s.toLowerC
 const H={sqrt:(v,m)=>Math.sqrt(v/m),lin:(v,m)=>v/m};
 const RAMP=[[253,233,168],[246,160,90],[212,70,47],[122,16,80],[42,10,74]];
 const ramp=t=>{t=Math.min(1,Math.max(0,t))*4;const i=Math.min(3,Math.floor(t)),u=t-i;return RAMP[i].map((v,k)=>Math.round(v+(RAMP[i+1][k]-v)*u))};
-const S={lang:'en',cty:null,cen:null,ds:null,view:'pop',g:{eth:0,rel:0},sc:'lin',cm:'pct',min:false,list:false,q:'',sort:{k:'p',d:-1},selOn:false,sel:null};
+const S={lang:'en',cty:null,cen:null,ds:null,view:'pop',g:{eth:0,rel:0},sc:'lin',cm:'pct',d3:true,shade:'cont',min:false,list:false,q:'',sort:{k:'p',d:-1},selOn:false,sel:null};
 const t=k=>{const v=T[S.lang][k];return v!==undefined?v:/^(info|cen)_/.test(k)?T[S.lang].na:T.en[k]},lbl=(k,f)=>T[S.lang][k]!==undefined?T[S.lang][k]:T.en[k]!==undefined?T.en[k]:f,ds=()=>DS.find(d=>d.id===S.ds&&d.country===S.cty&&d.census===S.cen),$=id=>document.getElementById(id),touch=matchMedia('(pointer:coarse)').matches;
 const trLack=(c,n)=>['eth_','rel_','info_'].some(k=>T[S.lang][k+c+'_'+n]===undefined), /* census c_n has no translation in the current language */
  mLack=()=>S.cty==='_m'?MS.sel.filter(c=>trLack(c,MS.cen[c])):[], /* several countries: the selected countries that lack the current language */
@@ -183,7 +195,8 @@ const NODATA=[92,88,102],nod=p=>S.view!=='pop'&&(!p[dm().e]||(isG()&&p[dm().e][g
 const nt=(k,id)=>{const x=((META[S.cty+'_'+S.cen]||{})[k]||{})[id];return x?(x[S.lang]||x.en):''}; /* meta.json notes keyed by an area's u id: "unofficial" (always) and "relNote" (religion views) */
 const notesFor=(p,rel)=>[nt('unofficial',p.u),rel?nt('relNote',p.u):''].filter(Boolean),isRel=()=>S.view!=='pop'&&dm().id==='rel';
 const ZERO=[165,168,172],zero=p=>isG()&&(p[dm().e]||[])[gi()]===0; /* group modes: areas with exactly 0 people are grey; a withheld value (-1) is not known to be 0, so it keeps the normal colours */
-let base=null,bord=null,hl=null,raf=0,hlData=[];
+let base=null,bord=null,hl=null,raf=0,hlData=[],vs=null; /* vs = the camera as the person left it */
+const BRK=[1,5,10,25,50,75]; /* "Set percentages" shading: class limits in %, giving 7 bands along the colour ramp */
 const tip=$('tip');
 function show(i){const o=i.object;if(!o){tip.style.display='none';return}const p=o.properties,D=dm();let x=`<b>${pn(p)}</b>${p.j?' ('+tc(jm_(p))+')':''}${p._cty?`<br><span class="mut">${t('c_'+p._cty)} · ${lbl('ds_'+p._sid,'')}</span>`:''}<br>${t('pop')}: ${fmt(p.p)}<br>`;
   if(S.view!=='pop'&&nod(p))x+=`<span class="mut">${isG()&&p[D.e]?NM(D)[gi()]+': –':t('nodata_l')}</span>`;
@@ -192,24 +205,29 @@ function show(i){const o=i.object;if(!o){tip.style.display='none';return}const p
   if(p.u)x+=`<br><span class="mut">${nt('short',p.u)||t('unof_s')}</span>`;tip.innerHTML=x;tip.style.display='block';tip.style.left=Math.max(4,Math.min(i.x+14,innerWidth-250))+'px';tip.style.top=(i.y+14)+'px'}
 function select(o){S.sel=o;build(false);drawSel();if(S.list)fillTable()}
 const deckgl=new deck.Deck({parent:$('map'),views:new deck.MapView({controller:{touchRotate:true,dragRotate:true}}),
-  initialViewState:{longitude:25,latitude:45.9,zoom:5.9,pitch:55,bearing:-12,minZoom:4,maxZoom:12},onHover:show,
+  initialViewState:{longitude:25,latitude:45.9,zoom:5.9,pitch:55,bearing:-12,minZoom:4,maxZoom:12},onHover:show,onViewStateChange:({viewState})=>{vs=viewState},
   onClick:i=>{if(S.selOn&&hasSel()&&i.object)select(i.object);show(i)}});
 /* right click: rotate only, no browser menu. Ctrl/Cmd + left click: disabled. */
 $('map').addEventListener('contextmenu',e=>e.preventDefault());
 ['pointerdown','mousedown'].forEach(n=>$('map').addEventListener(n,e=>{if(e.button===0&&(e.ctrlKey||e.metaKey))e.stopPropagation()},true));
 const val=f=>isG()?gv(f.properties):f.properties.p;
 function build(reset){
-  const d=ds(),F=d.data.features,flat=isM(),g=isG(),mx=Math.max(...F.map(val))||1,ms=g?Math.max(...F.map(f=>gv(f.properties)/f.properties.p)):0,pct=g&&S.cm==='pct',
+  const d=ds(),F=d.data.features,maj=isM(),flat=maj||!S.d3,g=isG(),mx=Math.max(...F.map(val))||1,ms=g?Math.max(...F.map(f=>gv(f.properties)/f.properties.p)):0,pct=g&&S.cm==='pct',
     sid=hasSel()&&S.selOn&&S.sel?S.sel.properties._i:-1;
-  const tcol=f=>pct?gv(f.properties)/f.properties.p/(ms||1):H[S.sc](val(f),mx);
+  const stp=S.shade==='step'&&!maj, /* set percentages: colour bands instead of a gradient (not used by the majority modes) */
+    xv=f=>pct?(f.properties.p?100*gv(f.properties)/f.properties.p:0):100*H[S.sc](val(f),mx), /* % of the local population, or % of the colour scale */
+    tcol=f=>pct?gv(f.properties)/f.properties.p/(ms||1):H[S.sc](val(f),mx),
+    scol=f=>stp?ramp(BRK.filter(b=>xv(f)>=b).length/BRK.length):ramp(tcol(f));
   base=(d.parts||[{F,role:d.role,k:''}]).map(pt=>{const blk=flat&&pt.role!=='unit';return new deck.GeoJsonLayer({id:'c'+d.id+pt.k,data:pt.F,pickable:true,autoHighlight:true,highlightColor:[255,255,255,90],extruded:!flat,filled:true,stroked:true,
-   lineWidthMinPixels:blk?1.2:.3,getLineColor:blk?[0,0,0,230]:[255,255,255,flat?110:60],getElevation:f=>flat?0:H[S.sc](val(f),mx)*(HT[S.cty]||150000),
-   getFillColor:f=>f.properties._i===sid?[0,200,255]:nod(f.properties)?NODATA:zero(f.properties)?ZERO:flat?col(f):ramp(tcol(f)),
-   material:{ambient:.55,diffuse:.7,shininess:20},transitions:{getElevation:500},updateTriggers:{getElevation:[S.ds,S.view,S.sc,gi(),d.v],getFillColor:[S.ds,S.view,gi(),S.sc,S.cm,sid,d.v],getLineColor:[S.ds,S.view]}})});
+   lineWidthMinPixels:blk?1.2:.3,getLineColor:blk?[0,0,0,230]:maj?[255,255,255,110]:flat?[30,30,30,80]:[255,255,255,60],getElevation:f=>flat?0:H[S.sc](val(f),mx)*(HT[S.cty]||150000),
+   getFillColor:f=>f.properties._i===sid?[0,200,255]:nod(f.properties)?NODATA:zero(f.properties)?ZERO:maj?col(f):scol(f),
+   material:{ambient:.55,diffuse:.7,shininess:20},transitions:{getElevation:500},updateTriggers:{getElevation:[S.ds,S.view,S.sc,gi(),d.v,S.d3],getFillColor:[S.ds,S.view,gi(),S.sc,S.cm,sid,d.v,S.shade],getLineColor:[S.ds,S.view,S.d3]}})});
   bord=flat&&d.borders?new deck.GeoJsonLayer({id:'cb'+d.id+(d.v||''),data:d.borders,pickable:false,filled:false,stroked:true,lineWidthMinPixels:1.4,getLineColor:[0,0,0,230],parameters:{depthTest:false}}):null;
   draw();
   if(reset)deckgl.setProps({initialViewState:{...VIEW[S.cty],pitch:flat?0:55,bearing:flat?0:-12,minZoom:4,maxZoom:12,transitionDuration:600}});
-  return {mx,ms,pct}}
+  return {mx,ms,pct,stp}}
+function tilt(){const f=isM()||!S.d3; /* 3D <-> 2D: same place on the map, only the tilt and rotation change */
+  deckgl.setProps({initialViewState:{...(vs||{...VIEW[S.cty],minZoom:4,maxZoom:12}),pitch:f?0:55,bearing:f?0:-12,transitionDuration:600}})}
 function draw(tm){const L=base?[...base]:[],D=dm();
   if(hl)L.push(new deck.GeoJsonLayer({id:'pulse',data:hlData,pickable:false,filled:true,stroked:false,parameters:{depthTest:false},
    getFillColor:f=>{const b=f.properties[D.k]==='mix'?MIXC:bc(f.properties[D.w]),s=(1+Math.sin(tm/220))/2,a=shade(b,.5),c=mix(b,.7);return a.map((x,i)=>Math.round(x+(c[i]-x)*s))},updateTriggers:{getFillColor:tm}}));
@@ -240,15 +258,20 @@ function render(reset){unpulse();
   h+=(mu?'':`<div class="g h">${DS.filter(x=>x.country===S.cty&&x.census===S.cen).map(x=>btn('ds',x.id,lbl('ds_'+x.id,x.id),x.id===S.ds)).join('')}</div>`)+`
   <div style="margin-bottom:4px">${dd('v',MODES.map(k=>({k,l:t('v_'+k)})),v,t('lbl_mode'))}</div><hr>`;
   if(miss()){P.innerHTML=h+`<div class="mut">${t('na')}</div>`;P.classList.remove('w');return fin()}
-  const sc=`<div class="g"><span class="lb">${t('lbl_h')}</span>${['sqrt','lin'].map(k=>btn('sc',k,t('s_'+k),k===S.sc,t('t_'+k))).join('')}</div>`;
+  const tg=(a,l,ks,cur)=>`<div class="g"><span class="lb">${t(l)}</span>${ks.map(([k,n,tt])=>btn(a,k,t(n),k===cur,t(tt))).join('')}</div>`,
+   dsp=tg('d','lbl_d',[['3','d_3','td_3'],['2','d_2','td_2']],S.d3?'3':'2'), /* 3D / 2D */
+   shd=tg('sh','lbl_sh',[['cont','sh_cont','tsh_cont'],['step','sh_step','tsh_step']],S.shade), /* proportional gradient / set percentages */
+   sc=S.d3||!m.pct?`<div class="g"><span class="lb">${t(S.d3?'lbl_h':'lbl_sc')}</span>${['sqrt','lin'].map(k=>btn('sc',k,t('s_'+k),k===S.sc,t((S.d3?'t_':'tf_')+k))).join('')}</div>`:''; /* with percentage colours in 2D the scale has no effect, so it is hidden */
   const bar=(a,b,c)=>`<div class="bar"></div><div class="mut sp"><span>${a}</span><span>${b}</span><span>${c}</span></div>`;
   const half=m.mx*(S.sc==='sqrt'?.25:.5),
    ndl=()=>{const n=d.data.features.filter(f=>nod(f.properties)).length;return n?`<div class="zl"><span class="zs" style="background:rgb(${NODATA})"></span><span>${t('nodata_l')} <span class="mut">(${fmt(n)})</span></span></div>`:''},
+   cv=b=>m.mx*(S.sc==='sqrt'?(b/100)**2:b/100),
+   leg=()=>m.stp?BRK.concat(100).map((hi,i)=>{const lo=i?BRK[i-1]:0;return `<div class="zl c"><span class="zs" style="background:rgb(${ramp(i/BRK.length)})"></span><span>${m.pct?lo+'–'+hi+'%':fmt(Math.round(cv(lo)))+' – '+fmt(Math.round(cv(hi)))}</span></div>`}).join('')+`<div class="mut">${t(m.pct?'shn_pct':'shn_cnt')}</div>`:
+    m.pct?bar('0%',(50*m.ms).toFixed(1)+'%',(100*m.ms).toFixed(1)+'%'):bar(0,fmt(Math.round(half)),fmt(m.mx)),
    zl=()=>{const n=d.data.features.filter(f=>zero(f.properties)).length;return n?`<div class="zl"><span class="zs" style="background:rgb(${ZERO})"></span><span>${t('zero_l')} <span class="mut">(${fmt(n)})</span></span></div>`:''};
-  if(v==='pop')h+=`<div class="mut" style="margin:0 0 8px">${t('pop_h')}</div>${sc}${bar(0,fmt(Math.round(half)),fmt(m.mx))}`;
-  if(g)h+=`<select data-a="grp">${nm.map((n,i)=>rc()&&!rc().has(i)?'':`<option value="${i}" ${i===gi()?'selected':''}>${n}</option>`).join('')}</select><div class="mut" style="margin:0 0 8px">${t(D.gh)}</div>${sc}
-   <div class="g"><span class="lb">${t('lbl_c')}</span>${btn('cm','pct',t('cm_pct'),S.cm==='pct',t('t_pct'))}${btn('cm','pop',t('cm_pop'),S.cm==='pop',t('t_cpop'))}</div>`+
-   (m.pct?bar('0%',(50*m.ms).toFixed(1)+'%',(100*m.ms).toFixed(1)+'%'):bar(0,fmt(Math.round(half)),fmt(m.mx)))+zl()+ndl();
+  if(v==='pop')h+=`<div class="mut" style="margin:0 0 8px">${t('pop_h')}</div>${dsp}${sc}${shd}${leg()}`;
+  if(g)h+=`<select data-a="grp">${nm.map((n,i)=>rc()&&!rc().has(i)?'':`<option value="${i}" ${i===gi()?'selected':''}>${n}</option>`).join('')}</select><div class="mut" style="margin:0 0 8px">${t(D.gh)}</div>${dsp}${sc}
+   <div class="g"><span class="lb">${t('lbl_c')}</span>${btn('cm','pct',t('cm_pct'),S.cm==='pct',t('t_pct'))}${btn('cm','pop',t('cm_pop'),S.cm==='pop',t('t_cpop'))}</div>${shd}`+leg()+zl()+ndl();
   if(isM()){const seen=[...new Set(d.data.features.filter(f=>f.properties[D.k]!=='mix'&&!nod(f.properties)).map(f=>f.properties[D.w]))].sort((a,b)=>a-b),nmix=d.data.features.filter(f=>f.properties[D.k]==='mix').length;
    h+=`<div class="row" style="margin:0 0 4px"><span class="hd">${t('absm')}</span><span class="hd">${t('simm')}</span><span></span></div>`+
    seen.map(w=>{const n=k=>d.data.features.filter(f=>f.properties[D.w]===w&&f.properties[D.k]===k).length,b=bc(w);
@@ -385,11 +408,11 @@ $('panel').onclick=async e=>{
   if(a==='sort'){const c=cols().find(x=>x.k===k);S.sort={k,d:k===sk()?-S.sort.d:(c.t?1:-1)};return render(false)}
   if(a==='cty'){S.g={eth:0,rel:0};S.cty=k;const cs=CENSUSES.filter(x=>x.country===k);S.cen=cs[cs.length-1].id;S.ds=DS.find(x=>x.country===k&&x.census===S.cen).id;S.sc='lin';S.sel=null}
   else if(a==='cen'){S.cen=k;S.ds=DS.find(x=>x.country===S.cty&&x.census===k).id;S.sc='lin';S.sel=null}
-  else if(a==='ds'){S.ds=k;S.sc='lin';S.sel=null}else if(a==='v')S.view=k;else if(a==='sc')S.sc=k;else if(a==='cm')S.cm=k;
+  else if(a==='ds'){S.ds=k;S.sc='lin';S.sel=null}else if(a==='v')S.view=k;else if(a==='sc')S.sc=k;else if(a==='cm')S.cm=k;else if(a==='d')S.d3=k==='3';else if(a==='sh')S.shade=k;
   if(a==='cty'||a==='cen'||a==='ds'){const sig=S.cty+S.cen+S.ds;$('ld').textContent=t('loading');$('ld').style.display='block';
     try{await load()}catch(err){console.error(err);$('ld').textContent=t('load_err');setTimeout(()=>$('ld').style.display='none',6000);return}
     $('ld').style.display='none';if(sig!==S.cty+S.cen+S.ds)return}
-  render(a!=='sc'&&a!=='cm')};
+  render(!['sc','cm','d','sh'].includes(a));if(a==='d')tilt()};
 $('panel').oninput=e=>{if(e.target.id==='q'){S.q=e.target.value;fillTable()}};
 $('panel').onchange=e=>{if(e.target.dataset.a==='grp'){S.g[dm().id]=+e.target.value;render(false)}};
 $('warn').onclick=e=>{if(e.target.closest('[data-a="notr_back"]')){S.cty=S.cen=S.ds=null;S.sel=null;S.selOn=false;render(true)}};
