@@ -22,7 +22,7 @@ hr{border:0;border-top:1px solid var(--bd);margin:8px 0}
 .sw{height:18px;border-radius:3px;cursor:pointer;border:1px solid #0003}.sw:hover{outline:2px solid var(--fg)}
 .bar{height:10px;border-radius:5px;margin:8px 0 2px;background:linear-gradient(90deg,#fde9a8,#f6a05a,#d4462f,#7a1050,#2a0a4a)}
 .sp{display:flex;justify-content:space-between;margin:0}
-.zl{display:flex;align-items:center;gap:6px;margin:8px 0 2px;font-size:12px}.zs{width:18px;height:12px;border-radius:3px;border:1px solid #0003;flex:none}.zl.c{margin:3px 0}
+.zl{display:flex;align-items:center;gap:6px;margin:8px 0 2px;font-size:12px}.zs{width:18px;height:12px;border-radius:3px;border:1px solid #0003;flex:none}.row.s{grid-template-columns:62px 1fr}
 #tip{position:absolute;pointer-events:none;z-index:3;background:var(--panel);border:1px solid var(--bd);border-radius:8px;padding:6px 9px;font-size:12px;display:none;max-width:240px}
 #ld{left:50%;top:50%;transform:translate(-50%,-50%);padding:10px 16px;display:none;z-index:5}
 #lang{right:12px;top:calc(12px + env(safe-area-inset-top,0px));padding:4px}#lang button{display:flex;align-items:center;gap:6px;border:0;width:100%;font-weight:600;font-size:12px}
@@ -195,8 +195,8 @@ const NODATA=[92,88,102],nod=p=>S.view!=='pop'&&(!p[dm().e]||(isG()&&p[dm().e][g
 const nt=(k,id)=>{const x=((META[S.cty+'_'+S.cen]||{})[k]||{})[id];return x?(x[S.lang]||x.en):''}; /* meta.json notes keyed by an area's u id: "unofficial" (always) and "relNote" (religion views) */
 const notesFor=(p,rel)=>[nt('unofficial',p.u),rel?nt('relNote',p.u):''].filter(Boolean),isRel=()=>S.view!=='pop'&&dm().id==='rel';
 const ZERO=[165,168,172],zero=p=>isG()&&(p[dm().e]||[])[gi()]===0; /* group modes: areas with exactly 0 people are grey; a withheld value (-1) is not known to be 0, so it keeps the normal colours */
-let base=null,bord=null,hl=null,raf=0,hlData=[],vs=null; /* vs = the camera as the person left it */
-const BRK=[1,5,10,25,50,75]; /* "Set percentages" shading: class limits in %, giving 7 bands along the colour ramp */
+let base=null,bord=null,hl=null,raf=0,hlData=[],vs=null,bandOf=null,hlE=null,hlC=null; /* vs = the camera as the person left it */
+const BRK=[1,5,...Array.from({length:18},(_,i)=>10+5*i)]; /* "Set percentages" shading: class limits in % (1, 5, 10, 15 ... 95) = 21 bands along the colour ramp */
 const tip=$('tip');
 function show(i){const o=i.object;if(!o){tip.style.display='none';return}const p=o.properties,D=dm();let x=`<b>${pn(p)}</b>${p.j?' ('+tc(jm_(p))+')':''}${p._cty?`<br><span class="mut">${t('c_'+p._cty)} · ${lbl('ds_'+p._sid,'')}</span>`:''}<br>${t('pop')}: ${fmt(p.p)}<br>`;
   if(S.view!=='pop'&&nod(p))x+=`<span class="mut">${isG()&&p[D.e]?NM(D)[gi()]+': –':t('nodata_l')}</span>`;
@@ -217,7 +217,8 @@ function build(reset){
   const stp=S.shade==='step'&&!maj, /* set percentages: colour bands instead of a gradient (not used by the majority modes) */
     xv=f=>pct?(f.properties.p?100*gv(f.properties)/f.properties.p:0):100*H[S.sc](val(f),mx), /* % of the local population, or % of the colour scale */
     tcol=f=>pct?gv(f.properties)/f.properties.p/(ms||1):H[S.sc](val(f),mx),
-    scol=f=>stp?ramp(BRK.filter(b=>xv(f)>=b).length/BRK.length):ramp(tcol(f));
+    bo=f=>BRK.filter(b=>xv(f)>=b).length,scol=f=>stp?ramp(bo(f)/BRK.length):ramp(tcol(f));
+  bandOf=stp?bo:null;hlE=flat?null:f=>H[S.sc](val(f),mx)*(HT[S.cty]||150000); /* used by the legend and by the pulse layer */
   base=(d.parts||[{F,role:d.role,k:''}]).map(pt=>{const blk=flat&&pt.role!=='unit';return new deck.GeoJsonLayer({id:'c'+d.id+pt.k,data:pt.F,pickable:true,autoHighlight:true,highlightColor:[255,255,255,90],extruded:!flat,filled:true,stroked:true,
    lineWidthMinPixels:blk?1.2:.3,getLineColor:blk?[0,0,0,230]:maj?[255,255,255,110]:flat?[30,30,30,80]:[255,255,255,60],getElevation:f=>flat?0:H[S.sc](val(f),mx)*(HT[S.cty]||150000),
    getFillColor:f=>f.properties._i===sid?[0,200,255]:nod(f.properties)?NODATA:zero(f.properties)?ZERO:maj?col(f):scol(f),
@@ -229,11 +230,17 @@ function build(reset){
 function tilt(){const f=isM()||!S.d3; /* 3D <-> 2D: same place on the map, only the tilt and rotation change */
   deckgl.setProps({initialViewState:{...(vs||{...VIEW[S.cty],minZoom:4,maxZoom:12}),pitch:f?0:55,bearing:f?0:-12,transitionDuration:600}})}
 function draw(tm){const L=base?[...base]:[],D=dm();
-  if(hl)L.push(new deck.GeoJsonLayer({id:'pulse',data:hlData,pickable:false,filled:true,stroked:false,parameters:{depthTest:false},
-   getFillColor:f=>{const b=f.properties[D.k]==='mix'?MIXC:bc(f.properties[D.w]),s=(1+Math.sin(tm/220))/2,a=shade(b,.5),c=mix(b,.7);return a.map((x,i)=>Math.round(x+(c[i]-x)*s))},updateTriggers:{getFillColor:tm}}));
+  if(hl)L.push(new deck.GeoJsonLayer({id:'pulse',data:hlData,pickable:false,filled:true,stroked:false,extruded:!!hlE,getElevation:hlE||0,material:{ambient:.55,diffuse:.7,shininess:20},parameters:{depthTest:false},
+   getFillColor:f=>{const b=hlC(f),s=(1+Math.sin(tm/220))/2,a=shade(b,.5),c=mix(b,.7);return a.map((x,i)=>Math.round(x+(c[i]-x)*s))},updateTriggers:{getFillColor:tm}}));
   if(bord)L.push(bord);deckgl.setProps({layers:L})}
 function loop(tm){if(!hl)return;draw(tm);raf=requestAnimationFrame(loop)}
-function pulse(w,k){const D=dm();hl={w,k};hlData=ds().data.features.filter(f=>f.properties[D.k]===k&&(k==='mix'||f.properties[D.w]===w));raf=requestAnimationFrame(loop)}
+function pulse(w,k){const D=dm(),P=f=>f.properties; /* k: abs / rel / mix (majority colours), band (set-percentage band w), nod (no data), zero (no people) */
+  let fn,cf;
+  if(k==='band'){fn=f=>!nod(P(f))&&!zero(P(f))&&bandOf(f)===w;cf=()=>ramp(w/BRK.length)}
+  else if(k==='nod'){fn=f=>nod(P(f));cf=()=>NODATA}
+  else if(k==='zero'){fn=f=>!nod(P(f))&&zero(P(f));cf=()=>ZERO}
+  else{fn=f=>P(f)[D.k]===k&&(k==='mix'||P(f)[D.w]===w);cf=f=>P(f)[D.k]==='mix'?MIXC:bc(P(f)[D.w])}
+  hl=true;hlC=cf;hlData=ds().data.features.filter(fn);raf=requestAnimationFrame(loop)}
 function unpulse(){hl=null;cancelAnimationFrame(raf);draw()}
 function render(reset){unpulse();
   if(noTr()){S.selOn=false;S.sel=null;base=bord=null;draw();$('panel').style.display='none';$('sel').style.display='none';const w=$('warn');w.style.display='block'; /* big warning in the middle instead of the panel */
@@ -264,18 +271,21 @@ function render(reset){unpulse();
    sc=S.d3||!m.pct?`<div class="g"><span class="lb">${t(S.d3?'lbl_h':'lbl_sc')}</span>${['sqrt','lin'].map(k=>btn('sc',k,t('s_'+k),k===S.sc,t((S.d3?'t_':'tf_')+k))).join('')}</div>`:''; /* with percentage colours in 2D the scale has no effect, so it is hidden */
   const bar=(a,b,c)=>`<div class="bar"></div><div class="mut sp"><span>${a}</span><span>${b}</span><span>${c}</span></div>`;
   const half=m.mx*(S.sc==='sqrt'?.25:.5),
-   ndl=()=>{const n=d.data.features.filter(f=>nod(f.properties)).length;return n?`<div class="zl"><span class="zs" style="background:rgb(${NODATA})"></span><span>${t('nodata_l')} <span class="mut">(${fmt(n)})</span></span></div>`:''},
+   ex=(k,c,l,n,w3)=>`<div class="row${w3?'':' s'}"><span class="sw" data-hl="0:${k}" style="background:rgb(${c})"></span>${w3?'<span></span>':''}<span>${l} <span class="mut">(${fmt(n)})</span></span></div>`, /* legend row with a full-size swatch that pulses on hover; w3 = the 3-column grid of the majority modes */
+   ndl=w3=>{const n=d.data.features.filter(f=>nod(f.properties)).length;return n?ex('nod',NODATA,t('nodata_l'),n,w3):''},
    cv=b=>m.mx*(S.sc==='sqrt'?(b/100)**2:b/100),
-   leg=()=>m.stp?BRK.concat(100).map((hi,i)=>{const lo=i?BRK[i-1]:0;return `<div class="zl c"><span class="zs" style="background:rgb(${ramp(i/BRK.length)})"></span><span>${m.pct?lo+'–'+hi+'%':fmt(Math.round(cv(lo)))+' – '+fmt(Math.round(cv(hi)))}</span></div>`}).join('')+`<div class="mut">${t(m.pct?'shn_pct':'shn_cnt')}</div>`:
+   leg=()=>m.stp?(()=>{const has={};d.data.features.forEach(f=>{if(!nod(f.properties)&&!zero(f.properties))has[bandOf(f)]=1}); /* only the bands that occur */
+     return BRK.concat(100).map((hi,i)=>{if(!has[i])return '';const lo=i?BRK[i-1]:0,pc=i?lo+'–'+hi+'%':'&lt;1%',nu=m.pct?'':` <span class="mut">(${fmt(Math.round(cv(lo)))} – ${fmt(Math.round(cv(hi)))})</span>`;
+      return `<div class="row s"><span class="sw" data-hl="${i}:band" style="background:rgb(${ramp(i/BRK.length)})"></span><span><b>${pc}</b>${nu}</span></div>`}).join('')})()+`<div class="mut">${t(m.pct?'shn_pct':'shn_cnt')}</div>`:
     m.pct?bar('0%',(50*m.ms).toFixed(1)+'%',(100*m.ms).toFixed(1)+'%'):bar(0,fmt(Math.round(half)),fmt(m.mx)),
-   zl=()=>{const n=d.data.features.filter(f=>zero(f.properties)).length;return n?`<div class="zl"><span class="zs" style="background:rgb(${ZERO})"></span><span>${t('zero_l')} <span class="mut">(${fmt(n)})</span></span></div>`:''};
+   zl=()=>{const n=d.data.features.filter(f=>zero(f.properties)).length;return n?ex('zero',ZERO,t('zero_l'),n):''};
   if(v==='pop')h+=`<div class="mut" style="margin:0 0 8px">${t('pop_h')}</div>${dsp}${sc}${shd}${leg()}`;
   if(g)h+=`<select data-a="grp">${nm.map((n,i)=>rc()&&!rc().has(i)?'':`<option value="${i}" ${i===gi()?'selected':''}>${n}</option>`).join('')}</select><div class="mut" style="margin:0 0 8px">${t(D.gh)}</div>${dsp}${sc}
    <div class="g"><span class="lb">${t('lbl_c')}</span>${btn('cm','pct',t('cm_pct'),S.cm==='pct',t('t_pct'))}${btn('cm','pop',t('cm_pop'),S.cm==='pop',t('t_cpop'))}</div>${shd}`+leg()+zl()+ndl();
   if(isM()){const seen=[...new Set(d.data.features.filter(f=>f.properties[D.k]!=='mix'&&!nod(f.properties)).map(f=>f.properties[D.w]))].sort((a,b)=>a-b),nmix=d.data.features.filter(f=>f.properties[D.k]==='mix').length;
    h+=`<div class="row" style="margin:0 0 4px"><span class="hd">${t('absm')}</span><span class="hd">${t('simm')}</span><span></span></div>`+
    seen.map(w=>{const n=k=>d.data.features.filter(f=>f.properties[D.w]===w&&f.properties[D.k]===k).length,b=bc(w);
-    return `<div class="row"><span class="sw" data-hl="${w}:abs" style="background:rgb(${b})"></span><span class="sw" data-hl="${w}:rel" style="background:rgb(${mix(b,.6)})"></span><span>${nm[w]} <span class="mut">(${n('abs')} / ${n('rel')})</span></span></div>`}).join('')+(nmix?`<div class="row"><span class="sw" data-hl="0:mix" style="background:rgb(${MIXC})"></span><span></span><span>${t('mixm')} <span class="mut">(${nmix})</span></span></div>`:'')+ndl()+`<div class="mut">${t(D.mn)}${nmix?' '+t('mix_n'):''}</div>`}
+    return `<div class="row"><span class="sw" data-hl="${w}:abs" style="background:rgb(${b})"></span><span class="sw" data-hl="${w}:rel" style="background:rgb(${mix(b,.6)})"></span><span>${nm[w]} <span class="mut">(${n('abs')} / ${n('rel')})</span></span></div>`}).join('')+(nmix?`<div class="row"><span class="sw" data-hl="0:mix" style="background:rgb(${MIXC})"></span><span></span><span>${t('mixm')} <span class="mut">(${nmix})</span></span></div>`:'')+ndl(1)+`<div class="mut">${t(D.mn)}${nmix?' '+t('mix_n'):''}</div>`}
   if(d.hasU&&isRel())h+=[...d.uids].map(id=>nt('relNote',id)).filter(Boolean).map(x=>`<div class="rn">† ${x}</div>`).join('');
   if(mu)h+=`<div class="mut">${t('multi_n')}</div>`+multiNotes(d);
   h+=`<div class="mut">${touch?t('nav_t'):t('nav_m')}</div><div class="g" style="margin-top:8px"><button data-a="list">${t(S.list?'list_hide':'list_show')}</button>${hasSel()?`<button data-a="seltool" class="${S.selOn?'on':''}" title="${t('sel_tt')}">${t('sel_tool')}</button>`:''}<button data-a="multi" class="${mu?'on':''}" title="${t('multi_tt')}">${t('multi_btn')}</button>${S.list?'<span class="mut" id="cnt" style="margin:0"></span>':''}</div>`+
