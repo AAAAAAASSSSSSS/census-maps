@@ -274,9 +274,9 @@ function render(reset){unpulse();
    ex=(k,c,l,n,w3)=>`<div class="row${w3?'':' s'}"><span class="sw" data-hl="0:${k}" style="background:rgb(${c})"></span>${w3?'<span></span>':''}<span>${l} <span class="mut">(${fmt(n)})</span></span></div>`, /* legend row with a full-size swatch that pulses on hover; w3 = the 3-column grid of the majority modes */
    ndl=w3=>{const n=d.data.features.filter(f=>nod(f.properties)).length;return n?ex('nod',NODATA,t('nodata_l'),n,w3):''},
    cv=b=>m.mx*(S.sc==='sqrt'?(b/100)**2:b/100),
-   leg=()=>m.stp?(()=>{const has={};d.data.features.forEach(f=>{if(!nod(f.properties)&&!zero(f.properties))has[bandOf(f)]=1}); /* only the bands that occur */
+   leg=()=>m.stp?(()=>{const has={};d.data.features.forEach(f=>{if(!nod(f.properties)&&!zero(f.properties)){const i=bandOf(f);has[i]=(has[i]||0)+1}}); /* number of areas per band */ /* only the bands that occur */
      return BRK.concat(100).map((hi,i)=>{if(!has[i])return '';const lo=i?BRK[i-1]:0,pc=i?lo+'–'+hi+'%':'&lt;1%',nu=m.pct?'':` <span class="mut">(${fmt(Math.round(cv(lo)))} – ${fmt(Math.round(cv(hi)))})</span>`;
-      return `<div class="row s"><span class="sw" data-hl="${i}:band" style="background:rgb(${ramp(i/BRK.length)})"></span><span><b>${pc}</b>${nu}</span></div>`}).join('')})()+`<div class="mut">${t(m.pct?'shn_pct':'shn_cnt')}</div>`:
+      return `<div class="row s"><span class="sw" data-hl="${i}:band" style="background:rgb(${ramp(i/BRK.length)})"></span><span><b>${pc}</b>${nu} <span class="mut">(${fmt(has[i])})</span></span></div>`}).join('')})()+`<div class="mut">${t(m.pct?'shn_pct':'shn_cnt')}</div>`:
     m.pct?bar('0%',(50*m.ms).toFixed(1)+'%',(100*m.ms).toFixed(1)+'%'):bar(0,fmt(Math.round(half)),fmt(m.mx)),
    zl=()=>{const n=d.data.features.filter(f=>zero(f.properties)).length;return n?ex('zero',ZERO,t('zero_l'),n):''};
   if(v==='pop')h+=`<div class="mut" style="margin:0 0 8px">${t('pop_h')}</div>${dsp}${sc}${shd}${leg()}`;
