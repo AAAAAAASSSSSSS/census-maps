@@ -66,7 +66,7 @@ const T={en:{title:'Census maps',rights:'© 2026 AAAAAAASSSSSSS, all rights rese
   t_pct:'The strongest color signifies the largest share of the local population.',t_cpop:'The strongest color signifies the largest population.',
   pop_h:'Height represents the resident population.',grp_h:'Height represents the number of people of the selected ethnicity.',rgr_h:'Height represents the number of people of the selected religion.',
   pop:'Population',majabs:'absolute majority',majsim:'relative majority',absm:'Absolute',simm:'Relative',mixm:'Mixed',mix_n:'Mixed = the two largest groups are exactly equal.',na:'Not available',
-  contact:'For questions and other such matters, you can send an e-mail to <a href="mailto:aaaaaaasssssss@protonmail.com">aaaaaaasssssss@protonmail.com</a>.',col_county_bg:'Oblast',
+  contact:'For questions and other such matters, you can send an e-mail to <a href="mailto:aaaaaaasssssss@protonmail.com">aaaaaaasssssss@protonmail.com</a>.',col_county_bg:'Oblast',col_county_mk:'Municipality',
   list_show:'Show list',list_hide:'Hide list',search:'Search…',col_name:'Name',col_county:'County',col_pop:'Population',col_nat:'% of {c}',col_group:'Largest group',col_relg:'Largest religion',col_share:'Share',col_people:'People',col_maj:'Majority',
   sel_tool:'Select area',sel_tt:'Click an area on the map to see its full breakdown.',sel_title:'Area details',sel_hint:'Click an area on the map to see its full breakdown.',sel_close:'Close',sel_total:'Total',col_eg:'Ethnic group',col_rg:'Religion',
   sel_note:'Small values are withheld by the statistics office (*), so the rows may not add up to the total.',zero_l:'No people',nodata_l:'No data',nodata_sel:'No data for this area.',unof_s:'Unofficial data †',notr_t:'This census is not available in this language yet.',notr_m:'The selected census has not been translated into the current language. Change the language (top right) to view it.',notr_b:'Choose another country',sel_subs:'Towns and villages',sel_parts:'Parts of this area',k_town:'town',k_sector:'sector',
@@ -128,7 +128,7 @@ Object.assign(T.bg,{lbl_d:'Изглед:',d_3:'3D',d_2:'2D',td_3:'Територ
   lbl_sh:'Оцветяване:',sh_cont:'Пропорционално',sh_step:'Фиксирани проценти',tsh_cont:'Цветовете преливат плавно. Най-силният цвят е най-високата стойност на картата.',tsh_step:'Цветовете са в няколко степени с фиксирани процентни граници вместо плавен градиент.',
   shn_pct:'Степените са фиксирани дялове от местното население.',shn_cnt:'Степените са фиксирани проценти от цветовата скала; най-високата стойност на картата е 100%.',
   lbl_sc:'Скала:',tf_sqrt:'Цветът расте с квадратния корен от стойността, така че по-малките места да се виждат до големите градове.',tf_lin:'Цветът е право пропорционален на стойността.'});
-const LANGS=[{id:'en',code:'EN',flag:'us'},{id:'ro',code:'RO',flag:'ro'},{id:'bg',code:'BG',flag:'bg'}];
+const LANGS=[{id:'en',code:'EN',flag:'us'},{id:'ro',code:'RO',flag:'ro'},{id:'bg',code:'BG',flag:'bg'}].sort((a,b)=>a.code.localeCompare(b.code)); /* the menu lists them alphabetically by the code on the buttons (BG, EN, RO) */
 const flag=k=>{
   if(k==='bg')return '<svg width="22" height="15" viewBox="0 0 3 2"><rect width="3" height="2" fill="#fff"/><rect y=".667" width="3" height="1.333" fill="#00966E"/><rect y="1.333" width="3" height=".667" fill="#D62612"/></svg>';
   if(k==='ro')return '<svg width="22" height="15" viewBox="0 0 3 2"><rect width="1" height="2" fill="#002B7F"/><rect x="1" width="1" height="2" fill="#FCD116"/><rect x="2" width="1" height="2" fill="#CE1126"/></svg>';

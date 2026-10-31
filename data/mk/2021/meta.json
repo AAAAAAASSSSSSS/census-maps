@@ -40,7 +40,8 @@
    "2": "ff00ff",
    "3": "808000",
    "5": "01579b",
-   "6": "16a085"
+   "6": "16a085",
+   "4": "f59e0b"
   },
   "rel": {
    "0": "4a7fd8",
@@ -72,7 +73,7 @@
  },
  "withheld": false,
  "info": {
-  "en": "These maps were created using data from the 2021 census of North Macedonia, available in <a href=\"https://makstat.stat.gov.mk/PXWeb/pxweb/mk/MakStat/\" target=\"_blank\" rel=\"noopener noreferrer\">MakStat, the database of the State Statistical Office (makstat.stat.gov.mk)</a>.<br>For 132,260 residents (7.2%; up to 17% in Šuto Orizari) the data were taken from administrative sources and there is no ethnicity or religion for them. They are shown as “Data from administrative sources”, are included in the shares and are not counted when the majority is chosen.<br>The 80 municipalities are those of the 2013 reform (Drugovo, Oslomej, Zajas and Vraneštica are part of Kičevo). The ten municipalities of the City of Skopje are separate areas.<br>“Christian (denomination not specified)” is a group of its own, separate from “Orthodox”: in 11 municipalities (for example Negotino, Delčevo, Sveti Nikole and Karbinci) it is the largest religious group. The statistics office notes that the religion data cover only the categories with more than 500 people in the country."
+  "en": "These maps were created using data from the 2021 census of North Macedonia, available in <a href=\"https://makstat.stat.gov.mk/PXWeb/pxweb/mk/MakStat/\" target=\"_blank\" rel=\"noopener noreferrer\">MakStat, the database of the State Statistical Office (makstat.stat.gov.mk)</a> (tables of the resident population by settlement and by municipality).<br>Ethnicity is available for the 1,781 settlements, the 80 municipalities and the country; religion only for the municipalities and the country, so the settlements are shown as “No data” in the religious mode. The 205 settlements with no residents are “No data” in the ethnic mode and are not listed in the breakdown of their municipality.<br>For 132,260 residents (7.2%; up to 17% in Šuto Orizari) the data were taken from administrative sources and there is no ethnicity or religion for them. They are shown as “Data from administrative sources”, are included in the shares and are not counted when the majority is chosen.<br>The 80 municipalities are those of the 2013 reform (Drugovo, Oslomej, Zajas and Vraneštica are part of Kičevo); the ten municipalities of the City of Skopje are separate areas, and the settlement of Skopje is split into ten parts, one in each. The municipality and country borders are made of the settlement borders.<br>“Christian (denomination not specified)” is a group of its own, separate from “Orthodox”: in 11 municipalities (for example Negotino, Delčevo, Sveti Nikole and Karbinci) it is the largest religious group. The statistics office notes that the religion data cover only the categories with more than 500 people in the country."
  },
  "ethNote": {
   "en": "People whose data were taken from administrative sources (7.2% of residents) have no ethnicity. They are included in the shares, so the shares of the named groups are lower than they would be among the people with data."

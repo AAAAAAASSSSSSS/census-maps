@@ -68,8 +68,9 @@
   {
    "id": "md",
    "name": {
-    "en": "Republic of Moldova",
-    "bg": "Република Молдова"
+    "en": "Moldova",
+    "ro": "Moldova",
+    "bg": "Молдова"
    },
    "view": {
     "longitude": 28.4,
@@ -325,11 +326,22 @@
      },
      "datasets": [
       {
+       "id": "mk-settlements",
+       "role": "unit",
+       "file": "settlements.json",
+       "label": {
+        "en": "Settlements"
+       }
+      },
+      {
        "id": "mk-municipalities",
        "role": "region",
        "file": "municipalities.json",
        "label": {
         "en": "Municipalities"
+       },
+       "subs": {
+        "en": "Settlements"
        }
       },
       {

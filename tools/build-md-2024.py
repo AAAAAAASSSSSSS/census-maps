@@ -159,5 +159,5 @@ co_b = [dict(n='Area enumerated by the 2024 census', p=total['p'], e=cen_e, r=ce
         dict(n='Transnistria', p=TR_P, e=tr_e, r=None, u='tr')]
 assert sum(co_r) == total['p'] + TR_P
 json.dump(dict(type='FeatureCollection', features=[dict(type='Feature', geometry=c['geometry'],
-    properties=dict(n='Republic of Moldova', p=total['p'] + TR_P, e=co_e, r=co_r, u='co', b=co_b))]), open(os.path.join(out, 'md_country.geojson'), 'w'), ensure_ascii=False)
+    properties=dict(n='Moldova', p=total['p'] + TR_P, e=co_e, r=co_r, u='co', b=co_b))]), open(os.path.join(out, 'md_country.geojson'), 'w'), ensure_ascii=False)
 print('wrote', out)
