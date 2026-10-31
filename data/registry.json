@@ -242,6 +242,110 @@
      ]
     }
    ]
+  },
+  {
+   "id": "al",
+   "name": {
+    "en": "Albania"
+   },
+   "view": {
+    "longitude": 20.1,
+    "latitude": 41.15,
+    "zoom": 7.0
+   },
+   "height": 70000,
+   "censuses": [
+    {
+     "id": "2023",
+     "label": {
+      "en": "2023 census"
+     },
+     "datasets": [
+      {
+       "id": "al-units",
+       "role": "unit",
+       "file": "units.json",
+       "label": {
+        "en": "Administrative units"
+       }
+      },
+      {
+       "id": "al-municipalities",
+       "role": "unit",
+       "file": "municipalities.json",
+       "label": {
+        "en": "Municipalities"
+       },
+       "subs": {
+        "en": "Administrative units"
+       }
+      },
+      {
+       "id": "al-counties",
+       "role": "region",
+       "file": "counties.json",
+       "label": {
+        "en": "Counties"
+       },
+       "subs": {
+        "en": "Municipalities"
+       }
+      },
+      {
+       "id": "al-country",
+       "role": "country",
+       "file": "country.json",
+       "label": {
+        "en": "Country"
+       },
+       "subs": {
+        "en": "Counties"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mk",
+   "name": {
+    "en": "North Macedonia"
+   },
+   "view": {
+    "longitude": 21.7,
+    "latitude": 41.6,
+    "zoom": 7.4
+   },
+   "height": 60000,
+   "censuses": [
+    {
+     "id": "2021",
+     "label": {
+      "en": "2021 census"
+     },
+     "datasets": [
+      {
+       "id": "mk-municipalities",
+       "role": "region",
+       "file": "municipalities.json",
+       "label": {
+        "en": "Municipalities"
+       }
+      },
+      {
+       "id": "mk-country",
+       "role": "country",
+       "file": "country.json",
+       "label": {
+        "en": "Country"
+       },
+       "subs": {
+        "en": "Municipalities"
+       }
+      }
+     ]
+    }
+   ]
   }
  ]
 }

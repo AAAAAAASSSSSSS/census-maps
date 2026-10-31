@@ -1,0 +1,80 @@
+{
+ "names": {
+  "eth": {
+   "en": [
+    "Macedonian",
+    "Albanian",
+    "Turkish",
+    "Roma",
+    "Vlach",
+    "Serbian",
+    "Bosniak",
+    "Other ethnicity",
+    "Not declared",
+    "Unknown",
+    "Data from administrative sources"
+   ]
+  },
+  "rel": {
+   "en": [
+    "Orthodox",
+    "Muslim",
+    "Catholic",
+    "Christian (denomination not specified)",
+    "Protestant",
+    "Evangelical",
+    "Evangelical-Methodist",
+    "Jehovah’s Witnesses",
+    "Atheist (not a believer)",
+    "Other religion",
+    "Not declared",
+    "Unknown",
+    "Data from administrative sources"
+   ]
+  }
+ },
+ "colors": {
+  "eth": {
+   "0": "e056a4",
+   "1": "ff3b30",
+   "2": "ff00ff",
+   "3": "808000",
+   "5": "01579b",
+   "6": "16a085"
+  },
+  "rel": {
+   "0": "4a7fd8",
+   "1": "1e9e4a",
+   "2": "f2c200",
+   "3": "18b8c9",
+   "4": "8d5fd3",
+   "5": "e056a4",
+   "6": "c87137",
+   "7": "808000",
+   "8": "34495e"
+  }
+ },
+ "other": {
+  "eth": 7,
+  "rel": 9
+ },
+ "unavailable": {
+  "eth": [
+   8,
+   9,
+   10
+  ],
+  "rel": [
+   10,
+   11,
+   12
+  ]
+ },
+ "withheld": false,
+ "info": {
+  "en": "These maps were created using data from the 2021 census of North Macedonia, available in <a href=\"https://makstat.stat.gov.mk/PXWeb/pxweb/mk/MakStat/\" target=\"_blank\" rel=\"noopener noreferrer\">MakStat, the database of the State Statistical Office (makstat.stat.gov.mk)</a>.<br>For 132,260 residents (7.2%; up to 17% in Šuto Orizari) the data were taken from administrative sources and there is no ethnicity or religion for them. They are shown as “Data from administrative sources”, are included in the shares and are not counted when the majority is chosen.<br>The 80 municipalities are those of the 2013 reform (Drugovo, Oslomej, Zajas and Vraneštica are part of Kičevo). The ten municipalities of the City of Skopje are separate areas.<br>“Christian (denomination not specified)” is a group of its own, separate from “Orthodox”: in 11 municipalities (for example Negotino, Delčevo, Sveti Nikole and Karbinci) it is the largest religious group. The statistics office notes that the religion data cover only the categories with more than 500 people in the country."
+ },
+ "ethNote": {
+  "en": "People whose data were taken from administrative sources (7.2% of residents) have no ethnicity. They are included in the shares, so the shares of the named groups are lower than they would be among the people with data."
+ }
+}

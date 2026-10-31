@@ -1,0 +1,77 @@
+{
+ "names": {
+  "eth": {
+   "en": [
+    "Albanian",
+    "Greek",
+    "Macedonian",
+    "Montenegrin",
+    "Aromanian",
+    "Roma",
+    "Egyptian",
+    "Bosniak",
+    "Serbian",
+    "Bulgarian",
+    "Mixed ethnicity",
+    "Other ethnicity",
+    "No ethnicity",
+    "Prefer not to answer",
+    "Not available"
+   ]
+  },
+  "rel": {
+   "en": [
+    "Muslim",
+    "Muslim - Bektashi",
+    "Catholic",
+    "Orthodox",
+    "Evangelical (Protestant)",
+    "Believers (denomination unspecified)",
+    "Atheist",
+    "Other religion",
+    "Prefer not to answer",
+    "Not available"
+   ]
+  }
+ },
+ "colors": {
+  "eth": {
+   "0": "ff3b30",
+   "1": "4dabf7",
+   "2": "e056a4",
+   "5": "808000",
+   "9": "db5b0b"
+  },
+  "rel": {
+   "0": "1e9e4a",
+   "1": "8bc34a",
+   "2": "f2c200",
+   "3": "4a7fd8",
+   "4": "8d5fd3",
+   "5": "b0b0ff",
+   "6": "34495e"
+  }
+ },
+ "other": {
+  "eth": 11,
+  "rel": 7
+ },
+ "unavailable": {
+  "eth": [
+   12,
+   13,
+   14
+  ],
+  "rel": [
+   8,
+   9
+  ]
+ },
+ "withheld": false,
+ "info": {
+  "en": "These maps were created using data from the 2023 Albanian census, available in <a href=\"https://databaza.instat.gov.al:8083/pxweb/sq/DST\" target=\"_blank\" rel=\"noopener noreferrer\">the statistical database of the Institute of Statistics (INSTAT) (databaza.instat.gov.al)</a>.<br>Ethnicity and religion were published only for the 12 counties and the country. Municipalities and administrative units have population figures only, so in the ethnic and religious modes they are shown as “No data”; the “Select area” tool lists the municipalities of a county and the administrative units of a municipality with their populations.<br>Answering the ethnicity and religion questions was voluntary. “Prefer not to answer” (0.6% for ethnicity, 10.2% for religion) and “Not available” (5.6%; 26% in Berat county) are included in the shares and are not counted when the majority is chosen. “Believers (denomination unspecified)” (13.8%) is a group of its own, and so is the Bektashi branch of Islam."
+ },
+ "ethNote": {
+  "en": "Ethnicity is published only for counties. “Not available” (5.6% of residents, 26% in Berat county) and “Prefer not to answer” are included in the shares, so the shares of the named groups are lower than they would be among the people who answered."
+ }
+}
