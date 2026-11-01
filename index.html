@@ -161,7 +161,7 @@ const DOM={eth:{id:'eth',e:'e',w:'w',k:'k',s:'s',names:'eth',base:{},oth:-1,na:[
 /* prep(): everything derived from the raw counts is computed here, so the data files only store counts (p = population, e = ethnicity counts, r = religion counts).
    Majority = largest group excluding "other" / "not given"; absolute = more than 50%; ties between the two largest groups are marked k='mix'. */
 function derive(p,M){for(const D of Object.values(DOM)){const e=p[D.e];if(!e)continue;const o=M.other[D.id],na=[].concat(M.unavailable[D.id]),ids=e.map((_,x)=>x).filter(x=>x!==o&&!na.includes(x)),v=ids.map(x=>Math.max(0,e[x])),m=Math.max(0,...v);
-  p[D.w]=m>0?ids[v.indexOf(m)]:0;p[D.k]=2*m>p.p?'abs':'rel';p[D.s]=+(100*m/p.p).toFixed(1);
+  p[D.w]=m>0?ids[v.indexOf(m)]:0;p[D.k]=m<=0?'none':2*m>p.p?'abs':'rel';p[D.s]=m>0?+(100*m/p.p).toFixed(1):0; /* 'none': nobody in any real group (everyone is "other" / "not given" / from administrative sources): there is no majority, so the area counts as "No data" in the majority modes */
   const s=v.slice().sort((a,b)=>b-a);if(s[0]>0&&s[0]===s[1])p[D.k]='mix'}}
 /* Optional breakdown b = [{n,p,e,r,y,c}]: towns/communes of a raion (y: 't' town, 's' sector), c = nested rows (Chisinau sectors). Shown in the "Select area" card. */
 function prep(d,M){const F=d.data.features;d.tot=0;d.hasS=false;d.hasU=false;d.uids=new Set();d.rec={eth:new Set(),rel:new Set()}; /* categories that have a figure in at least one area: the others are not offered (e.g. Bulgaria's smaller ethnic groups exist only for the country) */
@@ -191,7 +191,7 @@ const tied=(p,D)=>{const e=p[D.e],ids=e.map((_,i)=>i).filter(i=>i!==D.oth&&!D.na
   gname=(p,D)=>p[D.k]==='mix'?tied(p,D).map(i=>NM(D)[i]).join(' / '):NM(D)[p[D.w]];
 const bc=w=>dm().base[w]||[90,90,90],col=f=>{const p=f.properties,D=dm();if(p[D.k]==='mix')return MIXC;return p[D.k]==='abs'?bc(p[D.w]):mix(bc(p[D.w]),.6)};
 const gv=p=>{const e=p[dm().e];return e?Math.max(0,e[gi()]||0):0}; /* "*" (withheld) values are stored as -1 and count as 0 */
-const NODATA=[92,88,102],nod=p=>S.view!=='pop'&&(!p[dm().e]||(isG()&&p[dm().e][gi()]==null)); /* no data: the area has no ethnicity/religion figures, or this group was not recorded (null) */
+const NODATA=[92,88,102],nod=p=>S.view!=='pop'&&(!p[dm().e]||p[dm().k]==='none'&&!isG()||(isG()&&p[dm().e][gi()]==null)); /* no data: the area has no ethnicity/religion figures, or this group was not recorded (null) */
 const nt=(k,id)=>{const x=((META[S.cty+'_'+S.cen]||{})[k]||{})[id];return x?(x[S.lang]||x.en):''}; /* meta.json notes keyed by an area's u id: "unofficial" (always) and "relNote" (religion views) */
 const notesFor=(p,rel)=>[nt('unofficial',p.u),rel?nt('relNote',p.u):''].filter(Boolean),isRel=()=>S.view!=='pop'&&dm().id==='rel';
 const ZERO=[165,168,172],zero=p=>isG()&&(p[dm().e]||[])[gi()]===0; /* group modes: areas with exactly 0 people are grey; a withheld value (-1) is not known to be 0, so it keeps the normal colours */
@@ -322,7 +322,7 @@ function drawSel(){const el=$('sel'),on=hasSel()&&S.selOn;el.style.display=on?'b
   h+=`<div><b>${pn(p)}</b></div><div class="mut" style="margin:0 0 4px">${p.j?tc(jm_(p)):t('ds_'+(p._sid||ds().id))}</div>`;
   if(!pop&&!p[D.e])h+=`<div class="mut">${t('nodata_sel')}</div>`;
   else if(!pop){const nm=NM(D),e=p[D.e],ids=nm.map((_,i)=>i).filter(i=>i!==D.oth&&!D.na.includes(i)&&(!rc()||rc().has(i))).sort((a,b)=>Math.max(0,e[b])-Math.max(0,e[a])||a-b);
-    const row=i=>{const v=e[i],x=v==null;return `<tr class="${(isG()?i===gi():p[D.k]==='mix'?tied(p,D).includes(i):i===p[D.w])?'cur':''}"><td>${nm[i]}</td><td class="r">${x?'–':v<0?'*':fmt(v)}</td><td class="r">${x||v<0?'–':(100*v/p.p).toFixed(2)+'%'}</td></tr>`};
+    const row=i=>{const v=e[i],x=v==null;return `<tr class="${(isG()?i===gi():p[D.k]==='mix'?tied(p,D).includes(i):p[D.k]!=='none'&&i===p[D.w])?'cur':''}"><td>${nm[i]}</td><td class="r">${x?'–':v<0?'*':fmt(v)}</td><td class="r">${x||v<0?'–':(100*v/p.p).toFixed(2)+'%'}</td></tr>`};
     const note=(META[S.cty+'_'+S.cen]||{}).withheld!==false&&!p._nw&&(e.some(v=>v<0)||e.reduce((a,v)=>a+Math.max(0,v),0)!==p.p)&&!p.u; /* census files with no withheld values set "withheld":false in meta.json */
     h+=`<table><thead><tr><th>${t(D.ch)}</th><th class="r">${t('col_people')}</th><th class="r">${t('col_share')}</th></tr></thead><tbody>${ids.map(row).join('')}<tr class="gap"><td colspan="3"></td></tr>${row(D.oth)}${D.na.map(row).join('')}
    <tr class="tot"><td>${t('sel_total')}</td><td class="r">${fmt(p.p)}</td><td class="r">100%</td></tr></tbody></table>`+(note?`<div class="mut">${t('sel_note')}</div>`:'')}
