@@ -8,7 +8,7 @@ Inputs (keep them in raw/, which is not committed). All tables are from MakStat 
   ethnic_settlements_north_mkd.xlsx      T1503P21  ethnic affiliation by settlement (Latin; "Name (Municipality)")
   population_settlements_north_mkd.xlsx  T1501P21  population by settlement (only a double check)
   mkd_settlements.gpkg                   the settlement polygons of the national register (NTES): Cyrillic names, municipality and statistical
-                                         region of each settlement; coordinates in MGI 1901 / Balkans zone 7 (EPSG:6316) although the file says "undefined"
+                                         region of each settlement; coordinates in MGI 1901 / Balkans zone 7 although the file says "undefined"; converted by tools/mk_crs.py, not by PROJ
 
 Usage (from the repo root; needs `pip install openpyxl geopandas shapely pyproj numpy`, and `cd tools && npm install`):
   python3 tools/build-mk-2021.py raw build
@@ -55,6 +55,7 @@ from shapely.geometry.polygon import orient
 from shapely.ops import unary_union
 from shapely import make_valid
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 raw, out = (sys.argv + ['raw', 'build'])[1:3]
 os.makedirs(out, exist_ok=True)
 read = lambda f: list(openpyxl.load_workbook(os.path.join(raw, f), read_only=True).active.iter_rows(values_only=True))
@@ -114,11 +115,16 @@ spop = {str(r[0]): num(r[1]) for r in read('population_settlements_north_mkd.xls
 assert all(spop[v['label']] == v['p'] for v in srows.values()), 'population differs from T1501P21'
 
 # ---------------------------------------------------------------- polygons
-g = gpd.read_file(os.path.join(raw, 'mkd_settlements.gpkg')).set_crs('EPSG:6316', allow_override=True)
+g = gpd.read_file(os.path.join(raw, 'mkd_settlements.gpkg'))
 assert len(g) == 1792
 empty = g.geometry.is_empty | g.geometry.isna()
 assert empty.sum() == 11 and g.loc[empty, 'st_area(shape)'].isna().all()
-g = g[~empty].to_crs('EPSG:4326').reset_index(drop=True)
+# NOT .to_crs(): PROJ picks a different datum operation inside a rectangle in the north-west, which tore the settlement shapes there (straight lines through
+# Kumanovo, Petrovec, Veles, Zelenikovo, Studeničani, Želino, Brvenica, Gostivar ...). mk_crs.to_wgs84 is one smooth transformation for the whole country.
+import shapely
+from mk_crs import to_wgs84
+g = g[~empty].reset_index(drop=True)
+g = gpd.GeoDataFrame(g.drop(columns='geometry'), geometry=shapely.transform(g.geometry.values, lambda a: np.column_stack(to_wgs84(a[:, 0], a[:, 1]))), crs='EPSG:4326')
 assert len(g) == 1781
 mname = {a['name'].upper(): a['name'] for a in muni_e}
 assert set(g.ntes_municipality_name) == set(mname), set(g.ntes_municipality_name) ^ set(mname)
