@@ -1,0 +1,29 @@
+{
+ "names": {
+  "eth": {
+   "en": []
+  },
+  "rel": {
+   "en": []
+  }
+ },
+ "colors": {
+  "eth": {},
+  "rel": {}
+ },
+ "other": {
+  "eth": -1,
+  "rel": -1
+ },
+ "unavailable": {
+  "eth": [],
+  "rel": []
+ },
+ "withheld": false,
+ "info": {
+  "en": "These maps were created using data from the 2021 census of Greece, available from <a href=\"https://www.statistics.gr\" target=\"_blank\" rel=\"noopener noreferrer\">the Hellenic Statistical Authority (ELSTAT) (statistics.gr)</a> (table A1602_SAM03_TB_DC_00_2021_C01_F_GR, permanent population by sex and age group, from the whole country down to settlements).<br>The Greek census does not ask about ethnicity or religion, so only the population mode is available for Greece. Selecting a mode that needs ethnic or religious data would show every area as “No data”, so these modes are hidden.<br>Boundaries are from geoBoundaries and still show the municipalities as they were before the 2019 reform, which split a few of them. In those cases the new municipalities are added together on one area: Corfu (Central Corfu and the Diapontian Islands, North Corfu, South Corfu), Cephalonia (Argostoli, Lixouri, Sami), Lesbos (Mytilene, West Lesbos), Samos (East Samos, West Samos), Servia-Velventos (Servia, Velventos) and Mylopotamos (Mylopotamos, Anogeia). The “Select area” tool lists the individual census municipalities of each regional unit.<br>The 13,586 settlements have no boundaries, so they appear only in the “Select area” tool, under their municipality. Mount Athos is an autonomous region, shown here as a regional unit of Central Macedonia as in the census table. Settlement figures may differ by a few hundred people from the municipal totals, and the municipalities add up to 23 fewer people than the national total."
+ },
+ "ethNote": {
+  "en": ""
+ }
+}

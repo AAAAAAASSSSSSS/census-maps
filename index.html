@@ -66,7 +66,7 @@ const T={en:{title:'Census maps',rights:'© 2026 AAAAAAASSSSSSS, all rights rese
   t_pct:'The strongest color signifies the largest share of the local population.',t_cpop:'The strongest color signifies the largest population.',
   pop_h:'Height represents the resident population.',grp_h:'Height represents the number of people of the selected ethnicity.',rgr_h:'Height represents the number of people of the selected religion.',
   pop:'Population',majabs:'absolute majority',majsim:'relative majority',absm:'Absolute',simm:'Relative',mixm:'Mixed',mix_n:'Mixed = the two largest groups are exactly equal.',na:'Not available',
-  contact:'For questions and other such matters, you can send an e-mail to <a href="mailto:aaaaaaasssssss@protonmail.com">aaaaaaasssssss@protonmail.com</a>.',col_county_bg:'Oblast',col_county_mk:'Municipality',
+  contact:'For questions and other such matters, you can send an e-mail to <a href="mailto:aaaaaaasssssss@protonmail.com">aaaaaaasssssss@protonmail.com</a>.',col_county_bg:'Oblast',col_county_mk:'Municipality','col_county_gr-municipalities':'Regional unit','col_county_gr-regional-units':'Region',
   list_show:'Show list',list_hide:'Hide list',search:'Search…',col_name:'Name',col_county:'County',col_pop:'Population',col_nat:'% of {c}',col_group:'Largest group',col_relg:'Largest religion',col_share:'Share',col_people:'People',col_maj:'Majority',
   sel_tool:'Select area',sel_tt:'Click an area on the map to see its full breakdown.',sel_title:'Area details',sel_hint:'Click an area on the map to see its full breakdown.',sel_close:'Close',sel_total:'Total',col_eg:'Ethnic group',col_rg:'Religion',
   sel_note:'Small values are withheld by the statistics office (*), so the rows may not add up to the total.',zero_l:'No people',nodata_l:'No data',nodata_sel:'No data for this area.',unof_s:'Unofficial data †',notr_t:'This census is not available in this language yet.',notr_m:'The selected census has not been translated into the current language. Change the language (top right) to view it.',notr_b:'Choose another country',sel_subs:'Towns and villages',sel_parts:'Parts of this area',k_town:'town',k_sector:'sector',
@@ -145,7 +145,7 @@ const cache={},getJSON=u=>cache[u]||(cache[u]=fetch(u,{cache:'no-cache'}).then(r
 const dpath=(c,n,f)=>`data/${c}/${n}/${f}`;
 async function loadRegistry(){const R=await getJSON('data/registry.json');
   for(const c of R.countries){COUNTRIES.push(c.id);VIEW[c.id]=c.view;HT[c.id]=c.height||150000;for(const l in c.name)if(T[l])T[l]['c_'+c.id]=c.name[l];
-    for(const n of c.censuses){CENSUSES.push({id:n.id,country:c.id});for(const l in n.label)if(T[l])T[l]['cen_'+c.id+'_'+n.id]=n.label[l];
+    for(const n of c.censuses){CENSUSES.push({id:n.id,country:c.id,modes:n.modes});for(const l in n.label)if(T[l])T[l]['cen_'+c.id+'_'+n.id]=n.label[l];
       for(const d of n.datasets){DS.push({id:d.id,country:c.id,census:n.id,role:d.role,file:d.file,data:null,borders:null});for(const l in d.label)if(T[l])T[l]['ds_'+d.id]=d.label[l];for(const l in d.subs||{})if(T[l])T[l]['subs_'+d.id]=d.subs[l]}}}}
 async function loadMeta(c,n){const M=await getJSON(dpath(c,n,'meta.json'));META[c+'_'+n]=M;
   if(!M._t){M._t=1;for(const k of ['eth','rel'])for(const l in M.names[k])if(T[l])T[l][k+'_'+c+'_'+n]=M.names[k][l];for(const l in M.info)if(T[l])T[l]['info_'+c+'_'+n]=M.info[l]}
@@ -176,6 +176,8 @@ async function loadDs(d){const M=await loadMeta(d.country,d.census);
     prep(d,M)}return M}
 async function load(){const d=ds();if(!d)return;applyMeta(await loadDs(d))}
 const MODES=['pop','eth','grp','rel','rgr'],VD={eth:'eth',grp:'eth',rel:'rel',rgr:'rel'};
+/* modes offered: a census can list the modes it supports (registry "modes"), e.g. Greece has no ethnicity or religion question; with several countries, a mode is offered if any of them supports it */
+const okModes=()=>{const cs=(S.cty==='_m'?MS.sel.map(c=>CENSUSES.find(x=>x.country===c&&x.id===MS.cen[c])):[CENSUSES.find(x=>x.country===S.cty&&x.id===S.cen)]).filter(Boolean),m=MODES.filter(k=>!cs.length||cs.some(x=>!x.modes||x.modes.includes(k)));return m.length?m:['pop']};
 const fmt=n=>n.toLocaleString('en-GB'),tc=s=>s===s.toUpperCase()&&s!==s.toLowerCase()?s.toLowerCase().replace(/(^|[\s-])\S/g,m=>m.toUpperCase()):s /* only ALL-CAPS names (Romania) are re-cased; other names keep their own capitals */;
 const H={sqrt:(v,m)=>Math.sqrt(v/m),lin:(v,m)=>v/m};
 const RAMP=[[253,233,168],[246,160,90],[212,70,47],[122,16,80],[42,10,74]];
@@ -247,6 +249,7 @@ function render(reset){unpulse();
     const mm=mLack(),ml=(L)=>mm.map(c=>(T[L]['c_'+c]||T.en['c_'+c]||c.toUpperCase())).join(', ');
     w.innerHTML=mm.length?`<h2>${t('notr_t')}</h2><p>${t('notr_mm')}</p><p><b>${t('notr_ml')}</b> ${ml(S.lang)}</p>${S.lang!=='en'?`<p class="en">${T.en.notr_t} ${T.en.notr_mm} <b>${T.en.notr_ml}</b> ${ml('en')}</p>`:''}<button data-a="notr_back">${t('notr_b')}</button>`:`<h2>${t('notr_t')}</h2><p>${t('notr_m')}</p>${S.lang!=='en'?`<p class="en">${T.en.notr_t} ${T.en.notr_m}</p>`:''}<button data-a="notr_back">${t('notr_b')}</button>`;return fin()}
   $('warn').style.display='none';$('panel').style.display='';
+  if(S.cty&&!okModes().includes(S.view))S.view='pop';
   if(S.selOn&&!hasSel()){S.selOn=false;S.sel=null}
   if(S.cty&&!miss()&&ds()&&ds().data&&isG()){const R=rc();if(R&&R.size&&!R.has(gi()))S.g[dm().id]=Math.min(...R)} /* the chosen group is not recorded at this level -> first recorded one */
   const v=S.view,m=S.cty&&!miss()&&ds()&&ds().data?build(reset):(base=bord=null,draw(),null),P=$('panel'),d=ds(),D=dm(),g=isG(),nm=S.cty?(NM(D)||[]):[];
@@ -263,7 +266,7 @@ function render(reset){unpulse();
    `<div class="g h">${dd('cty',COUNTRIES.map(c=>({k:c,l:lbl('c_'+c,c.toUpperCase())})).sort((a,b)=>a.l.localeCompare(b.l,S.lang)),S.cty,t('pick_cty'),1)}${S.cty?dd('cen',cs.map(x=>({k:x.id,l:lbl('cen_'+S.cty+'_'+x.id,x.id)})),S.cen,'',1):''}</div>`;
   if(!S.cty){P.innerHTML=h+`<div class="mut">${t('pick_hint')}</div>`;P.classList.remove('w');return fin()}
   h+=(mu?'':`<div class="g h">${DS.filter(x=>x.country===S.cty&&x.census===S.cen).map(x=>btn('ds',x.id,lbl('ds_'+x.id,x.id),x.id===S.ds)).join('')}</div>`)+`
-  <div style="margin-bottom:4px">${dd('v',MODES.map(k=>({k,l:t('v_'+k)})),v,t('lbl_mode'))}</div><hr>`;
+  <div style="margin-bottom:4px">${dd('v',okModes().map(k=>({k,l:t('v_'+k)})),v,t('lbl_mode'))}</div><hr>`;
   if(miss()){P.innerHTML=h+`<div class="mut">${t('na')}</div>`;P.classList.remove('w');return fin()}
   const tg=(a,l,ks,cur)=>`<div class="g"><span class="lb">${t(l)}</span>${ks.map(([k,n,tt])=>btn(a,k,t(n),k===cur,t(tt))).join('')}</div>`,
    dsp=tg('d','lbl_d',[['3','d_3','td_3'],['2','d_2','td_2']],S.d3?'3':'2'), /* 3D / 2D */
@@ -294,7 +297,7 @@ function render(reset){unpulse();
   P.querySelectorAll('[data-hl]').forEach(e=>{const[w,k]=e.dataset.hl.split(':');e.onmouseenter=()=>pulse(+w,k);e.onmouseleave=unpulse});fin()}
 function cols(){const d=ds(),v=S.view,D=dm(),c=[{k:'n',l:'col_name',t:1,g:p=>pn(p),s:p=>nm_(p)}];
   if(S.cty==='_m')c.push({k:'ct',l:'col_country',t:1,g:p=>t('c_'+p._cty),s:p=>t('c_'+p._cty)});
-  if(d.role==='unit')c.push({k:'j',l:T.en['col_county_'+S.cty]!==undefined?'col_county_'+S.cty:'col_county',t:1,g:p=>p.j?tc(jm_(p)):'',s:p=>jm_(p)||''}); /* a country can name its regions differently (col_county_<id>) */
+  if(d.role==='unit')c.push({k:'j',l:T.en['col_county_'+d.id]!==undefined?'col_county_'+d.id:T.en['col_county_'+S.cty]!==undefined?'col_county_'+S.cty:'col_county',t:1,g:p=>p.j?tc(jm_(p)):'',s:p=>jm_(p)||''}); /* a country can name its regions differently (col_county_<id>) */
   c.push({k:'p',l:'col_pop',r:1,g:p=>fmt(p.p),s:p=>p.p});
   if(v==='pop')c.push({k:'x',l:'col_nat',r:1,g:p=>(100*p.p/d.tot).toFixed(3)+'%',s:p=>p.p});
   if(isM())c.push({k:'y',l:D.cg,t:1,g:p=>nod(p)?'–':gname(p,D),s:p=>nod(p)?'':gname(p,D)},{k:'z',l:'col_share',r:1,g:p=>nod(p)?'–':p[D.s]+'%',s:p=>nod(p)?-1:p[D.s]},{k:'m',l:'col_maj',t:1,g:p=>nod(p)?'–':t(p[D.k]==='abs'?'absm':p[D.k]==='mix'?'mixm':'simm'),s:p=>nod(p)?-1:p[D.k]==='abs'?2:p[D.k]==='mix'?0:1});

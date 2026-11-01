@@ -358,6 +358,75 @@
      ]
     }
    ]
+  },
+  {
+   "id": "gr",
+   "name": {
+    "en": "Greece"
+   },
+   "view": {
+    "longitude": 24.3,
+    "latitude": 38.3,
+    "zoom": 6.0
+   },
+   "height": 90000,
+   "censuses": [
+    {
+     "id": "2021",
+     "label": {
+      "en": "2021 census"
+     },
+     "modes": [
+      "pop"
+     ],
+     "datasets": [
+      {
+       "id": "gr-municipalities",
+       "role": "unit",
+       "file": "municipalities.json",
+       "label": {
+        "en": "Municipalities"
+       },
+       "subs": {
+        "en": "Settlements"
+       }
+      },
+      {
+       "id": "gr-regional-units",
+       "role": "unit",
+       "file": "regional-units.json",
+       "label": {
+        "en": "Regional units"
+       },
+       "subs": {
+        "en": "Municipalities"
+       }
+      },
+      {
+       "id": "gr-regions",
+       "role": "region",
+       "file": "peripheries.json",
+       "label": {
+        "en": "Regions"
+       },
+       "subs": {
+        "en": "Regional units"
+       }
+      },
+      {
+       "id": "gr-country",
+       "role": "country",
+       "file": "country.json",
+       "label": {
+        "en": "Country"
+       },
+       "subs": {
+        "en": "Regions"
+       }
+      }
+     ]
+    }
+   ]
   }
  ]
 }
